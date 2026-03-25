@@ -8,7 +8,7 @@ import '../../../core/style/global_text_style.dart';
 import '../../../core/widgets/custom_button_widget.dart';
 import '../../../core/widgets/custom_textfield_widget.dart';
 import '../../../routes/app_routes.dart';
-import '../controller/signup_controller.dart';
+import '../controller/5_signup_controller.dart';
 
 class SignupScreen extends GetView<SignupController> {
   const SignupScreen({super.key});

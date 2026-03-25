@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'forgot_password_controller.dart';
+import '../controller/3_forgot_password_controller.dart';
 
 class ForgotPasswordBinding extends Bindings {
   @override

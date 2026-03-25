@@ -42,9 +42,9 @@ class ResetPasswordController extends GetxController {
 
   void onResetPasswordPressed() {
     if (formKey.currentState!.validate()) {
-      AppSnackBar.success('Password reset successfully', title: 'Success');
+      // AppSnackBar.success('Password reset successfully', title: 'Success');
       Future.delayed(const Duration(seconds: 1), () {
-        Get.offAllNamed(AppRoutes.LOGIN);
+        Get.offNamed(AppRoutes.PASSWORD_CHANGED_SUCCESS);
       });
     }
   }

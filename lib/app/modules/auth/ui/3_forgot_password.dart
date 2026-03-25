@@ -8,7 +8,7 @@ import '../../../core/style/global_text_style.dart';
 import '../../../core/widgets/custom_button_widget.dart';
 import '../../../core/widgets/custom_textfield_widget.dart';
 import '../../../routes/app_routes.dart';
-import '../controller/forgot_password_controller.dart';
+import '../controller/3_forgot_password_controller.dart';
 
 class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
   const ForgotPasswordScreen({super.key});

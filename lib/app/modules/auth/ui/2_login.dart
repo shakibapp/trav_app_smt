@@ -8,7 +8,7 @@ import '../../../core/style/global_text_style.dart';
 import '../../../core/widgets/custom_button_widget.dart';
 import '../../../core/widgets/custom_textfield_widget.dart';
 import '../../../routes/app_routes.dart';
-import '../controller/login_controller.dart';
+import '../controller/2_login_controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});

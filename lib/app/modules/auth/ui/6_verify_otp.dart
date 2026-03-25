@@ -7,7 +7,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/style/global_text_style.dart';
 import '../../../core/widgets/custom_button_widget.dart';
-import '../controller/verify_otp_controller.dart';
+import '../controller/6_verify_otp_controller.dart';
 
 class VerifyOtpScreen extends GetView<VerifyOtpController> {
   const VerifyOtpScreen({super.key});
