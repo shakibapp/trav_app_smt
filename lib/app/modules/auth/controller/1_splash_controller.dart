@@ -1,5 +1,6 @@
-import 'package:get/get.dart';
+import 'dart:developer';
 
+import 'package:get/get.dart';
 import '../../../core/services/local_data.dart';
 import '../../../routes/app_routes.dart';
 
