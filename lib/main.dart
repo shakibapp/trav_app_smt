@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'app/core/services/local_data.dart';
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalService.init();
   runApp(const MainApp());
 }
 

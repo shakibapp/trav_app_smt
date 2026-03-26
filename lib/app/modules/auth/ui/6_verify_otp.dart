@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_colors.dart';
+import 'package:hamishphipps/app/core/constants/app_images.dart';
+import 'package:hamishphipps/app/core/style/global_text_style.dart';
+import 'package:hamishphipps/app/core/widgets/custom_button_widget.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_images.dart';
-import '../../../core/style/global_text_style.dart';
-import '../../../core/widgets/custom_button_widget.dart';
 import '../controller/6_verify_otp_controller.dart';
 
 class VerifyOtpScreen extends GetView<VerifyOtpController> {
@@ -52,6 +52,8 @@ class VerifyOtpScreen extends GetView<VerifyOtpController> {
   }
 
   Widget _header() {
+    final args = (Get.arguments as Map?) ?? const {};
+    final email = (args['email'] as String?)?.trim();
     return Column(
       children: [
         SizedBox(height: 20.h),
@@ -89,7 +91,9 @@ class VerifyOtpScreen extends GetView<VerifyOtpController> {
                   ),
                 ),
                 TextSpan(
-                  text: 'hello@traveller.com',
+                  text: (email != null && email.isNotEmpty)
+                      ? email
+                      : 'hello@traveller.com',
                   style: globaltextInterTight(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w600,

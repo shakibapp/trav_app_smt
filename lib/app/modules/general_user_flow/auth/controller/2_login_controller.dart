@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/services/local_data.dart';
+import '../../../../core/widgets/app_snackbar.dart';
+import '../../../../routes/app_routes.dart';
+
 class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -36,7 +40,20 @@ class LoginController extends GetxController {
   }
 
   void onLoginPressed() {
-    if (formKey.currentState!.validate()) {}
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    final isValid = formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+
+    // Temporary local login (no API yet): persist a token so splash routes to NAVBAR.
+    final email = emailController.text.trim();
+    LocalService.localService.setEmail(email);
+    LocalService.localService.setToken('logged_in');
+
+    AppSnackBar.success('Login successful', title: 'Success');
+    Future.delayed(const Duration(milliseconds: 500), () {
+      Get.offAllNamed(AppRoutes.NAVBAR);
+    });
   }
 
   @override

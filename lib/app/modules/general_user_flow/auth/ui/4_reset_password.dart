@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_images.dart';
-import '../../../core/style/global_text_style.dart';
-import '../../../core/widgets/custom_button_widget.dart';
-import '../../../core/widgets/custom_textfield_widget.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_images.dart';
+import '../../../../core/style/global_text_style.dart';
+import '../../../../core/widgets/custom_button_widget.dart';
+import '../../../../core/widgets/custom_textfield_widget.dart';
 import '../controller/4_reset_password_controller.dart';
 
-class ResetPasswordScreen extends GetView<ResetPasswordController> {
+class ResetPasswordScreen extends GetWidget<ResetPasswordController> {
   const ResetPasswordScreen({super.key});
 
   @override

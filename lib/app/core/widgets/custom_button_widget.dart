@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -35,16 +34,15 @@ class CustomButtonWidget extends StatelessWidget {
     required VoidCallback? onPressed,
     bool loading = false,
     bool fullWidth = true,
-  }) =>
-      CustomButtonWidget(
-        key: key,
-        label: label,
-        onPressed: onPressed,
-        loading: loading,
-        fullWidth: fullWidth,
-        bgColor: AppColors.lightGrayishGreen,
-        fgColor: AppColors.whiteColor,
-      );
+  }) => CustomButtonWidget(
+    key: key,
+    label: label,
+    onPressed: onPressed,
+    loading: loading,
+    fullWidth: fullWidth,
+    bgColor: AppColors.authOrange,
+    fgColor: AppColors.whiteColor,
+  );
 
   factory CustomButtonWidget.outline({
     Key? key,
@@ -54,18 +52,17 @@ class CustomButtonWidget extends StatelessWidget {
     bool loading = false,
     bool fullWidth = true,
     double? height,
-  }) =>
-      CustomButtonWidget(
-        key: key,
-        label: label,
-        onPressed: onPressed,
-        loading: loading,
-        fullWidth: fullWidth,
-        outlined: true,
-        borderColor: color ?? AppColors.lightGrayishGreen,
-        fgColor: color ?? AppColors.lightGrayishGreen,
-        height: height,
-      );
+  }) => CustomButtonWidget(
+    key: key,
+    label: label,
+    onPressed: onPressed,
+    loading: loading,
+    fullWidth: fullWidth,
+    outlined: true,
+    borderColor: color ?? AppColors.lightGrayishGreen,
+    fgColor: color ?? AppColors.lightGrayishGreen,
+    height: height,
+  );
 
   /// Core props
   final String label;
@@ -133,7 +130,8 @@ class CustomButtonWidget extends StatelessWidget {
     Widget button = ElevatedButton(
       onPressed: loading ? null : onPressed,
       style: baseStyle,
-      child: Ink( // allows ripple over gradient/decoration
+      child: Ink(
+        // allows ripple over gradient/decoration
         decoration: BoxDecoration(
           color: (useGradient || outlined) ? Colors.transparent : resolvedBg,
           gradient: useGradient ? gradient : null,
@@ -141,10 +139,7 @@ class CustomButtonWidget extends StatelessWidget {
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: resolvedHeight),
-          child: Align(
-            alignment: Alignment.center,
-            child: childContent,
-          ),
+          child: Align(alignment: Alignment.center, child: childContent),
         ),
       ),
     );
@@ -158,18 +153,15 @@ class CustomButtonWidget extends StatelessWidget {
       );
     }
 
-    return SizedBox(
-      width: fullWidth ? double.infinity : width,
-      child: button,
-    );
+    return SizedBox(width: fullWidth ? double.infinity : width, child: button);
   }
 
   Widget _buildContent(
-      BuildContext context, {
-        required Color fg,
-        required double gap,
-        required EdgeInsetsGeometry resolvedPadding,
-      }) {
+    BuildContext context, {
+    required Color fg,
+    required double gap,
+    required EdgeInsetsGeometry resolvedPadding,
+  }) {
     final TextStyle defaultStyle = TextStyle(
       fontSize: 15.sp,
       fontWeight: FontWeight.w600,
@@ -186,22 +178,22 @@ class CustomButtonWidget extends StatelessWidget {
 
     final Widget inner = loading
         ? SizedBox(
-      width: 20.w,
-      height: 20.w,
-      child: CircularProgressIndicator(
-        strokeWidth: 2,
-        valueColor: AlwaysStoppedAnimation<Color>(fg),
-      ),
-    )
+            width: 20.w,
+            height: 20.w,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation<Color>(fg),
+            ),
+          )
         : Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (leading != null) ...[leading!, SizedBox(width: gap)],
-        Flexible(child: labelText),
-        if (trailing != null) ...[SizedBox(width: gap), trailing!],
-      ],
-    );
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (leading != null) ...[leading!, SizedBox(width: gap)],
+              Flexible(child: labelText),
+              if (trailing != null) ...[SizedBox(width: gap), trailing!],
+            ],
+          );
 
     return Padding(padding: resolvedPadding, child: inner);
   }

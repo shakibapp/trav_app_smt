@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/widgets/app_snackbar.dart';
-import '../../../routes/app_routes.dart';
+import '../../../../routes/app_routes.dart';
 
 class ResetPasswordController extends GetxController {
   final newPasswordController = TextEditingController();

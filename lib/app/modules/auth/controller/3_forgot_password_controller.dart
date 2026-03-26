@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../core/widgets/app_snackbar.dart';
-import '../../../routes/app_routes.dart';
+import 'package:hamishphipps/app/core/widgets/app_snackbar.dart';
+import 'package:hamishphipps/app/routes/app_routes.dart';
 
 class ForgotPasswordController extends GetxController {
   final emailController = TextEditingController();
@@ -25,7 +24,10 @@ class ForgotPasswordController extends GetxController {
     if (formKey.currentState!.validate()) {
       AppSnackBar.success('OTP sent to your email', title: 'Success');
       Future.delayed(const Duration(seconds: 1), () {
-        Get.offNamed(AppRoutes.VERIFICATION);
+        Get.offNamed(
+          AppRoutes.VERIFICATION,
+          arguments: {'flow': 'forgot', 'email': emailController.text.trim()},
+        );
       });
     }
   }

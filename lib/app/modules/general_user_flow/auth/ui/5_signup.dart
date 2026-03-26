@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_images.dart';
-import '../../../core/style/global_text_style.dart';
-import '../../../core/widgets/custom_button_widget.dart';
-import '../../../core/widgets/custom_textfield_widget.dart';
-import '../../../routes/app_routes.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_images.dart';
+import '../../../../core/style/global_text_style.dart';
+import '../../../../core/widgets/custom_button_widget.dart';
+import '../../../../core/widgets/custom_textfield_widget.dart';
+import '../../../../routes/app_routes.dart';
 import '../controller/5_signup_controller.dart';
 
-class SignupScreen extends GetView<SignupController> {
+class SignupScreen extends GetWidget<SignupController> {
   const SignupScreen({super.key});
 
   @override

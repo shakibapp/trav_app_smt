@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_images.dart';
-import '../../../core/style/global_text_style.dart';
+import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_images.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/auth/controller/1_splash_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -45,45 +44,53 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AppImages.splash),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: ScaleTransition(
-                scale: _scaleAnimation,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Logo
-                    Image.asset(AppImages.applogo, width: 150.w, height: 150.h),
-                    SizedBox(height: 60.h),
-                    // App Title
-                    // Text(
-                    //   'Trav',
-                    //   style: globalTextStyle(
-                    //     fontSize: 32.sp,
-                    //     fontWeight: FontWeight.w800,
-                    //     color: AppColors.whiteColor,
-                    //   ),
-                    // ),
-                  ],
+    return GetBuilder<SplashController>(
+      builder: (controller) {
+        return Scaffold(
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.splash),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(
+              child: Center(
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: ScaleTransition(
+                    scale: _scaleAnimation,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Logo
+                        Image.asset(
+                          AppImages.applogo,
+                          width: 150.w,
+                          height: 150.h,
+                        ),
+                        SizedBox(height: 60.h),
+                        // App Title
+                        // Text(
+                        //   'Trav',
+                        //   style: globalTextStyle(
+                        //     fontSize: 32.sp,
+                        //     fontWeight: FontWeight.w800,
+                        //     color: AppColors.whiteColor,
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

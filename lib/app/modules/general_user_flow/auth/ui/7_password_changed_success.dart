@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hamishphipps/app/modules/auth/controller/7_password_changed_success_controller.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/auth/controller/7_password_changed_success_controller.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../core/style/global_text_style.dart';
-import '../../../core/widgets/custom_button_widget.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/style/global_text_style.dart';
+import '../../../../core/widgets/custom_button_widget.dart';
 
 class PasswordChangedSuccessScreen
     extends GetView<PasswordChangedSuccessController> {
