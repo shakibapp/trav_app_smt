@@ -23,6 +23,8 @@ import '../modules/general_user_flow/nav_bar/ui/nav_bar_screen.dart';
 
 import '../modules/general_user_flow/profile/subitems/account/bindings/account_binding.dart';
 import '../modules/general_user_flow/profile/subitems/account/ui/account_screen.dart';
+import '../modules/general_user_flow/profile/subitems/notification/bindings/notification_binding.dart';
+import '../modules/general_user_flow/profile/subitems/notification/ui/notification_screen.dart';
 
 import 'app_routes.dart';
 
@@ -77,6 +79,11 @@ class AppPages {
       name: AppRoutes.PROFILE_ACCOUNT,
       page: () => AccountScreen(),
       binding: AccountBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.PROFILE_NOTIFICATION,
+      page: () => const NotificationScreen(),
+      binding: NotificationBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.SPLASH,

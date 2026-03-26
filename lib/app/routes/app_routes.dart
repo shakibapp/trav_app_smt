@@ -13,6 +13,7 @@ class AppRoutes {
   static const PREFERENCES = '/preferences';
   static const NAVBAR = '/navbar';
   static const PROFILE_ACCOUNT = '/profile-account';
+  static const PROFILE_NOTIFICATION = '/profile-notification';
   static const HOME = '/home';
   static const CALENDAR = '/calendar';
   static const DAILYEVENTS = '/daily-events';

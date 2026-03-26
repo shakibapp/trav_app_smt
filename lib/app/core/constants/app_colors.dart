@@ -21,7 +21,7 @@ class AppColors {
   static const Color navbarColor = Color(0xFFA26360);
   static const Color splashBgColor = Color(0xFFEDCC8B);
 
-  static const Color authOrange = Color(0xFFE37A3C);
+  static const Color authOrange = Color(0xFFFE751F);
   static const Color authOrangeDark = Color(0xFFD86B2F);
   static const Color authFieldBorder = Color(0xFFD6E0F3);
 }

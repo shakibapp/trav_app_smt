@@ -159,6 +159,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: 'Terms of Use',
           onTap: controller.onTermsOfUseTap,
         ),
+        SizedBox(height: 10.h),
+        ProfileMenuTile(
+          iconPath: AppIcons.deleteAccount,
+          title: 'Delete Account',
+          onTap: controller.onDeleteAccountTap,
+        ),
       ],
     );
   }

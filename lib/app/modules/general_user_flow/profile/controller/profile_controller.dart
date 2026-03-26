@@ -31,13 +31,17 @@ class ProfileController extends GetxController {
     Get.toNamed(AppRoutes.PROFILE_ACCOUNT);
   }
 
-  void onNotificationsTap() {}
+  void onNotificationsTap() {
+    Get.toNamed(AppRoutes.PROFILE_NOTIFICATION);
+  }
 
   void onParentsTap() {}
 
   void onPrivacyTap() {}
 
   void onTermsOfUseTap() {}
+
+  void onDeleteAccountTap() {}
 
   Future<void> onLogoutTap() async {
     _showLogoutDialog();

@@ -25,6 +25,7 @@ class AppIcons {
   static const String profileTerms = 'assets/icons/profile_terms.svg';
   static const String profileEmail = 'assets/icons/profile_email.svg';
   static const String logout = 'assets/icons/logout.svg';
+  static const String deleteAccount = 'assets/icons/profile_delete.svg';
 
   // Backward-compatible aliases
   static const String travHome = travHomeOutline;
