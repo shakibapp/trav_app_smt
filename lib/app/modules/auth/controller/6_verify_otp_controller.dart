@@ -8,13 +8,26 @@ class VerifyOtpController extends GetxController {
   final otpController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  late final String flow;
+
+  @override
+  void onInit() {
+    super.onInit();
+    final args = (Get.arguments as Map?) ?? const {};
+    flow = (args['flow'] as String?) ?? 'forgot';
+  }
+
   String get fullOtp => otpController.text;
 
   void onVerifyPressed() {
     if (fullOtp.length == 4) {
       AppSnackBar.success('OTP verified successfully', title: 'Success');
       Future.delayed(const Duration(seconds: 1), () {
-        Get.offNamed(AppRoutes.RESET_PASSWORD);
+        if (flow == 'signup') {
+          Get.offAllNamed(AppRoutes.PREFERENCES);
+        } else {
+          Get.offNamed(AppRoutes.RESET_PASSWORD);
+        }
       });
     } else {
       AppSnackBar.error('Please enter all 4 digits', title: 'Invalid OTP');

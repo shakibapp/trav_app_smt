@@ -10,6 +10,7 @@ class AppRoutes {
   static const VERIFICATION = '/verification';
   static const RESET_PASSWORD = '/reset-password';
   static const PASSWORD_CHANGED_SUCCESS = '/password-changed-success';
+  static const PREFERENCES = '/preferences';
   static const NAVBAR = '/navbar';
   static const HOME = '/home';
   static const CALENDAR = '/calendar';

@@ -15,6 +15,9 @@ import '../modules/auth/ui/6_verify_otp.dart';
 import '../modules/auth/ui/4_reset_password.dart';
 import '../modules/auth/ui/7_password_changed_success.dart';
 
+import '../modules/preferences/bindings/preferences_binding.dart';
+import '../modules/preferences/ui/1_search_place.dart';
+
 import 'app_routes.dart';
 
 class AppPages {
@@ -53,6 +56,11 @@ class AppPages {
       name: AppRoutes.PASSWORD_CHANGED_SUCCESS,
       page: () => const PasswordChangedSuccessScreen(),
       binding: PasswordChangedSuccessBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.PREFERENCES,
+      page: () => const PreferencesSearchPlaceScreen(),
+      binding: PreferencesBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.SPLASH,

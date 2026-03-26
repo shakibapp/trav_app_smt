@@ -52,6 +52,8 @@ class VerifyOtpScreen extends GetView<VerifyOtpController> {
   }
 
   Widget _header() {
+    final args = (Get.arguments as Map?) ?? const {};
+    final email = (args['email'] as String?)?.trim();
     return Column(
       children: [
         SizedBox(height: 20.h),
@@ -89,7 +91,9 @@ class VerifyOtpScreen extends GetView<VerifyOtpController> {
                   ),
                 ),
                 TextSpan(
-                  text: 'hello@traveller.com',
+                  text: (email != null && email.isNotEmpty)
+                      ? email
+                      : 'hello@traveller.com',
                   style: globaltextInterTight(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w600,
