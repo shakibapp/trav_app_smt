@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_icons.dart';
 import '../ui/widgets/create_action_sheet.dart';
 
 class NavBarItemData {
   const NavBarItemData({
     required this.index,
-    required this.icon,
+    required this.outlineAssetPath,
+    required this.filledAssetPath,
     required this.label,
   });
 
   final int index;
-  final IconData icon;
+  final String outlineAssetPath;
+  final String filledAssetPath;
   final String label;
 }
 
@@ -34,21 +37,34 @@ class NavBarController extends GetxController {
   final selectedIndex = 0.obs;
 
   final navItems = const <NavBarItemData>[
-    NavBarItemData(index: 0, icon: Icons.home_rounded, label: 'Home'),
+    NavBarItemData(
+      index: 0,
+      outlineAssetPath: AppIcons.travHomeOutline,
+      filledAssetPath: AppIcons.travHomeFill,
+      label: 'Home',
+    ),
     NavBarItemData(
       index: 1,
-      icon: Icons.airplanemode_active_rounded,
+      outlineAssetPath: AppIcons.travTripsOutline,
+      filledAssetPath: AppIcons.travTripsFill,
       label: 'Trips',
     ),
-    NavBarItemData(index: 2, icon: Icons.add, label: ''),
+    NavBarItemData(
+      index: 2,
+      outlineAssetPath: '',
+      filledAssetPath: '',
+      label: '',
+    ),
     NavBarItemData(
       index: 3,
-      icon: Icons.notifications_none_rounded,
+      outlineAssetPath: AppIcons.travAlertsOutline,
+      filledAssetPath: AppIcons.travAlertsFill,
       label: 'Alerts',
     ),
     NavBarItemData(
       index: 4,
-      icon: Icons.person_outline_rounded,
+      outlineAssetPath: AppIcons.travProfileOutline,
+      filledAssetPath: AppIcons.travProfileFill,
       label: 'Profile',
     ),
   ];

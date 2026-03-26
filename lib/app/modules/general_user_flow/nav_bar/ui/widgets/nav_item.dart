@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../core/style/global_text_style.dart';
 import '../../controller/nav_bar_controller.dart';
@@ -22,30 +23,34 @@ class NavItem extends StatelessWidget {
         ? Colors.white
         : Colors.white.withValues(alpha: 0.65);
 
-    return InkWell(
+    final assetPath = selected ? data.filledAssetPath : data.outlineAssetPath;
+
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18.r),
-      child: SizedBox(
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(data.icon, color: color, size: 22.sp),
-            SizedBox(height: 3.h),
-            Text(
-              data.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: globaltextInterTight(
-                fontSize: 11.sp,
-                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                color: color,
-                lineHeight: 1.1,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (assetPath.isNotEmpty)
+            SvgPicture.asset(
+              assetPath,
+              width: 22.sp,
+              height: 22.sp,
+              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+            )
+          else
+            SizedBox(height: 22.sp, width: 22.sp),
+          SizedBox(height: 3.h),
+          Text(
+            data.label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: globaltextInterTight(
+              fontSize: 11.sp,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              color: color,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

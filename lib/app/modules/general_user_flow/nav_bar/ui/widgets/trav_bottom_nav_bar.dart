@@ -23,12 +23,10 @@ class TravBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final barHeight = 62.h;
-
-    // Floating center button config
     final fabSize = 58.w;
     final notchSize = 78.w;
     final centerGap = fabSize + 4.w;
-    final floatOffset = 10.h; // how much the fab sits into the pill
+    final floatOffset = 10.h;
 
     return SizedBox(
       height: barHeight,
@@ -80,7 +78,6 @@ class TravBottomNavBar extends StatelessWidget {
               );
             }),
           ),
-          // notch (cuts the pill behind the center button)
           Positioned(
             top: -(notchSize / 2) + floatOffset,
             child: Container(

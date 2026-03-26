@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/style/global_text_style.dart';
+import '../../../profile/ui/profile_screen.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -63,15 +64,6 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Profile',
-        style: globaltextInterTight(
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w800,
-          color: AppColors.blackColor,
-        ),
-      ),
-    );
+    return const ProfileScreen();
   }
 }

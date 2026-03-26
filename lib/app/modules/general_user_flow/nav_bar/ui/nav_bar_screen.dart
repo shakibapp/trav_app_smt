@@ -15,7 +15,7 @@ class NavBarScreen extends GetWidget<NavBarController> {
     final pages = const <Widget>[
       HomeTab(),
       TripsTab(),
-      SizedBox.shrink(), // center action
+      SizedBox.shrink(),
       AlertsTab(),
       ProfileTab(),
     ];
@@ -34,18 +34,10 @@ class NavBarScreen extends GetWidget<NavBarController> {
         right: false,
         child: Padding(
           padding: EdgeInsets.fromLTRB(18.w, 0, 18.w, 8.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 360.w),
-                child: TravBottomNavBar(
-                  selectedIndexRx: controller.selectedIndex,
-                  items: controller.navItems,
-                  onItemTap: controller.onNavTap,
-                ),
-              ),
-            ],
+          child: TravBottomNavBar(
+            selectedIndexRx: controller.selectedIndex,
+            items: controller.navItems,
+            onItemTap: controller.onNavTap,
           ),
         ),
       ),
