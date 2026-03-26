@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_icons.dart';
 import '../../../../core/style/global_text_style.dart';
 import '../controller/profile_controller.dart';
 import 'widgets/profile_menu_tile.dart';
@@ -47,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _header(),
             SizedBox(height: 18.h),
             _menu(),
-            SizedBox(height: 22.h),
+            SizedBox(height: 30.h),
             _logout(),
             SizedBox(height: 18.h),
           ],
@@ -99,10 +101,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.mail_outline_rounded,
-                  size: 14.sp,
-                  color: AppColors.secondaryColor,
+                SvgPicture.asset(
+                  AppIcons.profileEmail,
+                  width: 14.sp,
+                  height: 14.sp,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.secondaryColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 SizedBox(width: 6.w),
                 Text(
@@ -125,31 +131,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       children: [
         ProfileMenuTile(
-          icon: Icons.person_outline_rounded,
+          iconPath: AppIcons.profileUser,
           title: 'Account',
           onTap: controller.onAccountTap,
         ),
         SizedBox(height: 10.h),
         ProfileMenuTile(
-          icon: Icons.notifications_none_rounded,
+          iconPath: AppIcons.profileNotification,
           title: 'Notifications',
           onTap: controller.onNotificationsTap,
         ),
         SizedBox(height: 10.h),
         ProfileMenuTile(
-          icon: Icons.group_outlined,
+          iconPath: AppIcons.profileParent,
           title: 'Parents',
           onTap: controller.onParentsTap,
         ),
         SizedBox(height: 10.h),
         ProfileMenuTile(
-          icon: Icons.shield_outlined,
+          iconPath: AppIcons.profilePrivacy,
           title: 'Privacy',
           onTap: controller.onPrivacyTap,
         ),
         SizedBox(height: 10.h),
         ProfileMenuTile(
-          icon: Icons.description_outlined,
+          iconPath: AppIcons.profileTerms,
           title: 'Terms of Use',
           onTap: controller.onTermsOfUseTap,
         ),
@@ -163,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       borderRadius: BorderRadius.circular(12.r),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 18.h),
         decoration: BoxDecoration(
           color: const Color(0xFFFFF1F1),
           borderRadius: BorderRadius.circular(12.r),
@@ -171,10 +177,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Row(
           children: [
-            Icon(
-              Icons.logout_rounded,
-              size: 20.sp,
-              color: const Color(0xFFEF4444),
+            SvgPicture.asset(
+              AppIcons.logout,
+              width: 20.sp,
+              height: 20.sp,
+              colorFilter: const ColorFilter.mode(
+                Color(0xFFEF4444),
+                BlendMode.srcIn,
+              ),
             ),
             SizedBox(width: 12.w),
             Expanded(

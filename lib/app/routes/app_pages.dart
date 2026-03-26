@@ -21,6 +21,9 @@ import '../modules/general_user_flow/preferences/ui/1_search_place.dart';
 import '../modules/general_user_flow/nav_bar/bindings/nav_bar_binding.dart';
 import '../modules/general_user_flow/nav_bar/ui/nav_bar_screen.dart';
 
+import '../modules/general_user_flow/profile/subitems/account/bindings/account_binding.dart';
+import '../modules/general_user_flow/profile/subitems/account/ui/account_screen.dart';
+
 import 'app_routes.dart';
 
 class AppPages {
@@ -69,6 +72,11 @@ class AppPages {
       name: AppRoutes.NAVBAR,
       page: () => const NavBarScreen(),
       binding: NavBarBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.PROFILE_ACCOUNT,
+      page: () => AccountScreen(),
+      binding: AccountBinding(),
     ),
     // GetPage(
     //   name: AppRoutes.SPLASH,

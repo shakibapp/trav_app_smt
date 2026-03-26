@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../../core/constants/country_list.dart';
 import '../../../../routes/app_routes.dart';
-import '../data/countries.dart';
 
 class PreferencesController extends GetxController {
   // Step 1
@@ -20,7 +20,9 @@ class PreferencesController extends GetxController {
   // Options
   final ageRanges = const ['Under 18', '18-24', '25-34', '35-44', 'Over 45'];
 
-  final List<String> countries = kCountries;
+  late final List<String> countries = countryList
+      .map((c) => c['name']!)
+      .toList();
 
   final interests = const [
     'Food & Drink',

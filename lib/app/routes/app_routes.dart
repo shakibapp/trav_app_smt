@@ -12,6 +12,7 @@ class AppRoutes {
   static const PASSWORD_CHANGED_SUCCESS = '/password-changed-success';
   static const PREFERENCES = '/preferences';
   static const NAVBAR = '/navbar';
+  static const PROFILE_ACCOUNT = '/profile-account';
   static const HOME = '/home';
   static const CALENDAR = '/calendar';
   static const DAILYEVENTS = '/daily-events';
