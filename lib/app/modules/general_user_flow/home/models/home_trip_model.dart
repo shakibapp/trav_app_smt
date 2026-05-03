@@ -1,4 +1,5 @@
 class HomeTripData {
+  final String id;
   final String location;
   final String imageUrl;
   final String startDate;
@@ -10,6 +11,7 @@ class HomeTripData {
   final String status;
 
   HomeTripData({
+    required this.id,
     required this.location,
     required this.imageUrl,
     required this.startDate,
@@ -22,6 +24,7 @@ class HomeTripData {
   /// Convert to JSON
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'location': location,
       'imageUrl': imageUrl,
       'startDate': startDate,
@@ -38,6 +41,7 @@ class HomeTripData {
     final isOngoing = json['isOngoing'] as bool?;
 
     return HomeTripData(
+      id: json['id'] as String? ?? '',
       location: json['location'] as String,
       imageUrl: json['imageUrl'] as String,
       startDate: json['startDate'] as String,

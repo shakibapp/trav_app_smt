@@ -16,7 +16,7 @@ class NavBarScreen extends GetWidget<NavBarController> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = const <Widget>[
+    final pages =  <Widget>[
       HomeScreen(),
       TripsScreen(),
       SizedBox.shrink(),

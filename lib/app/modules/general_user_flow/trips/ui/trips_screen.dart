@@ -18,12 +18,12 @@ class TripsScreen extends GetView<TripsController> {
       bottom: false,
       child: Scaffold(
         backgroundColor: AppColors.whiteColor,
-        body: SingleChildScrollView(
+        body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 18.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 16.h),
+              SizedBox(height: 10.h),
               // Header
               Text(
                 'Trips',
@@ -34,12 +34,15 @@ class TripsScreen extends GetView<TripsController> {
                   lineHeight: 1.05,
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               // Tab Bar
               _buildTabBar(),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               // Trips List
               Obx(() {
+                if (controller.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
                 final trips = controller.currentTrips;
                 if (trips.isEmpty) {
                   return Center(
@@ -51,16 +54,18 @@ class TripsScreen extends GetView<TripsController> {
                     ),
                   );
                 }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: trips.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
-                      child: TripCard(trip: trips[index]),
-                    );
-                  },
+                return Expanded(
+                  child: ListView.builder(
+                    // shrinkWrap: true,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    itemCount: trips.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: TripCard(trip: trips[index]),
+                      );
+                    },
+                  ),
                 );
               }),
               SizedBox(height: 24.h),

@@ -5,18 +5,27 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/view/trip_details_screen.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/trip_model.dart';
 
 class TripCard extends StatelessWidget {
-  final TripData trip;
+  final AllTripDataModel trip;
 
   const TripCard({super.key, required this.trip});
 
   @override
   Widget build(BuildContext context) {
+    // Format dates
+    final startDate = DateFormat(
+      'MMM dd',
+    ).format(DateTime.parse(trip.startDate));
+    final endDate = DateFormat(
+      'MMM dd yyyy',
+    ).format(DateTime.parse(trip.endDate));
+
     return GestureDetector(
-      onTap: ()=>Get.to(TripDetailsScreen()),
+      onTap: () => Get.to(TripDetailsScreen()),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
@@ -33,7 +42,7 @@ class TripCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.r),
               child: Image.asset(
-                trip.imageUrl,
+                'assets/images/rome.png', // Default image since API doesn't provide
                 width: double.infinity,
                 height: 220.h,
                 fit: BoxFit.cover,
@@ -65,7 +74,7 @@ class TripCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      trip.location,
+                      trip.city.join(', '),
                       style: globaltextInterTight(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w800,
@@ -79,12 +88,12 @@ class TripCard extends StatelessWidget {
                       children: [
                         _buildInfoChip(
                           icon: 'assets/icons/trip_calendar.svg',
-                          label: '${trip.startDate} - ${trip.endDate}',
+                          label: '$startDate - $endDate',
                         ),
                         SizedBox(width: 8.w),
                         _buildInfoChip(
                           icon: 'assets/icons/trip_calendar.svg',
-                          label: '${trip.days} Days',
+                          label: '${trip.totalDays} Days',
                         ),
                       ],
                     ),
@@ -94,17 +103,12 @@ class TripCard extends StatelessWidget {
                       children: [
                         _buildInfoChip(
                           icon: 'assets/icons/trip_dollar.svg',
-                          label: trip.priceRange,
+                          label: '\$${trip.budget}',
                         ),
                         SizedBox(width: 8.w),
                         _buildInfoChip(
                           icon: 'assets/icons/home_outline.svg',
-                          label: trip.vibe,
-                        ),
-                        SizedBox(width: 8.w),
-                        _buildInfoChip(
-                          icon: 'assets/icons/trip_apartment.svg',
-                          label: trip.accommodation,
+                          label: trip.interests.join(', '),
                         ),
                       ],
                     ),

@@ -29,41 +29,90 @@ class AlertsView extends StatelessWidget {
           ),
         ),
         centerTitle: false,
-      ),
-      body: Obx(
-        () => ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: controller.alerts.length,
-          itemBuilder: (context, index) {
-            return AlertCardWidget(
-              alert: controller.alerts[index],
-              onPrimaryPressed: () => controller.onPrimaryButtonPressed(index),
-              onSecondaryPressed:
-                  controller.alerts[index].secondaryButtonText != null
-                  ? () => controller.onSecondaryButtonPressed(index)
+        actions: [
+          Obx(() {
+            final unreadCount = controller.alerts
+                .where((alert) => alert.read == false)
+                .length;
+            return IconButton(
+              icon: controller.isNotificationReadLoading.value
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.mark_email_read_outlined),
+              onPressed:
+                  unreadCount > 0 && !controller.isNotificationReadLoading.value
+                  ? controller.readNotification
                   : null,
+              tooltip: 'Mark all as read',
             );
-          },
-        ),
+          }),
+        ],
       ),
+      body: Obx(() {
+        if (controller.isNotificationLoading.value &&
+            controller.alerts.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.alerts.isEmpty) {
+          return Center(
+            child: Text(
+              'No alerts available',
+              style: globalTextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF666666),
+              ),
+            ),
+          );
+        }
+
+        return RefreshIndicator(
+          onRefresh: () => controller.getNotification(reset: true),
+          child: ListView.builder(
+            controller: controller.scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(16),
+            itemCount:
+                controller.alerts.length + (controller.hasMore.value ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index >= controller.alerts.length) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              final alert = controller.alerts[index];
+              return AlertCardWidget(
+                alert: alert,
+                onPrimaryPressed: () =>
+                    controller.markNotificationAsRead(index),
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
 class AlertCardWidget extends StatelessWidget {
-  final AlertModel alert;
+  final NotificationModel alert;
   final VoidCallback onPrimaryPressed;
-  final VoidCallback? onSecondaryPressed;
 
   const AlertCardWidget({
     Key? key,
     required this.alert,
     required this.onPrimaryPressed,
-    this.onSecondaryPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final hasRead = alert.read == true;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -99,18 +148,47 @@ class AlertCardWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  alert.title,
-                  style: globalTextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF1A1A1A),
-                    lineHeight: 1.4,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        alert.title ?? 'Untitled Alert',
+                        style: globalTextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF1A1A1A),
+                          lineHeight: 1.4,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: hasRead
+                            ? const Color(0xFFD9F1E9)
+                            : const Color(0xFFFFF0E5),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        hasRead ? 'Read' : 'Unread',
+                        style: globalTextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: hasRead
+                              ? const Color(0xFF1F8A59)
+                              : const Color(0xFFB85A0C),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 8),
                 Text(
-                  alert.description,
+                  alert.body ?? 'No details available',
                   style: globalTextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
@@ -118,88 +196,40 @@ class AlertCardWidget extends StatelessWidget {
                     lineHeight: 1.5,
                   ),
                 ),
-                if (alert.showBulletPoints && alert.bulletPoints != null) ...[
-                  const SizedBox(height: 8),
-                  ...alert.bulletPoints!.map(
-                    (point) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Row(
-                        children: [
-                          const Text(
-                            '• ',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Color(0xFF666666),
-                            ),
-                          ),
-                          Text(
-                            point,
-                            style: globalTextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xFF666666),
-                            ),
-                          ),
-                        ],
-                      ),
+                if (alert.createdAt != null) ...[
+                  const SizedBox(height: 10),
+                  Text(
+                    alert.createdAt!.toLocal().toString().split('.').first,
+                    style: globalTextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF999999),
                     ),
                   ),
                 ],
                 const SizedBox(height: 12),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: onPrimaryPressed,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFF6B35),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Text(
-                        alert.primaryButtonText,
-                        style: globalTextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
+                ElevatedButton(
+                  onPressed: hasRead ? null : onPrimaryPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF6B35),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
                     ),
-                    if (alert.secondaryButtonText != null) ...[
-                      const SizedBox(width: 8),
-                      OutlinedButton(
-                        onPressed: onSecondaryPressed,
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFFFF6B35),
-                          side: const BorderSide(
-                            color: Color(0xFFFF6B35),
-                            width: 1.5,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Text(
-                          alert.secondaryButtonText!,
-                          style: globalTextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFFFF6B35),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text(
+                    hasRead ? 'Already read' : 'Mark as read',
+                    style: globalTextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),

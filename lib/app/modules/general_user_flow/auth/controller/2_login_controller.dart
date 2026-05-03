@@ -91,6 +91,10 @@ class LoginController extends GetxController {
             AppToast.showError('Please verify your email before logging in.');
             return;
           }else if(isProfileComplete == false){
+            AppToast.showSuccess('Login successful');
+            await localService.setToken(token);
+            await localService.setRole(role);
+            log("Login successful profile incomplete. Token: $token, Role: $role");
             Get.offAllNamed(AppRoutes.PREFERENCES);
           } else {
             AppToast.showSuccess('Login successful');

@@ -63,6 +63,7 @@ class PreferencesController extends GetxController {
         Uri.parse("${Urls.baseUrl}/users/profile"),
       );
       String? token = localService.getToken();
+      log(" Updating profile with token: $token");
       if (token != null) {
         request.headers.addAll({
           'Content-Type': 'multipart/form-data',
