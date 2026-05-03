@@ -11,6 +11,7 @@ import 'package:hamishphipps/app/modules/general_user_flow/home/ui/widgets/trip_
 import 'package:intl/intl.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/style/global_text_style.dart';
+import '../../create_plan/city/view/city_view.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends GetWidget<HomeController> {
@@ -472,20 +473,23 @@ class HomeScreen extends GetWidget<HomeController> {
         children: [
           Row(
             children: [
-              Container(
-                width: 44.w,
-                height: 44.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFFE9E9EF),
-                ),
-                child: Center(
-                  child: Text(
-                    'H',
-                    style: globaltextInterTight(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.blackColor,
+              GestureDetector(
+                onTap: ()=>Get.to(RegionSelectionView()),
+                child: Container(
+                  width: 44.w,
+                  height: 44.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFFE9E9EF),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'H',
+                      style: globaltextInterTight(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.blackColor,
+                      ),
                     ),
                   ),
                 ),

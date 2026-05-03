@@ -1,0 +1,38 @@
+[
+  { "id": "region_europe", "name": "Europe", "type": "region" },
+  { "id": "region_asia", "name": "Asia", "type": "region" },
+  { "id": "region_north_america", "name": "North America", "type": "region" },
+  { "id": "region_south_america", "name": "South America", "type": "region" },
+  { "id": "region_africa", "name": "Africa", "type": "region" },
+  { "id": "region_oceania", "name": "Oceania", "type": "region" },
+  { "id": "region_middle_east", "name": "Middle East", "type": "region" },
+
+  { "id": "country_france", "name": "France", "type": "country", "regionId": "region_europe" },
+  { "id": "country_italy", "name": "Italy", "type": "country", "regionId": "region_europe" },
+  { "id": "country_spain", "name": "Spain", "type": "country", "regionId": "region_europe" },
+
+  { "id": "city_paris", "name": "Paris", "type": "city", "regionId": "region_europe", "countryId": "country_france", "isPopular": true },
+  { "id": "city_amsterdam", "name": "Amsterdam", "type": "city", "regionId": "region_europe", "countryId": "country_france", "isPopular": true },
+  { "id": "city_berlin", "name": "Berlin", "type": "city", "regionId": "region_europe", "countryId": "country_italy", "isPopular": true },
+
+  { "id": "country_japan", "name": "Japan", "type": "country", "regionId": "region_asia" },
+  { "id": "country_thailand", "name": "Thailand", "type": "country", "regionId": "region_asia" },
+
+  { "id": "city_tokyo", "name": "Tokyo", "type": "city", "regionId": "region_asia", "countryId": "country_japan", "isPopular": true },
+  { "id": "city_osaka", "name": "Osaka", "type": "city", "regionId": "region_asia", "countryId": "country_japan", "isPopular": true },
+
+  { "id": "country_usa", "name": "USA", "type": "country", "regionId": "region_north_america" },
+  { "id": "city_newyork", "name": "New York", "type": "city", "regionId": "region_north_america", "countryId": "country_usa", "isPopular": true },
+
+  { "id": "country_brazil", "name": "Brazil", "type": "country", "regionId": "region_south_america" },
+  { "id": "city_rio", "name": "Rio de Janeiro", "type": "city", "regionId": "region_south_america", "countryId": "country_brazil", "isPopular": true },
+
+  { "id": "country_egypt", "name": "Egypt", "type": "country", "regionId": "region_africa" },
+  { "id": "city_cairo", "name": "Cairo", "type": "city", "regionId": "region_africa", "countryId": "country_egypt", "isPopular": true },
+
+  { "id": "country_australia", "name": "Australia", "type": "country", "regionId": "region_oceania" },
+  { "id": "city_sydney", "name": "Sydney", "type": "city", "regionId": "region_oceania", "countryId": "country_australia", "isPopular": true },
+
+  { "id": "country_uae", "name": "UAE", "type": "country", "regionId": "region_middle_east" },
+  { "id": "city_dubai", "name": "Dubai", "type": "city", "regionId": "region_middle_east", "countryId": "country_uae", "isPopular": true }
+]
