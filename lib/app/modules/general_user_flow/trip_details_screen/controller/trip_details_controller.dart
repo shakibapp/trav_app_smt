@@ -70,20 +70,20 @@ class TripDetailsController extends GetxController {
       ),
     ].obs;
 
-    var itineraryList = <ItineraryItem>[
-      ItineraryItem(
-        cityName: "Rome, Italy",
-        duration: "3 Nights",
-        imageUrl: "assets/images/rome.png",
-        statusIcons: ["flight", "hotel", "activity"],
-      ),
-      ItineraryItem(
-        cityName: "Venice, Italy",
-        duration: "3 Nights",
-        imageUrl: "assets/images/rome.png",
-        statusIcons: ["train", "hotel", "activity"],
-      ),
-    ].obs;
+    // var itineraryList = <ItineraryItem>[
+    //   ItineraryItem(
+    //     cityName: "Rome, Italy",
+    //     duration: "3 Nights",
+    //     imageUrl: "assets/images/rome.png",
+    //     statusIcons: ["flight", "hotel", "activity"],
+    //   ),
+    //   ItineraryItem(
+    //     cityName: "Venice, Italy",
+    //     duration: "3 Nights",
+    //     imageUrl: "assets/images/rome.png",
+    //     statusIcons: ["train", "hotel", "activity"],
+    //   ),
+    // ].obs;
   }
 
   void toggleStop(int index) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/create_plan/view/create_plan_country_screen.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/city/view/city_view.dart';
+
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_icons.dart';
@@ -69,12 +70,12 @@ class ParentNavBarController extends GetxController {
     ParentNavBarCreateAction(
       icon: Icons.add_road_rounded,
       title: 'New Trip',
-      onTap: () => Get.to(() => RegionSelectionView()),
+      onTap: () => Get.to(() => CityViewScreen()),
     ),
     ParentNavBarCreateAction(
       icon: Icons.event_available_rounded,
       title: 'New Booking',
-      onTap: () => Get.to(() => RegionSelectionView()),
+      onTap: () => Get.to(() => CityViewScreen()),
     ),
   ];
 

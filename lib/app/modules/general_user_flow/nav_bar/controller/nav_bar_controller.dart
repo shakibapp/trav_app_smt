@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/city/view/city_view.dart';
 import '../../../../core/constants/app_icons.dart';
-import '../../create_plan/view/create_plan_country_screen.dart';
+
 
 
 class NavBarItemData {
@@ -72,12 +73,12 @@ class NavBarController extends GetxController {
     NavBarCreateAction(
       icon: Icons.add_road_rounded,
       title: 'New Trip',
-      onTap: () => Get.to(() => RegionSelectionView()),
+      onTap: () => Get.to(() => CityViewScreen()),
     ),
     NavBarCreateAction(
       icon: Icons.event_available_rounded,
       title: 'New Booking',
-      onTap: () => Get.to(() => RegionSelectionView()),
+      onTap: () => Get.to(() => CityViewScreen()),
     ),
   ];
 
@@ -87,7 +88,7 @@ class NavBarController extends GetxController {
 
   void onNavTap(int index) {
     if (index == centerIndex) {
-      Get.to(() => RegionSelectionView());
+      Get.to(() => CityViewScreen());
       return;
     }
     setIndex(index);

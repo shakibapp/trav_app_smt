@@ -272,9 +272,8 @@ class DatePickerView extends StatelessWidget {
             '$day',
             style: TextStyle(
               color: isSelectable ? textColor : Colors.grey.shade400,
-              fontWeight: isStart || isEnd
-                  ? FontWeight.bold
-                  : FontWeight.normal,
+              fontWeight:
+                  isStart || isEnd ? FontWeight.bold : FontWeight.normal,
               fontSize: 12,
             ),
           ),
@@ -298,7 +297,6 @@ class DatePickerView extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
-
             color: Colors.yellow.shade50,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.yellow.shade200),
@@ -380,13 +378,12 @@ class DatePickerView extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-
             child: Center(
               child: Text(
                 date,
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),

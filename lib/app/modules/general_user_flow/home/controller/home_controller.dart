@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -236,5 +237,49 @@ class HomeController extends GetxController {
     );
 
     showVisaReminderPrompt.value = false;
+  }
+
+  //invite parent by email to view trip details
+  final RxBool isInvitingParent = false.obs;
+  Future<void> inviteParentByEmail() async {
+    if (parentEmailController.text.isEmpty) {
+      return;
+    }
+
+    try {
+      isInvitingParent.value = true;
+      final payload = {
+        "email": parentEmailController.text.trim(),
+      };
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.POST,
+        "${Urls.baseUrl}/users/invite-parent",
+        jsonEncode(payload),
+        is_auth: true,
+      );
+      if (response != null && response['success'] == true) {
+        Get.back();
+        Get.snackbar(
+          'Invitation Sent',
+          'Parent has been invited successfully',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+        parentEmailController.clear();
+      } else {
+        Get.snackbar(
+          'Invitation Failed',
+          response?['message'] ?? 'Unknown error occurred',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      log("Error inviting parent: $e");
+    } finally {
+      parentEmailController.clear();
+      isInvitingParent.value = false;
+    }
   }
 }

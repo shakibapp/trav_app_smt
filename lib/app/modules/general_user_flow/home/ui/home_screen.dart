@@ -70,7 +70,6 @@ class HomeScreen extends GetWidget<HomeController> {
                         ? _buildTripsLoadingShimmer()
                         : ListView.builder(
                             scrollDirection: Axis.horizontal,
-
                             itemCount: controller.upcomingTripsFromApi.length,
                             padding: EdgeInsets.zero,
                             itemBuilder: (_, index) {
@@ -89,9 +88,9 @@ class HomeScreen extends GetWidget<HomeController> {
                                       border: Border.all(
                                         color:
                                             controller.selectedTripId.value ==
-                                                trip.id
-                                            ? AppColors.authOrange
-                                            : Colors.transparent,
+                                                    trip.id
+                                                ? AppColors.authOrange
+                                                : Colors.transparent,
                                         width: 2,
                                       ),
                                       boxShadow: [
@@ -195,14 +194,13 @@ class HomeScreen extends GetWidget<HomeController> {
                                                               .ellipsis,
                                                           style:
                                                               globaltextInterTight(
-                                                                fontSize: 15.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: AppColors
-                                                                    .whiteColor,
-                                                                lineHeight: 1.1,
-                                                              ),
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight.w800,
+                                                            color: AppColors
+                                                                .whiteColor,
+                                                            lineHeight: 1.1,
+                                                          ),
                                                         ),
                                                         SizedBox(height: 4.h),
                                                         Text(
@@ -215,14 +213,13 @@ class HomeScreen extends GetWidget<HomeController> {
                                                               .ellipsis,
                                                           style:
                                                               globaltextInterTight(
-                                                                fontSize: 11.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: AppColors
-                                                                    .whiteColor,
-                                                                lineHeight: 1.2,
-                                                              ),
+                                                            fontSize: 11.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: AppColors
+                                                                .whiteColor,
+                                                            lineHeight: 1.2,
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -260,20 +257,13 @@ class HomeScreen extends GetWidget<HomeController> {
                         ? _buildDestinationsLoadingShimmer()
                         : ListView.builder(
                             scrollDirection: Axis.horizontal,
-
-                            itemCount:
-                                controller
-                                    .tripDetail
-                                    .value
-                                    .itineraries
-                                    ?.length ??
+                            itemCount: controller
+                                    .tripDetail.value.itineraries?.length ??
                                 0,
                             padding: EdgeInsets.zero,
                             itemBuilder: (_, index) {
                               final itinerary = controller
-                                  .tripDetail
-                                  .value
-                                  .itineraries?[index];
+                                  .tripDetail.value.itineraries?[index];
                               if (itinerary == null) {
                                 return const SizedBox.shrink();
                               }
@@ -282,19 +272,16 @@ class HomeScreen extends GetWidget<HomeController> {
                                   onTap: itinerary.id == null
                                       ? null
                                       : () => controller.getItineraryDetailById(
-                                          itinerary.id!,
-                                        ),
+                                            itinerary.id!,
+                                          ),
                                   borderRadius: BorderRadius.circular(20.r),
                                   child: Container(
                                     height: 120.h,
                                     margin: EdgeInsets.only(right: 5.h),
-
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20.r),
                                       border: Border.all(
-                                        color:
-                                            controller
-                                                    .selectedItineraryId
+                                        color: controller.selectedItineraryId
                                                     .value ==
                                                 itinerary.id
                                             ? AppColors.authOrange
@@ -319,7 +306,6 @@ class HomeScreen extends GetWidget<HomeController> {
                                             ),
                                             child: AppNetworkImage(
                                               imageUrl: itinerary.image,
-
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
@@ -375,7 +361,6 @@ class HomeScreen extends GetWidget<HomeController> {
                         ),
                       ),
                       SizedBox(height: 10.h),
-
                       if (itinerary.priorityRemainders != null &&
                           itinerary.priorityRemainders!.isNotEmpty)
                         ...itinerary.priorityRemainders!.map(
@@ -391,7 +376,6 @@ class HomeScreen extends GetWidget<HomeController> {
                                     : 'Add',
                                 icon: Icons.abc,
                               ),
-
                               SizedBox(height: 10.h),
                               priorityRemainder(
                                 context: context,
@@ -402,7 +386,6 @@ class HomeScreen extends GetWidget<HomeController> {
                                     : 'Add',
                                 icon: Icons.abc,
                               ),
-
                               SizedBox(height: 10.h),
                               priorityRemainder(
                                 context: context,
@@ -474,7 +457,7 @@ class HomeScreen extends GetWidget<HomeController> {
           Row(
             children: [
               GestureDetector(
-                onTap: ()=>Get.to(RegionSelectionView()),
+                onTap: () => Get.to(CityViewScreen()),
                 child: Container(
                   width: 44.w,
                   height: 44.w,
@@ -856,21 +839,26 @@ class HomeScreen extends GetWidget<HomeController> {
                 ),
               ),
               SizedBox(height: 14.h),
-              // CustomButtonWidget(
-              //   label: 'Invite',
-              //   onPressed: controller.inviteParent,
-              //   bgColor: AppColors.authOrange,
-              //   fgColor: AppColors.whiteColor,
-              //   fullWidth: true,
-              //   height: 54.h,
-              //   radius: 999.r,
-              //   elevation: 2,
-              //   textStyle: globaltextInterTight(
-              //     fontSize: 16.sp,
-              //     fontWeight: FontWeight.w700,
-              //     color: AppColors.whiteColor,
-              //   ),
-              // ),
+              Obx(() {
+                return CustomButtonWidget(
+                  label: 'Invite',
+                  onPressed: () async {
+                    await controller.inviteParentByEmail();
+                  },
+                  bgColor: AppColors.authOrange,
+                  fgColor: AppColors.whiteColor,
+                  loading: controller.isInvitingParent.value,
+                  fullWidth: true,
+                  height: 54.h,
+                  radius: 999.r,
+                  elevation: 2,
+                  textStyle: globaltextInterTight(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.whiteColor,
+                  ),
+                );
+              }),
             ],
           ),
         ),

@@ -1,18 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/controller/create_plan_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/view/itenerary_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
+import '../city/controller/city_controller.dart';
+import '../controller/create_plan_calender_controller.dart';
 import '../controller/stay_controller.dart';
 
 class StayView extends StatelessWidget {
   final StayController controller = Get.put(StayController());
+  final CityController cityController = Get.find<CityController>();
+  final CreatePlanController createPlanController =
+      Get.find<CreatePlanController>(tag: 'create_plan');
 
   StayView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final tripResponse = createPlanController.tripResponse.value;
+    if (tripResponse != null &&
+        tripResponse['itineraries'] != null &&
+        tripResponse['itineraries'] is List) {
+      controller.loadFromTripResponse(tripResponse);
+    } else {
+      final selectedCityNames =
+          cityController.selectedCities.map((e) => e.name).toList();
+      final currentCityNames =
+          controller.locations.map((e) => e.cityName).toList();
+
+      if (selectedCityNames.isNotEmpty &&
+          (selectedCityNames.length != currentCityNames.length ||
+              selectedCityNames
+                  .any((name) => !currentCityNames.contains(name)))) {
+        controller.locations.assignAll(
+          selectedCityNames
+              .map((name) => StayLocation(cityName: name))
+              .toList(),
+        );
+
+        // Distribute total days among cities
+        try {
+          final dateCtrl = Get.find<DatePickerController>();
+          final totalDays = dateCtrl.getTotalDays();
+          if (totalDays > 0) {
+            controller.distributeDaysToCities(totalDays);
+          }
+        } catch (e) {
+          // Date controller not found, skip distribution
+        }
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SafeArea(
@@ -33,6 +73,54 @@ class StayView extends StatelessWidget {
                 "We'll include this in your itinerary",
                 style: TextStyle(color: Colors.grey),
               ),
+              // if (cityController.selectedCities.isNotEmpty) ...[
+              //   SizedBox(height: 10),
+              //   Text(
+              //     "Selected cities: ${cityController.selectedCities.map((e) => e.name).join(', ')}",
+              //     style: TextStyle(color: Colors.grey.shade700),
+              //   ),
+              //],
+
+              // if (createPlanController.tripResponse.value != null) ...[
+              //   SizedBox(height: 16),
+              //   Container(
+              //     width: double.infinity,
+              //     padding: EdgeInsets.all(16),
+              //     decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.circular(16),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: Colors.black12,
+              //           blurRadius: 10,
+              //           offset: Offset(0, 4),
+              //         ),
+              //       ],
+              //     ),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           'Trip Response',
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.bold,
+              //             fontSize: 16,
+              //           ),
+              //         ),
+              //         SizedBox(height: 8),
+              //         Text(
+              //           'Status: ${createPlanController.tripResponse.value!['status'] ?? 'N/A'}',
+              //           style: TextStyle(fontSize: 14),
+              //         ),
+              //         SizedBox(height: 4),
+              //         Text(
+              //           'Itineraries: ${(createPlanController.tripResponse.value!['itineraries'] as List?)?.length ?? 0}',
+              //           style: TextStyle(fontSize: 14),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ],
 
               SizedBox(height: 20),
 
@@ -92,20 +180,35 @@ class StayView extends StatelessWidget {
               SizedBox(height: 30),
 
               // Next Button
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  onPressed: ()=>Get.to(ItineraryView()),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.authOrange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed: createPlanController.isSubmitting.value ||
+                            createPlanController.isManualSubmitting.value
+                        ? null
+                        : () {
+                            Get.to(() => ItineraryView(
+                                itineraryId: controller
+                                    .locations.first.itineraryId
+                                    .toString()));
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.authOrange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    "Next",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    child: createPlanController.isSubmitting.value ||
+                            createPlanController.isManualSubmitting.value
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text(
+                            "Next",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
                   ),
                 ),
               ),
@@ -238,28 +341,28 @@ class StayView extends StatelessWidget {
   }
 
   Widget _sectionTitle(String title) => Padding(
-    padding: const EdgeInsets.only(bottom: 8.0),
-    child: Text(
-      title,
-      style: TextStyle(
-        fontSize: 13,
-        color: Colors.grey,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-  );
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
 
   Widget _qtyBtn(IconData icon, VoidCallback onTap) => GestureDetector(
-    onTap: onTap,
-    child: Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: AppColors.authOrange,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Icon(icon, color: Colors.white, size: 20),
-    ),
-  );
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.authOrange,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, color: Colors.white, size: 20),
+        ),
+      );
 
   Widget _choiceChip(
     String label,

@@ -18,5 +18,7 @@ class Urls {
   static const String readNotification =
       '$baseUrl/notifications/read-noti'; //PATCH
   static const String trips = '$baseUrl/trips'; //GET
+  static const String createTripByAI = '$baseUrl/ai/generate-trip'; //POST
+  static const String createTrip = '$baseUrl/trips'; //POST
   static const String tripDetail = '$baseUrl/trips'; //GET
 }
