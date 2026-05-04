@@ -105,7 +105,7 @@ class TripCard extends StatelessWidget {
                           icon: 'assets/icons/trip_dollar.svg',
                           label: '\$${trip.budget}',
                         ),
-                        SizedBox(width: 8.w),
+                        SizedBox(width: 5.w),
                         _buildInfoChip(
                           icon: 'assets/icons/home_outline.svg',
                           label: trip.interests.join(', '),
@@ -124,7 +124,7 @@ class TripCard extends StatelessWidget {
 
   Widget _buildInfoChip({required String icon, required String label}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
       decoration: BoxDecoration(
         color: Colors.black.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(20.r),
@@ -146,13 +146,18 @@ class TripCard extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4.w),
-          Text(
-            label,
-            style: globaltextInterTight(
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w500,
-              color: AppColors.whiteColor,
-              lineHeight: 1.1,
+          SizedBox(
+            width: 120,
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: globaltextInterTight(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.whiteColor,
+                lineHeight: 1.1,
+              ),
             ),
           ),
         ],

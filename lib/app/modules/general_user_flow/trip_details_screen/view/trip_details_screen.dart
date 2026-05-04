@@ -10,7 +10,7 @@ import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/c
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 
 class TripDetailsScreen extends StatelessWidget {
-  TripDetailsScreen({Key? key});
+  TripDetailsScreen({super.key});
   final controller = Get.put(TripDetailsController());
 
   @override
