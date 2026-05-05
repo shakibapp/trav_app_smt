@@ -6,58 +6,64 @@ import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/cont
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
 
 class TripITineraryOverviewScreen extends StatelessWidget {
-
-   TripITineraryOverviewScreen({super.key});
-  final controller = Get.put(TripController());
+  final ItineraryDetailsController controller;
+  const TripITineraryOverviewScreen({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BuildStatCard(
-              icon: AppIcons.moon,
-              value: '${controller.currentTrip.value.duration}',
-              label: 'Night',
-            ),
-            SizedBox(width: 10),
-            BuildStatCard(
-              icon: AppIcons.activity,
-              value: '7',
-              label: 'Total Activity',
-            ),
-            SizedBox(width: 10),
-            BuildStatCard(
-              icon: AppIcons.appointment,
-              value: '8',
-              label: 'Total Bookings',
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        const Text(
-          'Quick Info',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 16),
-        buildQuickInfoItem(
-          icon: Icons.flight,
-          title: 'Book flight to Rome',
-          date: 'Arriving 20 Mar, 2025',
-          onTap: () => controller.changeTab(2),
-        ),
-        const SizedBox(height: 12),
-        buildQuickInfoItem(
-          icon: Icons.hotel,
-          title: 'Book accommodation in Rome',
-          date: 'Arriving 20 Mar, 2025',
-          onTap: () => controller.changeTab(1),
-        ),
-      ],
-    );
+    return Obx(() {
+      final itinerary = controller.itineraryOverview.value;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              BuildStatCard(
+                icon: AppIcons.moon,
+                value: '${itinerary.days}',
+                label: 'Night',
+              ),
+              SizedBox(width: 10),
+              BuildStatCard(
+                icon: AppIcons.activity,
+                value: '${itinerary.activities!.length ?? 0}',
+                label: 'Total Activity',
+              ),
+              SizedBox(width: 10),
+              BuildStatCard(
+                icon: AppIcons.appointment,
+                value: '${itinerary.accommodations!.length ?? 0}',
+                label: 'Total Bookings',
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          const Text(
+            'Quick Info',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: itinerary.remainders!.length,
+              itemBuilder: (context, index) {
+                final remainder = itinerary.remainders![index];
+                return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: 12.0,
+                    ),
+                    child: buildQuickInfoItem(
+                      icon: Icons.notifications,
+                      title: remainder.title!,
+                      date: remainder.description.toString(),
+                      onTap: () {},
+                    ));
+              })
+        ],
+      );
+    });
   }
 }

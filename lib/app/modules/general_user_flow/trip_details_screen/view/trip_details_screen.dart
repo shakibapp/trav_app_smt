@@ -150,7 +150,6 @@ class TripDetailsScreen extends StatelessWidget {
       height: 150,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-
         itemBuilder: (context, index) {
           return Container(
             width: 300,
@@ -182,7 +181,6 @@ class TripDetailsScreen extends StatelessWidget {
                     appButton(
                       height: 30,
                       width: 100,
-
                       onTap: () {},
                       name: '5 Days Left',
                       textColor: Colors.white,

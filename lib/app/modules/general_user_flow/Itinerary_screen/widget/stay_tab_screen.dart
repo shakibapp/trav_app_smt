@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/view/add_accommodation_screen.dart';
 
 class StayTabScreen extends StatelessWidget {
-  const StayTabScreen({super.key});
+  final ItineraryDetailsController controller;
+  const StayTabScreen({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -42,26 +44,22 @@ class StayTabScreen extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-        buildBookingOption(
-          icon: Icons.apartment,
-          title: 'Hostelworld',
-          description: 'Budget-friendly hostels and apartments',
-          onExplore: () {},
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: controller.itineraryOverview.value?.accommodations?.length ?? 0,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index){
+            final accommodation = controller.itineraryOverview.value!.accommodations![index];
+          return buildBookingOption(
+            icon: Icons.hotel,
+            title: '${accommodation.name}',
+            description: '${accommodation.address}',
+            onExplore: () {},
+          );
+        }
         ),
-        const SizedBox(height: 12),
-        buildBookingOption(
-          icon: Icons.favorite_border,
-          title: 'Airbnb',
-          description: 'Perfect for unique stays and local experiences',
-          onExplore: () {},
-        ),
-        const SizedBox(height: 12),
-        buildBookingOption(
-          icon: Icons.business,
-          title: 'Booking.com',
-          description: 'Hotels, rooms, and budget options',
-          onExplore: () {},
-        ),
+      
       ],
     );
   }

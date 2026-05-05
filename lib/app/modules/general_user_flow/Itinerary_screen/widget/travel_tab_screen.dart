@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_transportation_screen/view/add_transportation_screen.dart';
 
 class TravelTabScreen extends StatelessWidget {
-  const TravelTabScreen({super.key});
+  final ItineraryDetailsController controller;
+  const TravelTabScreen({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +40,22 @@ class TravelTabScreen extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-        buildBookingOption(
-          icon: Icons.flight_takeoff,
-          title: 'Skyscanner',
-          description: 'Compare and book the best flight deals',
-          onExplore: () {},
-        ),
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: controller.itineraryOverview.value?.transportations?.length ?? 0,
+          itemBuilder: (context,index){
+            final transport = controller.itineraryOverview.value!.transportations![index];
+
+          return buildBookingOption(
+            icon: Icons.flight_takeoff,
+            title: '${transport.type}',
+            description: '${transport.dpeartureLocation}',
+            onExplore: () {},
+          );
+        },)
+        
       ],
     );
   }

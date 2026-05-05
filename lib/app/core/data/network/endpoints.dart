@@ -13,7 +13,7 @@ class Urls {
   static const String userProfile = '$baseUrl/auth/profile'; //GET
   static const String deleteAccount = '$baseUrl/users/delete/';
 
-  ///DELETE
+  ///
   static const String getNotificatios = '$baseUrl/notifications/all-noti'; //GET
   static const String readNotification =
       '$baseUrl/notifications/read-noti'; //PATCH
@@ -21,4 +21,5 @@ class Urls {
   static const String createTripByAI = '$baseUrl/ai/generate-trip'; //POST
   static const String createTrip = '$baseUrl/trips'; //POST
   static const String tripDetail = '$baseUrl/trips'; //GET
+  static const String getItineraryDetails = '$baseUrl/trips/itinerary/'; //PUT
 }

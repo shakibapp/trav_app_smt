@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/view/tripItinerary_overview_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/view/trip_details_screen.dart';
 import 'package:intl/intl.dart';
 
@@ -25,7 +26,8 @@ class TripCard extends StatelessWidget {
     ).format(DateTime.parse(trip.endDate));
 
     return GestureDetector(
-      onTap: () => Get.to(TripDetailsScreen()),
+      //onTap: () => Get.to(TripItineraryView(), ),
+      onTap: ()=>Get.to(TripDetailsScreen()),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
