@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/create_plan/controller/itinerary_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 
 class TripDetailsController extends GetxController {
