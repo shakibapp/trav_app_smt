@@ -7,7 +7,8 @@ import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_scr
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
 class AddAccommodationView extends StatelessWidget {
-  AddAccommodationView({super.key});
+  final String id;
+  AddAccommodationView({super.key, required this.id});
 
   final AccommodationController controller = Get.put(AccommodationController());
 
@@ -514,7 +515,6 @@ class AddAccommodationView extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.authFieldFill,
               border: Border.all(color: AppColors.borderColor),
-
               borderRadius: BorderRadius.circular(8),
             ),
             child: DropdownButton<String>(
@@ -597,11 +597,16 @@ class AddAccommodationView extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: appButton(
-            textColor: Colors.white,
-            onTap: () => controller.saveForm(),
-            name: "Save",
-          ),
+          child: Obx(() {
+            return appButton(
+              loading: controller.isAddAccommodationLoading.value,
+              textColor: Colors.white,
+              onTap: () async {
+                await controller.createNewAccommodation(id);
+              },
+              name: "Save",
+            );
+          }),
         ),
       ],
     );

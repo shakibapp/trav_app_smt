@@ -6,7 +6,8 @@ import 'package:hamishphipps/app/modules/general_user_flow/add_transportation_sc
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
 class AddTransportationView extends StatelessWidget {
-  AddTransportationView({super.key});
+  final String id;
+  AddTransportationView({super.key, required this.id});
 
   final TransportationController controller = Get.put(
     TransportationController(),
@@ -700,13 +701,16 @@ class AddTransportationView extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: appButton(
+          child: Obx((){
+            return appButton(
             textColor: Colors.white,
-
-            onTap: () => controller.saveForm(),
+            loading: controller.isTransportationLoading.value,
+            onTap: ()async{
+              await controller.createTransportation(id.toString());
+            },
             name: "Save",
-          ),
-        ),
+          );
+          })),
       ],
     );
   }

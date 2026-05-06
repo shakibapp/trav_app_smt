@@ -1,0 +1,1100 @@
+
+[
+  {
+    "id": "region_europe",
+    "name": "Europe",
+    "type": "region"
+  },
+  {
+    "id": "region_asia",
+    "name": "Asia",
+    "type": "region"
+  },
+  {
+    "id": "region_north_america",
+    "name": "North America",
+    "type": "region"
+  },
+  {
+    "id": "region_south_america",
+    "name": "South America",
+    "type": "region"
+  },
+  {
+    "id": "region_africa",
+    "name": "Africa",
+    "type": "region"
+  },
+  {
+    "id": "region_oceania",
+    "name": "Oceania",
+    "type": "region"
+  },
+  {
+    "id": "region_middle_east",
+    "name": "Middle East",
+    "type": "region"
+  },
+  {
+    "id": "country_france",
+    "name": "France",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_italy",
+    "name": "Italy",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_spain",
+    "name": "Spain",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_germany",
+    "name": "Germany",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_uk",
+    "name": "United Kingdom",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_netherlands",
+    "name": "Netherlands",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_portugal",
+    "name": "Portugal",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_greece",
+    "name": "Greece",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_switzerland",
+    "name": "Switzerland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_czechia",
+    "name": "Czech Republic",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "city_paris",
+    "name": "Paris",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "images/cities/city_paris.jpg"
+  },
+  {
+    "id": "city_nice",
+    "name": "Nice",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "images/cities/city_nice.jpg"
+  },
+  {
+    "id": "city_lyon",
+    "name": "Lyon",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": false,
+    "image": "images/cities/city_lyon.jpg"
+  },
+  {
+    "id": "city_rome",
+    "name": "Rome",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "images/cities/city_rome.jpg"
+  },
+  {
+    "id": "city_venice",
+    "name": "Venice",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "images/cities/city_venice.jpg"
+  },
+  {
+    "id": "city_milan",
+    "name": "Milan",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "images/cities/city_milan.jpg"
+  },
+  {
+    "id": "city_florence",
+    "name": "Florence",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "images/cities/city_florence.jpg"
+  },
+  {
+    "id": "city_barcelona",
+    "name": "Barcelona",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "images/cities/city_barcelona.jpg"
+  },
+  {
+    "id": "city_madrid",
+    "name": "Madrid",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "images/cities/city_madrid.jpg"
+  },
+  {
+    "id": "city_seville",
+    "name": "Seville",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": false,
+    "image": "images/cities/city_seville.jpg"
+  },
+  {
+    "id": "city_berlin",
+    "name": "Berlin",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "images/cities/city_berlin.jpg"
+  },
+  {
+    "id": "city_munich",
+    "name": "Munich",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "images/cities/city_munich.jpg"
+  },
+  {
+    "id": "city_hamburg",
+    "name": "Hamburg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": false,
+    "image": "images/cities/city_hamburg.jpg"
+  },
+  {
+    "id": "city_london",
+    "name": "London",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk",
+    "isPopular": true,
+    "image": "images/cities/city_london.jpg"
+  },
+  {
+    "id": "city_edinburgh",
+    "name": "Edinburgh",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk",
+    "isPopular": true,
+    "image": "images/cities/city_edinburgh.jpg"
+  },
+  {
+    "id": "city_amsterdam",
+    "name": "Amsterdam",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": true,
+    "image": "images/cities/city_amsterdam.jpg"
+  },
+  {
+    "id": "city_lisbon",
+    "name": "Lisbon",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "images/cities/city_lisbon.jpg"
+  },
+  {
+    "id": "city_porto",
+    "name": "Porto",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "images/cities/city_porto.jpg"
+  },
+  {
+    "id": "city_athens",
+    "name": "Athens",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "images/cities/city_athens.jpg"
+  },
+  {
+    "id": "city_santorini",
+    "name": "Santorini",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "images/cities/city_santorini.jpg"
+  },
+  {
+    "id": "city_zurich",
+    "name": "Zurich",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": true,
+    "image": "images/cities/city_zurich.jpg"
+  },
+  {
+    "id": "city_geneva",
+    "name": "Geneva",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": false,
+    "image": "images/cities/city_geneva.jpg"
+  },
+  {
+    "id": "city_prague",
+    "name": "Prague",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_czechia",
+    "isPopular": true,
+    "image": "images/cities/city_prague.jpg"
+  },
+  {
+    "id": "country_japan",
+    "name": "Japan",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_thailand",
+    "name": "Thailand",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_india",
+    "name": "India",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_china",
+    "name": "China",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_vietnam",
+    "name": "Vietnam",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_indonesia",
+    "name": "Indonesia",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_malaysia",
+    "name": "Malaysia",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_singapore",
+    "name": "Singapore",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_south_korea",
+    "name": "South Korea",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "country_nepal",
+    "name": "Nepal",
+    "type": "country",
+    "regionId": "region_asia"
+  },
+  {
+    "id": "city_tokyo",
+    "name": "Tokyo",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_japan",
+    "isPopular": true,
+    "image": "images/cities/city_tokyo.jpg"
+  },
+  {
+    "id": "city_osaka",
+    "name": "Osaka",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_japan",
+    "isPopular": true,
+    "image": "images/cities/city_osaka.jpg"
+  },
+  {
+    "id": "city_kyoto",
+    "name": "Kyoto",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_japan",
+    "isPopular": true,
+    "image": "images/cities/city_kyoto.jpg"
+  },
+  {
+    "id": "city_hiroshima",
+    "name": "Hiroshima",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_japan",
+    "isPopular": false,
+    "image": "images/cities/city_hiroshima.jpg"
+  },
+  {
+    "id": "city_bangkok",
+    "name": "Bangkok",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "images/cities/city_bangkok.jpg"
+  },
+  {
+    "id": "city_chiangmai",
+    "name": "Chiang Mai",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "images/cities/city_chiangmai.jpg"
+  },
+  {
+    "id": "city_phuket",
+    "name": "Phuket",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "images/cities/city_phuket.jpg"
+  },
+  {
+    "id": "city_mumbai",
+    "name": "Mumbai",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_india",
+    "isPopular": true,
+    "image": "images/cities/city_mumbai.jpg"
+  },
+  {
+    "id": "city_delhi",
+    "name": "New Delhi",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_india",
+    "isPopular": true,
+    "image": "images/cities/city_delhi.jpg"
+  },
+  {
+    "id": "city_jaipur",
+    "name": "Jaipur",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_india",
+    "isPopular": true,
+    "image": "images/cities/city_jaipur.jpg"
+  },
+  {
+    "id": "city_goa",
+    "name": "Goa",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_india",
+    "isPopular": true,
+    "image": "images/cities/city_goa.jpg"
+  },
+  {
+    "id": "city_beijing",
+    "name": "Beijing",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_china",
+    "isPopular": true,
+    "image": "images/cities/city_beijing.jpg"
+  },
+  {
+    "id": "city_shanghai",
+    "name": "Shanghai",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_china",
+    "isPopular": true,
+    "image": "images/cities/city_shanghai.jpg"
+  },
+  {
+    "id": "city_hanoi",
+    "name": "Hanoi",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "images/cities/city_hanoi.jpg"
+  },
+  {
+    "id": "city_hcmc",
+    "name": "Ho Chi Minh City",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "images/cities/city_hcmc.jpg"
+  },
+  {
+    "id": "city_bali",
+    "name": "Bali",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "images/cities/city_bali.jpg"
+  },
+  {
+    "id": "city_jakarta",
+    "name": "Jakarta",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_indonesia",
+    "isPopular": false,
+    "image": "images/cities/city_jakarta.jpg"
+  },
+  {
+    "id": "city_kualalumpur",
+    "name": "Kuala Lumpur",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_malaysia",
+    "isPopular": true,
+    "image": "images/cities/city_kualalumpur.jpg"
+  },
+  {
+    "id": "city_singapore",
+    "name": "Singapore",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_singapore",
+    "isPopular": true,
+    "image": "images/cities/city_singapore.jpg"
+  },
+  {
+    "id": "city_seoul",
+    "name": "Seoul",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_south_korea",
+    "isPopular": true,
+    "image": "images/cities/city_seoul.jpg"
+  },
+  {
+    "id": "city_busan",
+    "name": "Busan",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_south_korea",
+    "isPopular": true,
+    "image": "images/cities/city_busan.jpg"
+  },
+  {
+    "id": "city_kathmandu",
+    "name": "Kathmandu",
+    "type": "city",
+    "regionId": "region_asia",
+    "countryId": "country_nepal",
+    "isPopular": true,
+    "image": "images/cities/city_kathmandu.jpg"
+  },
+  {
+    "id": "country_usa",
+    "name": "USA",
+    "type": "country",
+    "regionId": "region_north_america"
+  },
+  {
+    "id": "country_canada",
+    "name": "Canada",
+    "type": "country",
+    "regionId": "region_north_america"
+  },
+  {
+    "id": "country_mexico",
+    "name": "Mexico",
+    "type": "country",
+    "regionId": "region_north_america"
+  },
+  {
+    "id": "city_newyork",
+    "name": "New York",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "images/cities/city_newyork.jpg"
+  },
+  {
+    "id": "city_losangeles",
+    "name": "Los Angeles",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "images/cities/city_losangeles.jpg"
+  },
+  {
+    "id": "city_sanfrancisco",
+    "name": "San Francisco",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "images/cities/city_sanfrancisco.jpg"
+  },
+  {
+    "id": "city_lasvegas",
+    "name": "Las Vegas",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "images/cities/city_lasvegas.jpg"
+  },
+  {
+    "id": "city_miami",
+    "name": "Miami",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "images/cities/city_miami.jpg"
+  },
+  {
+    "id": "city_chicago",
+    "name": "Chicago",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "images/cities/city_chicago.jpg"
+  },
+  {
+    "id": "city_toronto",
+    "name": "Toronto",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "images/cities/city_toronto.jpg"
+  },
+  {
+    "id": "city_vancouver",
+    "name": "Vancouver",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "images/cities/city_vancouver.jpg"
+  },
+  {
+    "id": "city_mexicocity",
+    "name": "Mexico City",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "images/cities/city_mexicocity.jpg"
+  },
+  {
+    "id": "city_cancun",
+    "name": "Cancún",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "images/cities/city_cancun.jpg"
+  },
+  {
+    "id": "country_brazil",
+    "name": "Brazil",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_argentina",
+    "name": "Argentina",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_peru",
+    "name": "Peru",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_colombia",
+    "name": "Colombia",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_chile",
+    "name": "Chile",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "city_rio",
+    "name": "Rio de Janeiro",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "images/cities/city_rio.jpg"
+  },
+  {
+    "id": "city_saopaulo",
+    "name": "São Paulo",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "images/cities/city_saopaulo.jpg"
+  },
+  {
+    "id": "city_buenosaires",
+    "name": "Buenos Aires",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": true,
+    "image": "images/cities/city_buenosaires.jpg"
+  },
+  {
+    "id": "city_lima",
+    "name": "Lima",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": true,
+    "image": "images/cities/city_lima.jpg"
+  },
+  {
+    "id": "city_cusco",
+    "name": "Cusco",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": true,
+    "image": "images/cities/city_cusco.jpg"
+  },
+  {
+    "id": "city_bogota",
+    "name": "Bogotá",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": true,
+    "image": "images/cities/city_bogota.jpg"
+  },
+  {
+    "id": "city_cartagena",
+    "name": "Cartagena",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": true,
+    "image": "images/cities/city_cartagena.jpg"
+  },
+  {
+    "id": "city_santiago",
+    "name": "Santiago",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_chile",
+    "isPopular": true,
+    "image": "images/cities/city_santiago.jpg"
+  },
+  {
+    "id": "country_egypt",
+    "name": "Egypt",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_morocco",
+    "name": "Morocco",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_south_africa",
+    "name": "South Africa",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_kenya",
+    "name": "Kenya",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_tanzania",
+    "name": "Tanzania",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "city_cairo",
+    "name": "Cairo",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_egypt",
+    "isPopular": true,
+    "image": "images/cities/city_cairo.jpg"
+  },
+  {
+    "id": "city_luxor",
+    "name": "Luxor",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_egypt",
+    "isPopular": true,
+    "image": "images/cities/city_luxor.jpg"
+  },
+  {
+    "id": "city_marrakech",
+    "name": "Marrakech",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": true,
+    "image": "images/cities/city_marrakech.jpg"
+  },
+  {
+    "id": "city_casablanca",
+    "name": "Casablanca",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": false,
+    "image": "images/cities/city_casablanca.jpg"
+  },
+  {
+    "id": "city_fes",
+    "name": "Fes",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": true,
+    "image": "images/cities/city_fes.jpg"
+  },
+  {
+    "id": "city_capetown",
+    "name": "Cape Town",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_south_africa",
+    "isPopular": true,
+    "image": "images/cities/city_capetown.jpg"
+  },
+  {
+    "id": "city_johannesburg",
+    "name": "Johannesburg",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_south_africa",
+    "isPopular": false,
+    "image": "images/cities/city_johannesburg.jpg"
+  },
+  {
+    "id": "city_nairobi",
+    "name": "Nairobi",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_kenya",
+    "isPopular": true,
+    "image": "images/cities/city_nairobi.jpg"
+  },
+  {
+    "id": "city_zanzibar",
+    "name": "Zanzibar",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_tanzania",
+    "isPopular": true,
+    "image": "images/cities/city_zanzibar.jpg"
+  },
+  {
+    "id": "country_australia",
+    "name": "Australia",
+    "type": "country",
+    "regionId": "region_oceania"
+  },
+  {
+    "id": "country_newzealand",
+    "name": "New Zealand",
+    "type": "country",
+    "regionId": "region_oceania"
+  },
+  {
+    "id": "country_fiji",
+    "name": "Fiji",
+    "type": "country",
+    "regionId": "region_oceania"
+  },
+  {
+    "id": "city_sydney",
+    "name": "Sydney",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "images/cities/city_sydney.jpg"
+  },
+  {
+    "id": "city_melbourne",
+    "name": "Melbourne",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "images/cities/city_melbourne.jpg"
+  },
+  {
+    "id": "city_brisbane",
+    "name": "Brisbane",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "images/cities/city_brisbane.jpg"
+  },
+  {
+    "id": "city_goldcoast",
+    "name": "Gold Coast",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "images/cities/city_goldcoast.jpg"
+  },
+  {
+    "id": "city_auckland",
+    "name": "Auckland",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_newzealand",
+    "isPopular": true,
+    "image": "images/cities/city_auckland.jpg"
+  },
+  {
+    "id": "city_queenstown",
+    "name": "Queenstown",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_newzealand",
+    "isPopular": true,
+    "image": "images/cities/city_queenstown.jpg"
+  },
+  {
+    "id": "city_nadi",
+    "name": "Nadi",
+    "type": "city",
+    "regionId": "region_oceania",
+    "countryId": "country_fiji",
+    "isPopular": true,
+    "image": "images/cities/city_nadi.jpg"
+  },
+  {
+    "id": "country_uae",
+    "name": "UAE",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_turkey",
+    "name": "Turkey",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_jordan",
+    "name": "Jordan",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_israel",
+    "name": "Israel",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_oman",
+    "name": "Oman",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_saudi",
+    "name": "Saudi Arabia",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "city_dubai",
+    "name": "Dubai",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_uae",
+    "isPopular": true,
+    "image": "images/cities/city_dubai.jpg"
+  },
+  {
+    "id": "city_abudhabi",
+    "name": "Abu Dhabi",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_uae",
+    "isPopular": true,
+    "image": "images/cities/city_abudhabi.jpg"
+  },
+  {
+    "id": "city_istanbul",
+    "name": "Istanbul",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "images/cities/city_istanbul.jpg"
+  },
+  {
+    "id": "city_cappadocia",
+    "name": "Cappadocia",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "images/cities/city_cappadocia.jpg"
+  },
+  {
+    "id": "city_antalya",
+    "name": "Antalya",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "images/cities/city_antalya.jpg"
+  },
+  {
+    "id": "city_petra",
+    "name": "Petra",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_jordan",
+    "isPopular": true,
+    "image": "images/cities/city_petra.jpg"
+  },
+  {
+    "id": "city_amman",
+    "name": "Amman",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_jordan",
+    "isPopular": false,
+    "image": "images/cities/city_amman.jpg"
+  },
+  {
+    "id": "city_telaviv",
+    "name": "Tel Aviv",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_israel",
+    "isPopular": true,
+    "image": "images/cities/city_telaviv.jpg"
+  },
+  {
+    "id": "city_jerusalem",
+    "name": "Jerusalem",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_israel",
+    "isPopular": true,
+    "image": "images/cities/city_jerusalem.jpg"
+  },
+  {
+    "id": "city_muscat",
+    "name": "Muscat",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_oman",
+    "isPopular": true,
+    "image": "images/cities/city_muscat.jpg"
+  },
+  {
+    "id": "city_riyadh",
+    "name": "Riyadh",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_saudi",
+    "isPopular": true,
+    "image": "images/cities/city_riyadh.jpg"
+  }
+]

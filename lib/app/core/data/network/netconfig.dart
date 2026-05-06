@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/services/logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart'; // added
@@ -173,7 +174,7 @@ class NetworkConfigV1 {
         ShowError('Something went wrong. Please try again.');
       }
     } else {
-      AppSnackBar.error("Please Connect Internet");
+      AppSnackbar.failed("Please Connect Internet");
     }
     return null;
   }
@@ -273,6 +274,7 @@ class NetworkConfigV1 {
   }
 
   void ShowError(Object msg) {
-    AppSnackBar.error(msg.toString());
+    AppSnackbar.failed(msg.toString());
+    
   }
 }

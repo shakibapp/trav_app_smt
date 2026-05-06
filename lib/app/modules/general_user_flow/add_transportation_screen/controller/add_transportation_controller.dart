@@ -1,7 +1,18 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/core/services/local_data.dart';
 
 class TransportationController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
+  final localService = LocalService.localService;
+
   // Text Controllers
   final departureLocationController = TextEditingController();
   final arrivalLocationController = TextEditingController();
@@ -65,30 +76,59 @@ class TransportationController extends GetxController {
     update();
   }
 
-  // Get all form data
-  Map<String, dynamic> getFormData() {
-    return {
-      'transportationType': selectedTransportationType.value,
-      'departureLocation': departureLocationController.text,
-      'arrivalLocation': arrivalLocationController.text,
-      'departureDate': departureDateController.text,
-      'departureTime': departureTimeController.text,
-      'arrivalDate': arrivalDateController.text,
-      'arrivalTime': arrivalTimeController.text,
-      'bookingPlatform': selectedBookingPlatform.value,
-      'bookingReference': bookingReferenceController.text,
-      'airline': airlineController.text,
-      'flightNumber': flightNumberController.text,
-      'terminal': terminalController.text,
-      'gate': gateController.text,
-      'seat': seatController.text,
-      'currency': selectedCurrency.value,
-      'totalCost': totalCostController.text,
-      'notes': notesController.text,
-    };
+
+
+
+String toIsoDate(String value) {
+  final date = DateFormat('dd/MM/yy').parseStrict(value);
+  return DateTime.utc(
+    date.year,
+    date.month,
+    date.day,
+  ).toIso8601String();
+}
+//create new transportation
+  final RxBool isTransportationLoading = false.obs;
+  Future<void> createTransportation(String id) async {
+    try {
+      isTransportationLoading.value = true;
+      final Map<String, dynamic> data = {
+        "type": selectedTransportationType.value,
+        "dpeartureLocation": departureLocationController.text,
+        "arrivalLocation": arrivalLocationController.text,
+        "departureDate": toIsoDate(departureDateController.text),
+        "departureTime": departureTimeController.text,
+        "arrivalDate": toIsoDate(arrivalDateController.text),
+        "arrivalTime": arrivalTimeController.text,
+        "bookingPlatform": selectedBookingPlatform.value,
+        "bookingReference": bookingReferenceController.text,
+        "airline": airlineController.text,
+        "flightNumber": flightNumberController.text,
+        "terminal": terminalController.text,
+        "gate": gateController.text,
+        "currency":selectedCurrency.value,
+        "totalCost": double.parse(totalCostController.text),
+        "notes": notesController.text
+      };
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.POST, "${Urls.createTransportation}/$id", jsonEncode(data),
+          is_auth: true);
+      if (response != null && response["success"]==true){
+       await Get.put(ItineraryDetailsController()).getItineraryOverview(id);
+        Get.back();
+        AppSnackbar.success("${response["message"]}");
+        log("create transportation success ${response["message"]}");
+      }else{
+        AppSnackbar.failed("${response["message"]}");
+        log("Create Transportation failed ${response["message"]}");
+      }
+    } catch (e) {
+      log("Create transportation error ${e.toString()}");
+    }finally{
+      isTransportationLoading.value = false;
+    }
   }
 
-  // Clear all fields
   void clearForm() {
     departureLocationController.clear();
     arrivalLocationController.clear();
@@ -111,27 +151,7 @@ class TransportationController extends GetxController {
     formKey.currentState?.reset();
   }
 
-  // Save form
-  void saveForm() {
-    if (validateForm()) {
-      final data = getFormData();
-      Get.snackbar(
-        'Success',
-        'Transportation booking saved!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-      // Here you would typically send data to backend
-      print('Form Data: $data');
-    } else {
-      Get.snackbar(
-        'Error',
-        'Please fill all required fields correctly',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
+
 
   @override
   void onClose() {

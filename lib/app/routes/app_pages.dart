@@ -100,13 +100,7 @@ class AppPages {
       binding: ParentsBinding(),
     ),
 
-    GetPage(
-      name: AppRoutes.addActivity,
-      page: () => AddActivityView(),
-      binding:AddActivityBinding() ,
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 300),
-    ),
+  
     // GetPage(
     //   name: AppRoutes.SPLASH,
     //   page: () => SplashScreen(),

@@ -31,7 +31,9 @@ class TravelTabScreen extends StatelessWidget {
           bgColor: Colors.transparent,
           textColor: AppColors.blackColor,
           borderColor: Colors.grey.shade300,
-          onTap: () => Get.to(() => AddTransportationView()),
+          onTap: () => Get.to(() => AddTransportationView(
+                id: controller.itineraryOverview.value.id.toString(),
+              )),
           name: "Add Booking Details",
         ),
         const SizedBox(height: 24),
@@ -44,18 +46,23 @@ class TravelTabScreen extends StatelessWidget {
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: controller.itineraryOverview.value?.transportations?.length ?? 0,
-          itemBuilder: (context,index){
-            final transport = controller.itineraryOverview.value!.transportations![index];
+          itemCount:
+              controller.itineraryOverview.value?.transportations?.length ?? 0,
+          itemBuilder: (context, index) {
+            final transport =
+                controller.itineraryOverview.value!.transportations![index];
 
-          return buildBookingOption(
-            icon: Icons.flight_takeoff,
-            title: '${transport.type}',
-            description: '${transport.dpeartureLocation}',
-            onExplore: () {},
-          );
-        },)
-        
+            return Padding(
+              padding: EdgeInsets.only(bottom: 10),
+              child: buildBookingOption(
+                icon: Icons.flight_takeoff,
+                title: '${transport.type}',
+                description: '${transport.dpeartureLocation}',
+                onExplore: () {},
+              ),
+            );
+          },
+        )
       ],
     );
   }

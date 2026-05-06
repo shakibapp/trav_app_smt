@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,10 +32,10 @@ class StayTabScreen extends StatelessWidget {
           bgColor: Colors.transparent,
           textColor: AppColors.blackColor,
           borderColor: Colors.grey.shade300,
-          onTap: ()=>Get.to(()=>AddAccommodationView()),
+          onTap: () => Get.to(() => AddAccommodationView(
+              id: controller.itineraryOverview.value.id.toString())),
           name: "Add Booking Details",
         ),
-
         const SizedBox(height: 24),
         const Text(
           'Book With',
@@ -45,21 +43,24 @@ class StayTabScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: controller.itineraryOverview.value?.accommodations?.length ?? 0,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index){
-            final accommodation = controller.itineraryOverview.value!.accommodations![index];
-          return buildBookingOption(
-            icon: Icons.hotel,
-            title: '${accommodation.name}',
-            description: '${accommodation.address}',
-            onExplore: () {},
-          );
-        }
-        ),
-      
+            padding: EdgeInsets.zero,
+            itemCount:
+                controller.itineraryOverview.value?.accommodations?.length ?? 0,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final accommodation =
+                  controller.itineraryOverview.value!.accommodations![index];
+              return Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: buildBookingOption(
+                  icon: Icons.hotel,
+                  title: '${accommodation.name}',
+                  description: '${accommodation.address}',
+                  onExplore: () {},
+                ),
+              );
+            }),
       ],
     );
   }

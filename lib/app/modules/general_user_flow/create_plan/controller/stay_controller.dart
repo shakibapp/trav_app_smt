@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/core/widgets/app_snackbar.dart';
@@ -85,9 +86,9 @@ class StayController extends GetxController {
     );
 
     if (response != null && response['success'] == true) {
-      AppSnackBar.success('Itinerary updated successfully.');
+      AppSnackbar.success('Itinerary updated successfully.');
     } else {
-      AppSnackBar.error('Failed to update itinerary.');
+      AppSnackbar.failed('Failed to update itinerary.');
     }
   }
 }

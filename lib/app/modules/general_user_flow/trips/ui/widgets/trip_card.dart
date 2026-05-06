@@ -26,8 +26,10 @@ class TripCard extends StatelessWidget {
     ).format(DateTime.parse(trip.endDate));
 
     return GestureDetector(
-      //onTap: () => Get.to(TripItineraryView(), ),
-      onTap: ()=>Get.to(TripDetailsScreen()),
+      onTap: () => Get.to(
+        TripItineraryView(),
+      ),
+      //onTap: ()=>Get.to(TripDetailsScreen()),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),

@@ -8,6 +8,8 @@ import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/cont
 import 'package:hamishphipps/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
+import '../../add_activity/view/add_activity_screen.dart';
+
 class ActivitiesTabScreen extends StatelessWidget {
   final ItineraryDetailsController controller;
   const ActivitiesTabScreen({super.key, required this.controller});
@@ -47,7 +49,9 @@ class ActivitiesTabScreen extends StatelessWidget {
                       textColor: Colors.black,
                       borderColor: Colors.grey,
                       bgColor: Colors.transparent,
-                      onTap: () => Get.toNamed(AppRoutes.addActivity),
+                      onTap: () => Get.to(() => AddActivityView(
+                          id: controller.itineraryOverview.value.id
+                              .toString())),
                       name: "Add Activity",
                     ),
                     const SizedBox(height: 8),

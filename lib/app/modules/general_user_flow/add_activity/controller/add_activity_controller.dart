@@ -1,10 +1,19 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/add_activity/model/add_activity_model.dart' hide TimeOfDay;
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/add_activity/model/add_activity_model.dart'
+    hide TimeOfDay;
 import 'package:hamishphipps/app/modules/general_user_flow/add_activity/validation/add_activity_validation_screen.dart';
 import 'package:intl/intl.dart';
 
 class AddActivityController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
+
   // Form states
   final formKey = GlobalKey<FormState>();
   final activityNameController = TextEditingController();
@@ -172,7 +181,7 @@ class AddActivityController extends GetxController {
     );
 
     if (picked != null) {
-      startTimeController.text = 
+      startTimeController.text =
           '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
     }
   }
@@ -189,7 +198,7 @@ class AddActivityController extends GetxController {
     );
 
     if (picked != null) {
-      endTimeController.text = 
+      endTimeController.text =
           '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
     }
   }
@@ -217,42 +226,45 @@ class AddActivityController extends GetxController {
         expenseError.value == null;
   }
 
-  // Submit form
-  Future<void> submitForm() async {
-    if (!validateAllFields()) {
-      _showError('Please fix all validation errors');
-      return;
-    }
+  String toIsoDate(DateTime date) {
+    return DateTime.utc(
+      date.year,
+      date.month,
+      date.day,
+    ).toIso8601String();
+  }
 
+  // Submit form
+  Future<void> createActivity(String id) async {
     try {
       isLoading.value = true;
-      errorMessage.value = null;
 
       // Create Activity object
-      final activity = Activity(
-        activityName: activityNameController.text,
-        dayNumber: selectedDayNumber.value!,
-        categories: selectedCategories,
-        startDate: selectedStartDate.value!,
-        endDate: selectedEndDate.value!,
-        startTime: startTimeController.text,
-        endTime: endTimeController.text,
-        location: locationController.text.isEmpty ? null : locationController.text,
-        expense: expenseController.text.isEmpty 
-            ? null 
-            : double.parse(expenseController.text),
-      );
-
-      // Here you would call your API service
-      // await activityService.createActivity(activity);
-
-      // Mock success
-      await Future.delayed(Duration(seconds: 2));
-
-      _showSuccess('Activity added successfully!');
-      resetForm();
+      final Map<String, dynamic> activity = {
+        "name": activityNameController.text.trim(),
+        "dayNumber": int.parse(selectedDayNumber.value.toString()),
+        "type": selectedCategories.map((e) => e.name).toList(),
+        "startDate": toIsoDate(selectedStartDate.value!),
+        "endDate": toIsoDate(selectedEndDate.value!),
+        "startTime": startTimeController.text.trim(),
+        "endTime": endTimeController.text.trim(),
+        "location": locationController.text.trim(),
+        "expense": double.parse(expenseController.text),
+      };
+      log("user input data ---$activity");
+      final response = await networkConfig.ApiRequestHandler(RequestMethod.POST,
+          "${Urls.activityCreate}/$id", jsonEncode(activity),
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        AppSnackbar.success("${response["message"]}");
+        log("create activity success ${response["message"]}");
+        resetForm();
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+        log("create activity failed ${response["message"]}");
+      }
     } catch (e) {
-      _showError('Failed to add activity: ${e.toString()}');
+      log('Failed to add activity: ${e.toString()}');
     } finally {
       isLoading.value = false;
     }

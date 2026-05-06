@@ -8,7 +8,8 @@ import '../../../../core/utils/date_formatter.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
 class AddActivityView extends StatelessWidget {
-  AddActivityView({Key? key});
+  final String id;
+  AddActivityView({super.key, required this.id});
   final controller = Get.put(AddActivityController());
   @override
   Widget build(BuildContext context) {
@@ -92,18 +93,17 @@ class AddActivityView extends StatelessWidget {
               errorText: controller.activityNameError.value,
             ),
             maxLength: 100,
-            buildCounter:
-                (
-                  context, {
-                  required currentLength,
-                  required isFocused,
-                  maxLength,
-                }) {
-                  return Text(
-                    '$currentLength/$maxLength',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  );
-                },
+            buildCounter: (
+              context, {
+              required currentLength,
+              required isFocused,
+              maxLength,
+            }) {
+              return Text(
+                '$currentLength/$maxLength',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              );
+            },
           ),
         ],
       ),
@@ -467,18 +467,17 @@ class AddActivityView extends StatelessWidget {
               errorText: controller.locationError.value,
             ),
             maxLength: 200,
-            buildCounter:
-                (
-                  context, {
-                  required currentLength,
-                  required isFocused,
-                  maxLength,
-                }) {
-                  return Text(
-                    '$currentLength/$maxLength',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  );
-                },
+            buildCounter: (
+              context, {
+              required currentLength,
+              required isFocused,
+              maxLength,
+            }) {
+              return Text(
+                '$currentLength/$maxLength',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              );
+            },
           ),
         ],
       ),
@@ -536,35 +535,35 @@ class AddActivityView extends StatelessWidget {
           ),
           SizedBox(width: 16),
           Expanded(
-            child: ElevatedButton(
-              onPressed: controller.isLoading.value
-                  ? null
-                  : controller.submitForm,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.authOrange,
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+            child: Obx(() {
+              return ElevatedButton(
+                onPressed: () => controller.createActivity(id.toString()),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.authOrange,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                 ),
-              ),
-              child: controller.isLoading.value
-                  ? SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                        strokeWidth: 2,
+                child: controller.isLoading.value
+                    ? SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        'Save',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    )
-                  : Text(
-                      'Save',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-            ),
+              );
+            }),
           ),
         ],
       ),
