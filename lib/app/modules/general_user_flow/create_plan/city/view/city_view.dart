@@ -266,7 +266,7 @@ class CityViewScreen extends StatelessWidget {
                   (region) => Chip(
                     label: Text(region.name),
                     onDeleted: () => controller.toggleRegion(region),
-                    deleteIcon: const Icon(Icons.close, size: 16),
+                    deleteIcon:  Icon(Icons.close, size: 16,),
                   ),
                 )
                 .toList(),

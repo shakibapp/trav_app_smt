@@ -38,7 +38,7 @@ class CityController extends GetxController {
     try {
       isLoading(true);
 
-      final data = await rootBundle.loadString('assets/jsons/locations.json');
+      final data = await rootBundle.loadString('assets/jsons/location.json');
       final List decoded = jsonDecode(data);
 
       allLocations.assignAll(
@@ -138,13 +138,7 @@ class CityController extends GetxController {
 
   // ---------------- NEXT ----------------
   void proceedNext() {
-    final payload = {
-      "region": selectedRegions.map((e) => e.name).toList(),
-      "city": selectedCities.map((e) => e.name).toList(),
-    };
     Get.to(() => DatePickerView());
-
-    debugPrint(payload.toString());
   }
 
   // ---------------- CLEAR ----------------

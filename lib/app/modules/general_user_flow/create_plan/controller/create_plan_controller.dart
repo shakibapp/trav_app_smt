@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'dart:developer';
 
@@ -133,32 +131,35 @@ class CreatePlanController extends GetxController {
   // =========================
   // PAYLOAD BUILDER
   // =========================
-Map<String, dynamic> _buildPayload({
-  required bool isAiMode,
-}) {
-  final base = {
-    "region": selectedRegions,
-    "city": selectedCities,
-    "startDate": _formatDate(startDate),
-    "endDate": _formatDate(endDate),
-    "totalDays": totalDays,
-    "interests": selectedInterests,
-    "budget": _resolveBudget(),
-  };
+  Map<String, dynamic> _buildPayload({
+    required bool isAiMode,
+  }) {
+    final cityList = cityController.selectedCities.map((city) {
+      return {
+        "name": city.name,
+        "image": city.image ?? "",
+      };
+    }).toList();
 
-  // =========================
-  // AI MODE ONLY
-  // =========================
-  if (isAiMode) {
-    base["message"] =
-        _buildMessage(selectedRegions, selectedInterests);
+    final base = {
+      "region": selectedRegions,
+      "city": cityList,
+      "startDate": _formatDate(startDate),
+      "endDate": _formatDate(endDate),
+      "totalDays": totalDays,
+      "interests": selectedInterests,
+      "budget": _resolveBudget(),
+    };
 
-    // AI can override cities if needed (optional logic)
-    base["city"] = selectedCities;
+    // =========================
+    // AI MODE ONLY
+    // =========================
+    if (isAiMode) {
+      base["message"] = _buildMessage(selectedRegions, selectedInterests);
+    }
+
+    return base;
   }
-
-  return base;
-}
 
   // =========================
   // VALIDATION
@@ -225,9 +226,9 @@ Map<String, dynamic> _buildPayload({
   // DATE FORMAT
   // =========================
   String _formatDate(DateTime? date) {
-  if (date == null) return '';
-  return date.toUtc().toIso8601String();
-}
+    if (date == null) return '';
+    return date.toUtc().toIso8601String();
+  }
 
   // =========================
   // AI MESSAGE BUILDER
