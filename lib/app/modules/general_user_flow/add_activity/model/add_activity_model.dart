@@ -83,58 +83,85 @@ class Activity {
 }
 
 enum ActivityCategory {
-  culture,
-  food,
-  nature,
-  nightlife,
-  shopping,
-  entertainment,
-  beach,
-  walking,
+  Culture,
+  Food,
+  Nature,
+  Nightlife,
+  Shopping,
+  Entertainment,
+  Beach,
+  Walking,
+  Sports,
+  Relaxation,
+  Adventure,
+  Camping,
+  Other
 }
 
 extension ActivityCategoryExtension on ActivityCategory {
   String get label {
-    switch (this) {
-      case ActivityCategory.culture:
-        return 'Culture';
-      case ActivityCategory.food:
-        return 'Food';
-      case ActivityCategory.nature:
-        return 'Nature';
-      case ActivityCategory.nightlife:
-        return 'Nightlife';
-      case ActivityCategory.shopping:
-        return 'Shopping';
-      case ActivityCategory.entertainment:
-        return 'Entertainment';
-      case ActivityCategory.beach:
-        return 'Beach';
-      case ActivityCategory.walking:
-        return 'Walking';
-    }
+  switch (this) {
+    case ActivityCategory.Culture:
+      return 'Culture';
+    case ActivityCategory.Food:
+      return 'Food';
+    case ActivityCategory.Nature:
+      return 'Nature';
+    case ActivityCategory.Nightlife:
+      return 'Nightlife';
+    case ActivityCategory.Shopping:
+      return 'Shopping';
+    case ActivityCategory.Entertainment:
+      return 'Entertainment';
+    case ActivityCategory.Beach:
+      return 'Beach';
+    case ActivityCategory.Walking:
+      return 'Walking';
+    // ✅ Missing cases added:
+    case ActivityCategory.Sports:
+      return 'Sports';
+    case ActivityCategory.Relaxation:
+      return 'Relaxation';
+    case ActivityCategory.Adventure:
+      return 'Adventure';
+    case ActivityCategory.Camping:
+      return 'Camping';
+    case ActivityCategory.Other:
+      return 'Other';
   }
+}
 
-  IconData get icon {
-    switch (this) {
-      case ActivityCategory.culture:
-        return Icons.palette;
-      case ActivityCategory.food:
-        return Icons.restaurant;
-      case ActivityCategory.nature:
-        return Icons.nature;
-      case ActivityCategory.nightlife:
-        return Icons.nightlife;
-      case ActivityCategory.shopping:
-        return Icons.shopping_bag;
-      case ActivityCategory.entertainment:
-        return Icons.theater_comedy;
-      case ActivityCategory.beach:
-        return Icons.beach_access;
-      case ActivityCategory.walking:
-        return Icons.directions_walk;
-    }
+IconData get icon {
+  switch (this) {
+    case ActivityCategory.Culture:
+      return Icons.palette;
+    case ActivityCategory.Food:
+      return Icons.restaurant;
+    case ActivityCategory.Nature:
+      return Icons.nature;
+    case ActivityCategory.Nightlife:
+      return Icons.nightlife;
+    case ActivityCategory.Shopping:
+      return Icons.shopping_bag;
+    case ActivityCategory.Entertainment:
+      return Icons.theater_comedy;
+    case ActivityCategory.Beach:
+      return Icons.beach_access;
+    case ActivityCategory.Walking:
+      return Icons.directions_walk;
+    // ✅ Missing cases added:
+    case ActivityCategory.Sports:
+      return Icons.sports;
+    case ActivityCategory.Relaxation:
+      return Icons.spa;
+    case ActivityCategory.Adventure:
+      return Icons.hiking;
+    case ActivityCategory.Camping:
+      return Icons.cabin;
+    case ActivityCategory.Other:
+      return Icons.category;
   }
+}
 }
 
 class TimeOfDay {

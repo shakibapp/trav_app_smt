@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
@@ -8,14 +11,18 @@ import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/cont
 import 'package:hamishphipps/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
+import '../../add_activity/controller/add_activity_controller.dart';
 import '../../add_activity/view/add_activity_screen.dart';
 
 class ActivitiesTabScreen extends StatelessWidget {
   final ItineraryDetailsController controller;
-  const ActivitiesTabScreen({super.key, required this.controller});
+  ActivitiesTabScreen({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
+    // Initialize AddActivityController and pass the ItineraryDetailsController reference
+    final activityController = Get.put(AddActivityController());
+    activityController.itineraryDetailsController = controller;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -64,7 +71,9 @@ class ActivitiesTabScreen extends StatelessWidget {
                     appButton(
                       width: double.infinity,
                       textColor: Colors.white,
-                      onTap: () {},
+                      onTap: () {
+                        log("id-----${controller.itineraryOverview.value.id.toString()}");
+                      },
                       name: "Ask Trav (AI)",
                     ),
                   ],
@@ -120,17 +129,29 @@ class ActivitiesTabScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              activity.name ?? "Activity Name",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            SizedBox(
+                              width: 260.w,
+                              child: Text(
+                                activity.name ?? "Activity Name",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                             Row(
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.to(() => AddActivityView(
+                                          id: controller
+                                              .itineraryOverview.value.id
+                                              .toString(),
+                                          activity: activity,
+                                        ));
+                                  },
                                   child: Image.asset(
                                     AppIcons.editButton,
                                     height: 20,
@@ -138,14 +159,26 @@ class ActivitiesTabScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(width: 10),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Image.asset(
-                                    AppIcons.deleteButton,
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                ),
+                                Obx(() {
+                                  return activityController
+                                          .isDeleteActivity.value
+                                      ? SizedBox(
+                                          height: 15,
+                                          width: 15,
+                                          child: CircularProgressIndicator
+                                              .adaptive())
+                                      : InkWell(
+                                          onTap: () {
+                                            activityController.deleteActivity(
+                                                activity.id.toString());
+                                          },
+                                          child: Image.asset(
+                                            AppIcons.deleteButton,
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                        );
+                                }),
                               ],
                             ),
                           ],
@@ -233,29 +266,42 @@ class ActivitiesTabScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: appButton(
-                                height: 45,
-                                onTap: () {},
-                                name: "Missed",
-                                bgColor: Colors.transparent,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: appButton(
-                                height: 45,
-                                onTap: () {},
-                                name: activity.status == "Pending"
-                                    ? "Mark as Complete"
-                                    : "Complete",
-                                textColor: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                        Obx(() => activity.status == "Completed"
+                            ? SizedBox()
+                            : Row(
+                                children: [
+                                  Expanded(
+                                    child: appButton(
+                                      height: 45,
+                                      loading: activityController
+                                          .isMissedLoading
+                                          .value, // শুধু Missed button loading
+                                      onTap: () => activityController
+                                          .statusUpdateActivity(
+                                              activity.id.toString(), "Missed"),
+                                      name: "Missed",
+                                      bgColor: Colors.transparent,
+                                    ),
+                                  ),
+                                  SizedBox(width: 12),
+                                  Expanded(
+                                    child: appButton(
+                                      height: 45,
+                                      loading: activityController
+                                          .isCompletedLoading
+                                          .value, // শুধু Complete button loading
+                                      onTap: () => activityController
+                                          .statusUpdateActivity(
+                                              activity.id.toString(),
+                                              "Completed"),
+                                      name: activity.status == "Pending"
+                                          ? "Mark as Complete"
+                                          : "Complete",
+                                      textColor: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              )),
                       ],
                     ),
                   ),

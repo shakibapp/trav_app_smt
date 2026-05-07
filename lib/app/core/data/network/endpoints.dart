@@ -26,4 +26,6 @@ class Urls {
   static const String createAccommondation = "$baseUrl/accommodations"; //POST With ID
   static const String createTransportation = "$baseUrl/transportations"; //POST With ID
   static const String activityCreate = "$baseUrl/activities"; 
+  static const String singleActivityById ="$baseUrl/activities/single"; //get 
+  static const String aiCreateActivityById ="$baseUrl/ai/generate-activities"; //get 
 }

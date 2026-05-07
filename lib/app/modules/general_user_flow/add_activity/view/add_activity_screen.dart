@@ -6,19 +6,26 @@ import 'package:hamishphipps/app/modules/general_user_flow/add_activity/controll
 import 'package:hamishphipps/app/modules/general_user_flow/add_activity/model/add_activity_model.dart';
 import '../../../../core/utils/date_formatter.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/model/tripltinerary_overview_model.dart'
+    as itinerary_model;
 
 class AddActivityView extends StatelessWidget {
   final String id;
-  AddActivityView({super.key, required this.id});
+  final itinerary_model.Activity? activity;
+  AddActivityView({super.key, required this.id, this.activity});
   final controller = Get.put(AddActivityController());
+
   @override
   Widget build(BuildContext context) {
+    if (activity != null) {
+      controller.setActivityForEdit(activity!);
+    }
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         title: Text(
-          'Add Activities',
+          controller.isEdit.value ? 'Edit Activity' : 'Add Activities',
           style: TextStyle(
             fontSize: 20.sp,
             fontWeight: FontWeight.w600,
@@ -537,7 +544,9 @@ class AddActivityView extends StatelessWidget {
           Expanded(
             child: Obx(() {
               return ElevatedButton(
-                onPressed: () => controller.createActivity(id.toString()),
+                onPressed: () => controller.isEdit.value
+                    ? controller.updateActivity(activity!.id.toString())
+                    : controller.createActivity(id.toString()),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.authOrange,
                   padding: EdgeInsets.symmetric(vertical: 16),
@@ -555,7 +564,7 @@ class AddActivityView extends StatelessWidget {
                         ),
                       )
                     : Text(
-                        'Save',
+                        controller.isEdit.value ? 'Update' : 'Save',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

@@ -19,7 +19,7 @@ class ItineraryDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    
+
     getItineraryOverview("69eeed3b57523b7608fc8d67");
   }
 
@@ -40,34 +40,65 @@ class ItineraryDetailsController extends GetxController {
 
   void removeActivity(String activityId) {
     selectedActivities.removeWhere((a) => a.id == activityId);
+  }
 
-    // Update suggested list
-    //   final index = suggestedActivities.indexWhere((a) => a.id == activityId);
-    //   if (index != -1) {
-    //     suggestedActivities[index] = suggestedActivities[index].copyWith(isAdded: false);
-    //   }
-    // }
+  // Update activity in local list
+  void updateActivityInList(Activity updatedActivity) {
+    final activities = itineraryOverview.value.activities;
+    if (activities != null) {
+      final index = activities.indexWhere((a) => a.id == updatedActivity.id);
+      if (index != -1) {
+        activities[index] = updatedActivity;
+        itineraryOverview.refresh();
+      }
+    }
+  }
 
-    // void addAccommodation(Accommodation accommodation) {
-    //   if (!currentTrip.value.accommodations.any((a) => a.id == accommodation.id)) {
-    //     currentTrip.value.accommodations.add(accommodation);
-    //     currentTrip.refresh(); // Notify listeners
-    //   }
-    // }
+  // Add activity to local list
+  void addActivityToList(Activity newActivity) {
+    final activities = itineraryOverview.value.activities;
+    if (activities != null) {
+      activities.add(newActivity);
+      itineraryOverview.refresh();
+    }
+  }
 
-    // void addTransport(Transport transport) {
-    //   if (!currentTrip.value.transports.any((t) => t.id == transport.id)) {
-    //     currentTrip.value.transports.add(transport);
-    //     currentTrip.refresh(); // Notify listeners
-    //   }
-    // }
+  // Delete activity from local list
+  void deleteActivityFromList(String activityId) {
+    final activities = itineraryOverview.value.activities;
+    if (activities != null) {
+      activities.removeWhere((a) => a.id == activityId);
+      itineraryOverview.refresh();
+    }
+  }
 
-    // double getTotalCost() {
-    //   double total = 0;
-    //   total += currentTrip.value.accommodations.fold(0, (sum, a) => sum + a.price);
-    //   total += currentTrip.value.transports.fold(0, (sum, t) => sum + t.price);
-    //   total += selectedActivities.fold(0, (sum, a) => sum + a.price);
-    //   return total;
+  // Update activity status in local list
+  void updateActivityStatus(String activityId, String newStatus) {
+    final activities = itineraryOverview.value.activities;
+    if (activities != null) {
+      final index = activities.indexWhere((a) => a.id == activityId);
+      if (index != -1) {
+        final updatedActivity = activities[index];
+        activities[index] = Activity(
+          id: updatedActivity.id,
+          itineraryId: updatedActivity.itineraryId,
+          name: updatedActivity.name,
+          dayNumber: updatedActivity.dayNumber,
+          type: updatedActivity.type,
+          startDate: updatedActivity.startDate,
+          endDate: updatedActivity.endDate,
+          startTime: updatedActivity.startTime,
+          endTime: updatedActivity.endTime,
+          location: updatedActivity.location,
+          expense: updatedActivity.expense,
+          status: newStatus,
+          rating: updatedActivity.rating,
+          createdAt: updatedActivity.createdAt,
+          updatedAt: updatedActivity.updatedAt,
+        );
+        itineraryOverview.refresh();
+      }
+    }
   }
 
   String formatDate(DateTime date) {

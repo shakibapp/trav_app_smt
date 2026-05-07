@@ -6,13 +6,18 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_activity/model/add_activity_model.dart'
     hide TimeOfDay;
+import 'package:hamishphipps/app/modules/general_user_flow/add_activity/model/single_activity_model.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_activity/validation/add_activity_validation_screen.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/model/tripltinerary_overview_model.dart'
+    as itinerary_model;
 import 'package:intl/intl.dart';
 
 class AddActivityController extends GetxController {
   final networkConfig = NetworkConfigV1.instance;
+  ItineraryDetailsController? itineraryDetailsController;
 
   // Form states
   final formKey = GlobalKey<FormState>();
@@ -29,6 +34,7 @@ class AddActivityController extends GetxController {
   final selectedEndDate = Rx<DateTime?>(null);
   final isLoading = false.obs;
   final errorMessage = RxnString();
+  final isEdit = false.obs;
 
   // Field error states
   final activityNameError = RxnString();
@@ -45,6 +51,21 @@ class AddActivityController extends GetxController {
   void onInit() {
     super.onInit();
     _setupValidationListeners();
+  }
+
+  void setActivityForEdit(itinerary_model.Activity activity) {
+    isEdit.value = true;
+    activityNameController.text = activity.name ?? '';
+    selectedDayNumber.value = activity.dayNumber;
+    selectedCategories.assignAll(activity.type?.map(
+            (t) => ActivityCategory.values.firstWhere((e) => e.name == t)) ??
+        []);
+    selectedStartDate.value = activity.startDate;
+    selectedEndDate.value = activity.endDate;
+    startTimeController.text = activity.startTime ?? '';
+    endTimeController.text = activity.endTime ?? '';
+    locationController.text = activity.location ?? '';
+    expenseController.text = activity.expense?.toString() ?? '';
   }
 
   // Setup real-time validation listeners
@@ -256,9 +277,26 @@ class AddActivityController extends GetxController {
           "${Urls.activityCreate}/$id", jsonEncode(activity),
           is_auth: true);
       if (response != null && response["success"] == true) {
+        // Add the new activity to the local list instead of refetching all data
+        final newActivity = itinerary_model.Activity(
+          id: response["data"]["id"],
+          name: activityNameController.text.trim(),
+          dayNumber: selectedDayNumber.value,
+          type: selectedCategories.map((e) => e.name).toList(),
+          startDate: selectedStartDate.value,
+          endDate: selectedEndDate.value,
+          startTime: startTimeController.text.trim(),
+          endTime: endTimeController.text.trim(),
+          location: locationController.text.trim(),
+          expense: double.parse(expenseController.text).toInt(),
+          status: "Pending",
+        );
+        itineraryDetailsController?.addActivityToList(newActivity);
+
+        resetForm();
+        Get.back();
         AppSnackbar.success("${response["message"]}");
         log("create activity success ${response["message"]}");
-        resetForm();
       } else {
         AppSnackbar.failed("${response["message"]}");
         log("create activity failed ${response["message"]}");
@@ -267,6 +305,160 @@ class AddActivityController extends GetxController {
       log('Failed to add activity: ${e.toString()}');
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  // get single activity
+  final Rx<SingleActivityModel> singleActivity = SingleActivityModel().obs;
+  Future<void> getSingleActivity(String id) async {
+    final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.GET, "${Urls.singleActivityById}/$id", {},
+        is_auth: true);
+    if (response != null && response["success"] == true) {
+      singleActivity.value = SingleActivityModel.fromJson(response["data"]);
+      activityNameController.text = singleActivity.value.name.toString();
+      locationController.text = singleActivity.value.location.toString();
+      expenseController.text = singleActivity.value.expense.toString();
+    }
+  }
+
+  //update activity --
+  final RxBool isUpdateActivivtyLoading = false.obs;
+  Future<void> updateActivity(String id) async {
+    try {
+      isUpdateActivivtyLoading.value = true;
+
+      // Create Activity object
+      final Map<String, dynamic> activity = {
+        "name": activityNameController.text.trim(),
+        "dayNumber": int.parse(selectedDayNumber.value.toString()),
+        "type": selectedCategories.map((e) => e.name).toList(),
+        "startDate": toIsoDate(selectedStartDate.value!),
+        "endDate": toIsoDate(selectedEndDate.value!),
+        "startTime": startTimeController.text.trim(),
+        "endTime": endTimeController.text.trim(),
+        "location": locationController.text.trim(),
+        "expense": double.parse(expenseController.text),
+      };
+      log("user input data ---$activity");
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.PUT, "${Urls.activityCreate}/$id", jsonEncode(activity),
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        // Update the activity in the local list instead of refetching all data
+        final updatedActivity = itinerary_model.Activity(
+          id: id,
+          name: activityNameController.text.trim(),
+          dayNumber: selectedDayNumber.value,
+          type: selectedCategories.map((e) => e.name).toList(),
+          startDate: selectedStartDate.value,
+          endDate: selectedEndDate.value,
+          startTime: startTimeController.text.trim(),
+          endTime: endTimeController.text.trim(),
+          location: locationController.text.trim(),
+          expense: double.parse(expenseController.text).toInt(),
+          status: "Pending",
+        );
+        itineraryDetailsController?.updateActivityInList(updatedActivity);
+
+        resetForm();
+        Get.back();
+        AppSnackbar.success("${response["message"]}");
+        log("Update activity success ${response["message"]}");
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+        log("Update activity failed ${response["message"]}");
+      }
+    } catch (e) {
+      log('Failed to update activity: ${e.toString()}');
+    } finally {
+      isUpdateActivivtyLoading.value = false;
+    }
+  }
+
+  //create activity by useing ai
+  final RxBool isCreateAIActivity = false.obs;
+  final preferencesTEC = TextEditingController();
+  Future<void> createAIActivtity(String id) async {
+    try {
+      isCreateAIActivity.value = true;
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.POST,
+          "${Urls.aiCreateActivityById}/$id",
+          jsonEncode({
+            "preferences": preferencesTEC.text,
+          }),
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        AppSnackbar.success("${response["message"]}");
+        log("Ai Create activity ---success ${response["message"]}");
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+        log("AI create activity failed --- ${response["message"]}");
+      }
+    } catch (e) {
+      log("Ai create activity error --${e.toString()}");
+    } finally {
+      isCreateAIActivity.value = false;
+    }
+  }
+
+//update status
+  final RxBool isMissedLoading = false.obs;
+  final RxBool isCompletedLoading = false.obs;
+
+  Future<void> statusUpdateActivity(String id, String status) async {
+    try {
+      if (status == "Missed") {
+        isMissedLoading.value = true;
+      } else {
+        isCompletedLoading.value = true;
+      }
+
+      final Map<String, dynamic> activity = {
+        "status": status,
+      };
+
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.PUT, "${Urls.activityCreate}/$id", jsonEncode(activity),
+          is_auth: true);
+
+      if (response != null && response["success"] == true) {
+        // Update activity status in local list
+        itineraryDetailsController?.updateActivityStatus(id, status);
+        AppSnackbar.success("${response["message"]}");
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+      }
+    } catch (e) {
+      log('Failed to update activity: ${e.toString()}');
+    } finally {
+      isMissedLoading.value = false;
+      isCompletedLoading.value = false;
+    }
+  }
+
+// delete activity
+  final RxBool isDeleteActivity = false.obs;
+  Future<void> deleteActivity(String id) async {
+    try {
+      isDeleteActivity.value = true;
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.DELETE,
+          "${Urls.baseUrl}/activities/$id",
+          jsonEncode({}),
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        AppSnackbar.success("${response["message"]}");
+        // Delete the activity from the local list
+        itineraryDetailsController?.deleteActivityFromList(id);
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+      }
+    } catch (e) {
+      log("Delete activity error ${e.toString()}");
+    } finally {
+      isDeleteActivity.value = false;
     }
   }
 
@@ -293,6 +485,7 @@ class AddActivityController extends GetxController {
     locationError.value = null;
     expenseError.value = null;
     errorMessage.value = null;
+    isEdit.value = false;
   }
 
   // Cancel action
