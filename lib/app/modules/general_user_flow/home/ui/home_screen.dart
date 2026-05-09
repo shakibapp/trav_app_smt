@@ -78,7 +78,7 @@ class HomeScreen extends GetWidget<HomeController> {
                               return Obx(() {
                                 return InkWell(
                                   onTap: () =>
-                                      controller.getTripDetailById(trip.id),
+                                      controller.getTripDetailById(trip.id.toString()),
                                   borderRadius: BorderRadius.circular(20.r),
                                   child: Container(
                                     margin: EdgeInsets.only(right: 5.h),
@@ -106,12 +106,31 @@ class HomeScreen extends GetWidget<HomeController> {
                                     child: Stack(
                                       children: [
                                         // Background Image
+                                        // ClipRRect(
+                                        //   borderRadius: BorderRadius.circular(20.r),
+                                        //   child: AppNetworkImage(
+                                        //     imageUrl: "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                        //     width: double.infinity,
+                                        //     height: double.infinity,
+                                        //     fit: BoxFit.cover,
+                                        //   ),
+                                        // ),
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            20.r,
-                                          ),
-                                          child: Image.asset(
-                                            'assets/images/rome.png',
+                                          borderRadius: BorderRadius.circular(20.r),
+                                          child: trip.images != null && trip.images!.isNotEmpty
+                                              ? PageView.builder(
+                                            itemCount: trip.images!.length,
+                                            itemBuilder: (_, imgIndex) {
+                                              return AppNetworkImage(
+                                                imageUrl: trip.images![imgIndex]??"https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
+                                          )
+                                              : AppNetworkImage(
+                                            imageUrl: "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
                                             width: double.infinity,
                                             height: double.infinity,
                                             fit: BoxFit.cover,
@@ -137,7 +156,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                                     BorderRadius.circular(20.r),
                                               ),
                                               child: Text(
-                                                trip.status,
+                                                trip.status.toString(),
                                                 style: globaltextInterTight(
                                                   fontSize: 12.sp,
                                                   fontWeight: FontWeight.w600,
@@ -168,7 +187,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                                 vertical: 14.h,
                                               ),
                                               decoration: BoxDecoration(
-                                                color: Colors.black54,
+                                                color: Colors.black12,
                                                 border: Border.all(
                                                   color: Colors.white
                                                       .withValues(alpha: 0.18),
@@ -188,7 +207,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          trip.city.join(', '),
+                                                          trip.city!.join(', '),
                                                           maxLines: 1,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -204,9 +223,9 @@ class HomeScreen extends GetWidget<HomeController> {
                                                         ),
                                                         SizedBox(height: 4.h),
                                                         Text(
-                                                          '${DateFormat('MMM d').format(DateTime.parse(trip.startDate))} – '
-                                                          '${DateFormat('MMM d').format(DateTime.parse(trip.endDate))} '
-                                                          '· ${DateTime.parse(trip.endDate).difference(DateTime.parse(trip.startDate)).inDays} days '
+                                                          '${DateFormat('MMM d').format(DateTime.parse(trip.startDate.toString()))} – '
+                                                          '${DateFormat('MMM d').format(DateTime.parse(trip.endDate.toString()))} '
+                                                          '· ${DateTime.parse(trip.endDate.toString()).difference(DateTime.parse(trip.startDate.toString())).inDays} days '
                                                           '\$${trip.budget}',
                                                           maxLines: 1,
                                                           overflow: TextOverflow
@@ -240,111 +259,12 @@ class HomeScreen extends GetWidget<HomeController> {
                 ),
 
                 SizedBox(height: 10.h),
-                Text(
-                  "Your Destinations",
-                  style: globaltextInterTight(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.blackColor,
-                  ),
-                ),
-
-                SizedBox(
-                  height: 120.h,
-                  width: double.infinity,
-                  child: Obx(() {
-                    return controller.isLoadingTripDetail.value
-                        ? _buildDestinationsLoadingShimmer()
-                        : ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller
-                                    .tripDetail.value.itineraries?.length ??
-                                0,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (_, index) {
-                              final itinerary = controller
-                                  .tripDetail.value.itineraries?[index];
-                              if (itinerary == null) {
-                                return const SizedBox.shrink();
-                              }
-                              return Obx(() {
-                                return InkWell(
-                                  onTap: itinerary.id == null
-                                      ? null
-                                      : () => controller.getItineraryDetailById(
-                                            itinerary.id!,
-                                          ),
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  child: Container(
-                                    height: 120.h,
-                                    margin: EdgeInsets.only(right: 5.h),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      border: Border.all(
-                                        color: controller.selectedItineraryId
-                                                    .value ==
-                                                itinerary.id
-                                            ? AppColors.authOrange
-                                            : Colors.transparent,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 5.h),
-                                          child: Container(
-                                            width: 80,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.r),
-                                            ),
-                                            child: AppNetworkImage(
-                                              imageUrl: itinerary.image,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          "${itinerary.name}",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.blackColor,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Days:${itinerary.days}",
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.blackColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              });
-                            },
-                          );
-                  }),
-                ),
-                SizedBox(height: 10.h),
                 Obx(() {
-                  if (controller.isLoadingItineraryDetail.value) {
+                  if (controller.isLoadingTripDetail.value) {
                     return _buildItineraryDetailLoadingShimmer();
                   }
 
-                  final itinerary = controller.itineraryDetail.value;
+                  final itinerary = controller.tripDetail.value;
                   if (itinerary.id == null || itinerary.id!.isEmpty) {
                     return SizedBox.shrink();
                   }
@@ -364,7 +284,7 @@ class HomeScreen extends GetWidget<HomeController> {
                       if (itinerary.priorityRemainders != null &&
                           itinerary.priorityRemainders!.isNotEmpty)
                         ...itinerary.priorityRemainders!.map(
-                          (reminder) => Column(
+                              (reminder) => Column(
                             children: [
                               SizedBox(height: 10.h),
                               priorityRemainder(
@@ -402,6 +322,110 @@ class HomeScreen extends GetWidget<HomeController> {
                     ],
                   );
                 }),
+                SizedBox(height: 10.h),
+                Text(
+                  "Your Destinations",
+                  style: globaltextInterTight(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+                Text("${controller.tripDetail.value.itineraries!.length} Stops(Total)"),
+                SizedBox(height: 10,),
+
+                SizedBox(
+                  height: 150.h,
+                  width: double.infinity,
+                  child: Obx(() {
+                    return controller.isLoadingTripDetail.value
+                        ? _buildDestinationsLoadingShimmer()
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller
+                                    .tripDetail.value.itineraries?.length ??
+                                0,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (_, index) {
+                              final itinerary = controller
+                                  .tripDetail.value.itineraries?[index];
+                              if (itinerary == null) {
+                                return const SizedBox.shrink();
+                              }
+                              return GestureDetector(
+                                onTap:(){},
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 180.h,
+                                  margin: EdgeInsets.only(right: 5.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: Colors.grey.shade200,
+
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 170,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(15),
+                                          ),
+                                          child: AppNetworkImage(
+                                            height: 170,
+                                            imageUrl: itinerary.image,
+                                            borderRadius:
+                                            BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15)),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:  EdgeInsets.only(left: 8.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${itinerary.name}",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColors.blackColor,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${itinerary.days} Day, ${itinerary.transportation}",
+                                                style: TextStyle(
+                                                  fontSize: 10.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColors.blackColor,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                  }),
+                ),
+                SizedBox(height: 10.h),
+
 
                 SizedBox(height: 20.h),
                 Text(
@@ -413,21 +437,21 @@ class HomeScreen extends GetWidget<HomeController> {
                   ),
                 ),
                 Obx(() {
-                  if (controller.isLoadingItineraryDetail.value) {
+                  if (controller.isLoadingTripDetail.value) {
                     return _buildItineraryDetailLoadingShimmer();
                   } else {
-                    final itinerary = controller.itineraryDetail.value;
+                    final remi = controller.tripDetail.value;
                     return ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: itinerary.remainders?.length ?? 0,
+                      itemCount:remi.remainders!.length,
                       itemBuilder: (_, index) {
-                        final remainder = itinerary.remainders?[index];
+                        final remainder = remi.remainders![index];
                         return TripRemindersSection(
-                          title: '${remainder?.title ?? 'Reminder'}',
+                          title: remainder.title ?? 'Reminder',
                           arrivingDate:
-                              "${remainder!.description ?? ''} · ${remainder.daysLeft ?? 0} days left",
+                              remainder.description ?? '',
                           onBook: () {},
                         );
                       },

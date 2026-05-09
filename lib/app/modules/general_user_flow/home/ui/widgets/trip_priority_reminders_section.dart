@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamishphipps/app/core/constants/app_colors.dart';
 
 Widget priorityRemainder({
   required BuildContext context,
@@ -21,9 +22,9 @@ Widget priorityRemainder({
             color: Colors.orange[50],
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child:  Icon(
             Icons.badge_outlined,
-            color: Colors.orange,
+            color: AppColors.authOrange,
             size: 24,
           ),
         ),
@@ -43,7 +44,7 @@ Widget priorityRemainder({
         ElevatedButton(
           onPressed: onUpdate,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange,
+            backgroundColor: AppColors.authOrange,
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
             elevation: 0,

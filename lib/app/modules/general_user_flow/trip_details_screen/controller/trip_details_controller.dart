@@ -1,121 +1,58 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 
 class TripDetailsController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
   // Observables
   final isLoading = false.obs;
   final selectedTabIndex = 0.obs;
   final expandedStopIndex = (-1).obs;
 
-  // Data
-  late TravelItinerary travelData;
-  late RxList<Reminder> reminders;
-  late RxList<PriorityReminder> priorityReminders;
-  late RxList<ItineraryStop> itineraryStops;
 
   @override
   void onInit() {
     super.onInit();
-    _initializeData();
+    getSingleTripData("69fc4ba8154098ba82db9081");
+
   }
 
-  void _initializeData() {
-    travelData = TravelItinerary(
-      destination: 'Rome, Italy',
-      startDate: 'Jan 15',
-      endDate: 'Jan 28, 2025',
-      days: 2,
-      budget: '\$500-1200',
-      travelers: '2 Liberty',
-      accommodation: 'Suite/Apartment',
-    );
-
-    reminders = <Reminder>[
-      Reminder(
-        id: '1',
-        title: 'Book flight to Rome',
-        daysLeft: '5 Days Left',
-        dueDate: 'Arriving 20 Mar, 2025',
-      ),
-      Reminder(
-        id: '2',
-        title: 'Book accommodation',
-        daysLeft: 'Arriving 20 Mar',
-      ),
-    ].obs;
-
-    priorityReminders = <PriorityReminder>[
-      PriorityReminder(
-        id: '1',
-        title: 'Passport',
-        icon: AppIcons.passport,
-        status: 'Update',
-      ),
-      PriorityReminder(
-        id: '2',
-        title: 'Visa',
-        icon: AppIcons.visa,
-        status: 'Check',
-      ),
-      PriorityReminder(
-        id: '3',
-        title: 'Travel Insurance',
-        icon: AppIcons.agreement,
-        status: 'Add',
-      ),
-    ].obs;
-
-    // var itineraryList = <ItineraryItem>[
-    //   ItineraryItem(
-    //     cityName: "Rome, Italy",
-    //     duration: "3 Nights",
-    //     imageUrl: "assets/images/rome.png",
-    //     statusIcons: ["flight", "hotel", "activity"],
-    //   ),
-    //   ItineraryItem(
-    //     cityName: "Venice, Italy",
-    //     duration: "3 Nights",
-    //     imageUrl: "assets/images/rome.png",
-    //     statusIcons: ["train", "hotel", "activity"],
-    //   ),
-    // ].obs;
+  //get single trip data
+  final Rx<SingleTripDetailsModel> singleTripData = SingleTripDetailsModel().obs;
+  final RxBool isTripDetailsLoading = false.obs;
+  Future<void> getSingleTripData(String id)async{
+    try{
+      isTripDetailsLoading.value = true;
+      final response = await networkConfig.ApiRequestHandler(RequestMethod.GET, "${Urls.tripDetail}/$id",
+          {},is_auth: true);
+      if(response != null && response["success"]==true){
+        singleTripData.value = SingleTripDetailsModel.fromJson(response["data"]);
+        log("Get single trip details success ${response['message']}");
+      }else{
+        log("get Single trip details failed ${response["message"]}");
+      }
+    }catch(e){
+      log("get single trip details error ${e.toString()}");
+    }finally{
+      isTripDetailsLoading.value = false;
+    }
   }
+
 
   void toggleStop(int index) {
     expandedStopIndex.value = expandedStopIndex.value == index ? -1 : index;
   }
 
-  void updateReminder(String id, bool completed) {
-    final index = reminders.indexWhere((r) => r.id == id);
-    if (index != -1) {
-      final updated = reminders[index];
-      reminders[index] = Reminder(
-        id: updated.id,
-        title: updated.title,
-        daysLeft: updated.daysLeft,
-        dueDate: updated.dueDate,
-        isCompleted: completed,
-      );
-    }
-  }
 
-  void updatePriorityReminder(String id, bool completed) {
-    final index = priorityReminders.indexWhere((r) => r.id == id);
-    if (index != -1) {
-      final updated = priorityReminders[index];
-      priorityReminders[index] = PriorityReminder(
-        id: updated.id,
-        title: updated.title,
-        icon: updated.icon,
-        status: updated.status,
-        isCompleted: completed,
-      );
-    }
-  }
 
   void handleReminder(String title) {
     Get.snackbar(
@@ -137,9 +74,40 @@ class TripDetailsController extends GetxController {
     );
   }
 
+  //update priority Remainder
+  final RxBool isPriorityLoading= false.obs;
+  Future<void> changePriority()async{
+    try{
+      isPriorityLoading.value = true;
+      final Map<String,dynamic> data ={
+        "passportCountry": "Paris",
+        "passportExpiry": "2028-03-15T00:00:00.000Z",
+        "isVisaConfirmed": true,
+        "noVisaRequired": false,
+        "needsAttention": false,
+        "visaNotes": "Visa approved via embassy",
+        "haveInsurance": true
+      };
+      final response = await networkConfig.ApiRequestHandler(RequestMethod.PUT, "${Urls.priorityStatusChange}/",
+          jsonEncode(data),is_auth: true);
+      if(response != null && response["success"]==true){
+        AppSnackbar.success("${response["message"]}");
+        log("priority reminders status update success");
+      }else{
+        AppSnackbar.failed("${response["message"]}");
+        log("Priority remainders failed ${response["message"]}");
+      }
+    }catch(e){
+      log("priority status change error ${e.toString()}");
+    }finally{
+      isPriorityLoading.value = false;
+    }
+  }
+
+
   // Bottom Sheet Methods
-  void showPriorityReminderBottomSheet(PriorityReminder reminder) {
-    switch (reminder.title) {
+  void showPriorityReminderBottomSheet(PriorityRemainder reminder) {
+    switch (reminder.passportCountry) {
       case 'Passport':
         _showPassportBottomSheet();
         break;

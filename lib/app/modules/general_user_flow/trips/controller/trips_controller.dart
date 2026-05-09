@@ -43,14 +43,12 @@ class TripsController extends GetxController {
         is_auth: true,
       );
 
-      if (response != null) {
-        if (response is Map &&
-            response.containsKey('success') &&
-            response['success'] == true) {
-          final tripResponse = TripListResponse.fromJson(
-            response.cast<String, dynamic>(),
-          );
-          final trips = tripResponse.data.data;
+      if (response != null && response['success'] == true) {
+        if (response is Map && response.containsKey('success') && response['success'] == true) {
+          final tripResponse = List<AllTripDataModel>.from(
+              response["data"]["data"]
+                  .map((e) => AllTripDataModel.fromJson(e)));
+          final trips = tripResponse;
 
           // Clear existing lists
           ongoingTrips.clear();
@@ -59,7 +57,7 @@ class TripsController extends GetxController {
 
           // Categorize trips based on status
           for (final trip in trips) {
-            switch (trip.status.toLowerCase()) {
+            switch (trip.status!.toLowerCase()) {
               case 'ongoing':
                 ongoingTrips.add(trip);
                 break;
@@ -89,7 +87,7 @@ class TripsController extends GetxController {
 
           // Categorize trips based on status
           for (final trip in trips) {
-            switch (trip.status.toLowerCase()) {
+            switch (trip.status!.toLowerCase()) {
               case 'ongoing':
                 ongoingTrips.add(trip);
                 break;

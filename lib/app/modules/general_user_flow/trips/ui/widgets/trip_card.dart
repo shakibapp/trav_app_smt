@@ -8,6 +8,7 @@ import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/view
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/view/trip_details_screen.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../core/widgets/network_image.dart';
 import '../../models/trip_model.dart';
 
 class TripCard extends StatelessWidget {
@@ -20,17 +21,232 @@ class TripCard extends StatelessWidget {
     // Format dates
     final startDate = DateFormat(
       'MMM dd',
-    ).format(DateTime.parse(trip.startDate));
+    ).format(DateTime.parse(trip.startDate.toString()));
     final endDate = DateFormat(
       'MMM dd yyyy',
-    ).format(DateTime.parse(trip.endDate));
+    ).format(DateTime.parse(trip.endDate.toString()));
 
+    // return GestureDetector(
+    //   onTap: () => Get.to(
+    //     TripItineraryView(),
+    //   ),
+    //   //onTap: ()=>Get.to(TripDetailsScreen()),
+    //   child: Container(
+    //     decoration: BoxDecoration(
+    //       borderRadius: BorderRadius.circular(20.r),
+    //       boxShadow: [
+    //         BoxShadow(
+    //           color: Colors.black.withValues(alpha: 0.15),
+    //           blurRadius: 8,
+    //           offset: const Offset(0, 4),
+    //         ),
+    //       ],
+    //     ),
+    //     // child: Stack(
+    //     //   children: [
+    //     //     ClipRRect(
+    //     //       borderRadius: BorderRadius.circular(20.r),
+    //     //       child: trip.images != null && trip.images!.isNotEmpty
+    //     //           ? PageView.builder(
+    //     //         itemCount: trip.images!.length,
+    //     //         itemBuilder: (_, imgIndex) {
+    //     //           return AppNetworkImage(
+    //     //             imageUrl: trip.images![imgIndex]??"https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+    //     //             width: double.infinity,
+    //     //             height: double.infinity,
+    //     //             fit: BoxFit.cover,
+    //     //           );
+    //     //         },
+    //     //       )
+    //     //           : AppNetworkImage(
+    //     //         imageUrl: "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+    //     //         width: double.infinity,
+    //     //         height: double.infinity,
+    //     //         fit: BoxFit.cover,
+    //     //       ),
+    //     //     ),
+    //     //     Container(
+    //     //       width: double.infinity,
+    //     //       height: 220.h,
+    //     //       decoration: BoxDecoration(
+    //     //         borderRadius: BorderRadius.circular(20.r),
+    //     //         gradient: LinearGradient(
+    //     //           begin: Alignment.topCenter,
+    //     //           end: Alignment.bottomCenter,
+    //     //           colors: [
+    //     //             Colors.transparent,
+    //     //             Colors.black.withValues(alpha: 0.6),
+    //     //             Colors.black.withValues(alpha: 0.8),
+    //     //           ],
+    //     //         ),
+    //     //       ),
+    //     //     ),
+    //     //     Positioned(
+    //     //       bottom: 0,
+    //     //       left: 0,
+    //     //       right: 0,
+    //     //       child: Padding(
+    //     //         padding: EdgeInsets.all(16.w),
+    //     //         child: Column(
+    //     //           crossAxisAlignment: CrossAxisAlignment.start,
+    //     //           children: [
+    //     //             Text(
+    //     //               trip.city!.join(', '),
+    //     //               style: globaltextInterTight(
+    //     //                 fontSize: 20.sp,
+    //     //                 fontWeight: FontWeight.w800,
+    //     //                 color: AppColors.whiteColor,
+    //     //                 lineHeight: 1.2,
+    //     //               ),
+    //     //             ),
+    //     //             SizedBox(height: 12.h),
+    //     //             // Date and Days on same row
+    //     //             Row(
+    //     //               children: [
+    //     //                 _buildInfoChip(
+    //     //                   icon: 'assets/icons/trip_calendar.svg',
+    //     //                   label: '$startDate - $endDate',
+    //     //                 ),
+    //     //                 SizedBox(width: 8.w),
+    //     //                 _buildInfoChip(
+    //     //                   icon: 'assets/icons/trip_calendar.svg',
+    //     //                   label: '${trip.totalDays} Days',
+    //     //                 ),
+    //     //               ],
+    //     //             ),
+    //     //             SizedBox(height: 8.h),
+    //     //             // Other info chips
+    //     //             Row(
+    //     //               children: [
+    //     //                 _buildInfoChip(
+    //     //                   icon: 'assets/icons/trip_dollar.svg',
+    //     //                   label: '\$${trip.budget}',
+    //     //                 ),
+    //     //                 SizedBox(width: 5.w),
+    //     //                 _buildInfoChip(
+    //     //                   icon: 'assets/icons/home_outline.svg',
+    //     //                   label: trip.interests!.join(', '),
+    //     //                 ),
+    //     //               ],
+    //     //             ),
+    //     //           ],
+    //     //         ),
+    //     //       ),
+    //     //     ),
+    //     //   ],
+    //     // ),
+    //     child: Stack(
+    //       children: [
+    //         // Background Image
+    //         ClipRRect(
+    //           borderRadius: BorderRadius.circular(20.r),
+    //           child: trip.images != null && trip.images!.isNotEmpty
+    //               ? PageView.builder(
+    //                   itemCount: trip.images!.length,
+    //                   itemBuilder: (_, imgIndex) {
+    //                     return AppNetworkImage(
+    //                       imageUrl: trip.images![imgIndex] ??
+    //                           "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+    //                       width: double.infinity,
+    //                       height: double.infinity,
+    //                       fit: BoxFit.cover,
+    //                     );
+    //                   },
+    //                 )
+    //               : AppNetworkImage(
+    //                   imageUrl:
+    //                       "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+    //                   width: double.infinity,
+    //                   height: double.infinity,
+    //                   fit: BoxFit.cover,
+    //                 ),
+    //         ),
+    //
+    //         // Shadow ONLY at bottom
+    //         Positioned(
+    //           left: 0,
+    //           right: 0,
+    //           bottom: 0,
+    //           child: Container(
+    //             height: 130.h, // শুধু নিচের অংশ cover করবে
+    //             decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.only(
+    //                 bottomLeft: Radius.circular(20.r),
+    //                 bottomRight: Radius.circular(20.r),
+    //               ),
+    //               gradient: LinearGradient(
+    //                 begin: Alignment.topCenter,
+    //                 end: Alignment.bottomCenter,
+    //                 colors: [
+    //                   Colors.transparent,
+    //                   Colors.black12.withValues(alpha: 0.75),
+    //                   Colors.black12.withValues(alpha: 0.92),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //
+    //         // Text content
+    //         Positioned(
+    //           bottom: 0,
+    //           left: 0,
+    //           right: 0,
+    //           child: Padding(
+    //             padding: EdgeInsets.all(16.w),
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: [
+    //                 Text(
+    //                   trip.city!.join(', '),
+    //                   style: globaltextInterTight(
+    //                     fontSize: 20.sp,
+    //                     fontWeight: FontWeight.w800,
+    //                     color: AppColors.whiteColor,
+    //                     lineHeight: 1.2,
+    //                   ),
+    //                 ),
+    //                 SizedBox(height: 12.h),
+    //                 Row(
+    //                   children: [
+    //                     _buildInfoChip(
+    //                       icon: 'assets/icons/trip_calendar.svg',
+    //                       label: '$startDate - $endDate',
+    //                     ),
+    //                     SizedBox(width: 8.w),
+    //                     _buildInfoChip(
+    //                       icon: 'assets/icons/trip_calendar.svg',
+    //                       label: '${trip.totalDays} Days',
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 SizedBox(height: 8.h),
+    //                 Row(
+    //                   children: [
+    //                     _buildInfoChip(
+    //                       icon: 'assets/icons/trip_dollar.svg',
+    //                       label: '\$${trip.budget}',
+    //                     ),
+    //                     SizedBox(width: 5.w),
+    //                     _buildInfoChip(
+    //                       icon: 'assets/icons/home_outline.svg',
+    //                       label: trip.interests!.join(', '),
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
     return GestureDetector(
-      onTap: () => Get.to(
-        TripItineraryView(),
-      ),
-      //onTap: ()=>Get.to(TripDetailsScreen()),
+      //onTap: () => Get.to(TripItineraryView()),
+      onTap: () => Get.to(TripDetailsScreen()),
       child: Container(
+        height: 220.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
@@ -41,86 +257,111 @@ class TripCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.r),
-              child: Image.asset(
-                'assets/images/rome.png', // Default image since API doesn't provide
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.r),
+          child: Stack(
+            children: [
+              // Background Image — PageView সরিয়ে SizedBox দিয়ে wrap করো
+              SizedBox(
                 width: double.infinity,
                 height: 220.h,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 220.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.6),
-                    Colors.black.withValues(alpha: 0.8),
-                  ],
+                child: trip.images != null && trip.images!.isNotEmpty
+                    ? PageView.builder(
+                  itemCount: trip.images!.length,
+                  itemBuilder: (_, imgIndex) {
+                    return AppNetworkImage(
+                      imageUrl: trip.images![imgIndex] ??
+                          "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                      width: double.infinity,
+                      height: 220.h,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                )
+                    : AppNetworkImage(
+                  imageUrl:
+                  "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                  width: double.infinity,
+                  height: 220.h,
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: EdgeInsets.all(16.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      trip.city.join(', '),
-                      style: globaltextInterTight(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.whiteColor,
-                        lineHeight: 1.2,
+
+              // Shadow only at bottom
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  height: 130.h,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.75),
+                        Colors.black.withValues(alpha: 0.92),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Text content
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: EdgeInsets.all(16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        trip.city!.join(', '),
+                        style: globaltextInterTight(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.whiteColor,
+                          lineHeight: 1.2,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 12.h),
-                    // Date and Days on same row
-                    Row(
-                      children: [
-                        _buildInfoChip(
-                          icon: 'assets/icons/trip_calendar.svg',
-                          label: '$startDate - $endDate',
-                        ),
-                        SizedBox(width: 8.w),
-                        _buildInfoChip(
-                          icon: 'assets/icons/trip_calendar.svg',
-                          label: '${trip.totalDays} Days',
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.h),
-                    // Other info chips
-                    Row(
-                      children: [
-                        _buildInfoChip(
-                          icon: 'assets/icons/trip_dollar.svg',
-                          label: '\$${trip.budget}',
-                        ),
-                        SizedBox(width: 5.w),
-                        _buildInfoChip(
-                          icon: 'assets/icons/home_outline.svg',
-                          label: trip.interests.join(', '),
-                        ),
-                      ],
-                    ),
-                  ],
+                      SizedBox(height: 12.h),
+                      Row(
+                        children: [
+                          _buildInfoChip(
+                            icon: 'assets/icons/trip_calendar.svg',
+                            label: '$startDate - $endDate',
+                          ),
+                          SizedBox(width: 8.w),
+                          _buildInfoChip(
+                            icon: 'assets/icons/trip_calendar.svg',
+                            label: '${trip.totalDays} Days',
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.h),
+                      Row(
+                        children: [
+                          _buildInfoChip(
+                            icon: 'assets/icons/trip_dollar.svg',
+                            label: '\$${trip.budget}',
+                          ),
+                          SizedBox(width: 5.w),
+                          _buildInfoChip(
+                            icon: 'assets/icons/home_outline.svg',
+                            label: trip.interests!.join(', '),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

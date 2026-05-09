@@ -38,13 +38,11 @@ class HomeController extends GetxController {
         is_auth: true,
       );
       if (response != null && response['success'] == true) {
-        final tripListResponse = TripListResponse.fromJson(response);
-        upcomingTripsFromApi.value = tripListResponse.data.data;
-        if (upcomingTripsFromApi.isNotEmpty) {
-          final firstTripId = upcomingTripsFromApi.first.id;
-          selectedTripId.value = firstTripId;
-          getTripDetailById(firstTripId);
-        }
+        upcomingTripsFromApi.value = List<AllTripDataModel>.from(
+            response["data"]["data"]
+                .map((e) => AllTripDataModel.fromJson(e))
+                .where((trip) => trip.status?.toLowerCase() == 'upcoming'));
+
       } else {
         log(
           " Failed to fetch upcoming trips: ${response?['message'] ?? 'Unknown error'}",

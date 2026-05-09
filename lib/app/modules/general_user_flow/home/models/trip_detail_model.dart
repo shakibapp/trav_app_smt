@@ -10,6 +10,7 @@ class TripDetailModel {
     final int? totalDays;
     final List<String>? interests;
     final int? budget;
+    final List<String>? images;
     final String? status;
     final bool? isDeleted;
     final bool? isSharedWithParents;
@@ -29,6 +30,7 @@ class TripDetailModel {
         this.totalDays,
         this.interests,
         this.budget,
+        this.images,
         this.status,
         this.isDeleted,
         this.isSharedWithParents,
@@ -49,6 +51,7 @@ class TripDetailModel {
         totalDays: json["totalDays"],
         interests: json["interests"] == null ? [] : List<String>.from(json["interests"]!.map((x) => x)),
         budget: json["budget"],
+        images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
         status: json["status"],
         isDeleted: json["isDeleted"],
         isSharedWithParents: json["isSharedWithParents"],
@@ -69,6 +72,7 @@ class TripDetailModel {
         "totalDays": totalDays,
         "interests": interests == null ? [] : List<dynamic>.from(interests!.map((x) => x)),
         "budget": budget,
+        "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
         "status": status,
         "isDeleted": isDeleted,
         "isSharedWithParents": isSharedWithParents,
@@ -87,7 +91,7 @@ class Itinerary {
     final int? days;
     final String? accommodation;
     final String? transportation;
-    final dynamic image;
+    final String? image;
     final DateTime? createdAt;
     final DateTime? updatedAt;
 
@@ -131,9 +135,8 @@ class Itinerary {
 class PriorityRemainder {
     final String? id;
     final String? tripId;
-    final String? itineraryId;
     final String? passportCountry;
-    final dynamic passportExpiry;
+    final DateTime? passportExpiry;
     final bool? isVisaConfirmed;
     final bool? noVisaRequired;
     final bool? needsAttention;
@@ -146,7 +149,6 @@ class PriorityRemainder {
     PriorityRemainder({
         this.id,
         this.tripId,
-        this.itineraryId,
         this.passportCountry,
         this.passportExpiry,
         this.isVisaConfirmed,
@@ -162,9 +164,8 @@ class PriorityRemainder {
     factory PriorityRemainder.fromJson(Map<String, dynamic> json) => PriorityRemainder(
         id: json["id"],
         tripId: json["tripId"],
-        itineraryId: json["itineraryId"],
         passportCountry: json["passportCountry"],
-        passportExpiry: json["passportExpiry"],
+        passportExpiry: json["passportExpiry"] == null ? null : DateTime.parse(json["passportExpiry"]),
         isVisaConfirmed: json["isVisaConfirmed"],
         noVisaRequired: json["noVisaRequired"],
         needsAttention: json["needsAttention"],
@@ -178,9 +179,8 @@ class PriorityRemainder {
     Map<String, dynamic> toJson() => {
         "id": id,
         "tripId": tripId,
-        "itineraryId": itineraryId,
         "passportCountry": passportCountry,
-        "passportExpiry": passportExpiry,
+        "passportExpiry": passportExpiry?.toIso8601String(),
         "isVisaConfirmed": isVisaConfirmed,
         "noVisaRequired": noVisaRequired,
         "needsAttention": needsAttention,

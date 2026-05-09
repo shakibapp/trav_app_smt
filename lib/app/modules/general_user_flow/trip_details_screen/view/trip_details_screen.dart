@@ -5,9 +5,13 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
+import 'package:hamishphipps/app/core/widgets/network_image.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/controller/trip_details_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
+import 'package:intl/intl.dart';
+
+import '../widget/trip_details_widget.dart';
 
 class TripDetailsScreen extends StatelessWidget {
   TripDetailsScreen({super.key});
@@ -20,24 +24,35 @@ class TripDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(controller),
-              _buildRemindersSection(controller),
-              _buildPriorityRemindersSection(controller),
-              _buildItinerarySection(controller),
-              SizedBox(height: 20),
-              _buildOptimizeRouteSection(controller),
-              const SizedBox(height: 30),
-            ],
-          ),
+          child: Obx(() {
+            if (controller.isTripDetailsLoading.value) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (controller.singleTripData.value == null) {
+              return Text("No Data Found");
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(controller),
+                  _buildRemindersSection(controller),
+                  _buildPriorityRemindersSection(controller),
+                  _buildItinerarySection(controller),
+                  SizedBox(height: 20),
+                  _buildOptimizeRouteSection(controller),
+                  const SizedBox(height: 30),
+                ],
+              );
+            }
+          }),
         ),
       ),
     );
   }
 
   Widget _buildHeader(TripDetailsController controller) {
+    final data = controller.singleTripData.value;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,16 +78,7 @@ class TripDetailsScreen extends StatelessWidget {
             height: 220.h,
             child: Stack(
               children: [
-                Image.asset(
-                  "assets/images/italy.png",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                  errorBuilder: (_, __, ___) => Container(
-                    color: Colors.grey[400],
-                    child: const Center(child: Icon(Icons.image, size: 50)),
-                  ),
-                ),
+                AppNetworkImage(imageUrl: data.images![0]),
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -92,24 +98,23 @@ class TripDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   controller.travelData.destination,
-                      //   style: const TextStyle(
-                      //     fontSize: 24,
-                      //     fontWeight: FontWeight.w700,
-                      //     color: Colors.white,
-                      //   ),
-                      // ),
+                      Text(
+                        data.region!.join(","),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
                       // const SizedBox(height: 8),
                       Wrap(
                         children: [
                           _buildInfoChip(
-                            '${controller.travelData.startDate} - ${controller.travelData.endDate}',
+                            formatDateRange(data.startDate.toString(),
+                                data.endDate.toString()),
                           ),
-                          const SizedBox(width: 12),
-                          _buildInfoChip(controller.travelData.travelers),
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -120,6 +125,19 @@ class TripDetailsScreen extends StatelessWidget {
         const SizedBox(height: 15),
       ],
     );
+  }
+
+  String formatDateRange(String startDate, String endDate) {
+    final start = DateTime.parse(startDate);
+    final end = DateTime.parse(endDate);
+
+    if (start.year == end.year) {
+      return '${DateFormat('MMM d').format(start)} – '
+          '${DateFormat('MMM d, y').format(end)}';
+    } else {
+      return '${DateFormat('MMM d, y').format(start)} – '
+          '${DateFormat('MMM d, y').format(end)}';
+    }
   }
 
   Widget _buildInfoChip(String text) {
@@ -150,7 +168,9 @@ class TripDetailsScreen extends StatelessWidget {
       height: 150,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
+        itemCount: controller.singleTripData.value.remainders!.length,
         itemBuilder: (context, index) {
+          final data = controller.singleTripData.value.remainders![index];
           return Container(
             width: 300,
             margin: EdgeInsets.only(right: 10),
@@ -182,18 +202,18 @@ class TripDetailsScreen extends StatelessWidget {
                       height: 30,
                       width: 100,
                       onTap: () {},
-                      name: '5 Days Left',
+                      name: '${data.daysLeft}',
                       textColor: Colors.white,
                     ),
                   ],
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Book flight to Rome",
+                  "${data.title}",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Arriving 20 Mar, 2026",
+                  "${data.description}",
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 SizedBox(height: 10),
@@ -240,90 +260,12 @@ class TripDetailsScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15),
-        Obx(
-          () => Column(
-            children: controller.priorityReminders
-                .map(
-                  (reminder) =>
-                      _buildPriorityReminderCard(reminder, controller),
-                )
-                .toList(),
-          ),
-        ),
+        tripPriority(name: 'Passport', image: AppIcons.passport, onTap: () {  }, buttonName: 'Add'),
+        SizedBox(height: 6,),
+        tripPriority(name: 'Visa', image: AppIcons.visa, onTap: () {  }, buttonName: 'Add'),
+        SizedBox(height: 6,),
+        tripPriority(name: 'Travel Insurance', image: AppIcons.travAlerts, onTap: () {  }, buttonName: 'Add'),
       ],
-    );
-  }
-
-  Widget _buildPriorityReminderCard(
-    PriorityReminder reminder,
-    TripDetailsController controller,
-  ) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!, width: 1),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 44.w,
-                height: 44.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.authOrange.withValues(alpha: 0.1),
-                ),
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  reminder.icon,
-                  width: 22.w,
-                  height: 22.w,
-                  colorFilter: const ColorFilter.mode(
-                    AppColors.authOrange,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                reminder.title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 90,
-            height: 32,
-            child: ElevatedButton(
-              onPressed: () =>
-                  controller.showPriorityReminderBottomSheet(reminder),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.authOrange,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-              ),
-              child: Text(
-                reminder.status,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -345,8 +287,10 @@ class TripDetailsScreen extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 2,
+            itemCount: controller.singleTripData.value.itineraries!.length,
             itemBuilder: (context, index) {
+              final itinerary =
+                  controller.singleTripData.value.itineraries![index];
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -369,74 +313,75 @@ class TripDetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 15),
                   Expanded(
-                    child: Card(
-                      color: Colors.grey.shade100,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Rome, Italy",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Card(
+                        color: Colors.grey.shade100,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${itinerary.name}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    "3 Nights",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
+                                    Text(
+                                      "${itinerary.days} Days",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        AppIcons.activity,
-                                        color: Colors.black,
-                                        height: 20,
-                                        width: 20,
-                                      ),
-                                      SizedBox(width: 6),
-                                      Image.asset(
-                                        AppIcons.airplaneColor,
-                                        color: Colors.black,
-                                        height: 20,
-                                        width: 20,
-                                      ),
-                                      SizedBox(width: 6),
-                                      Image.asset(
-                                        AppIcons.hotelBell,
-                                        color: Colors.black,
-                                        height: 20,
-                                        width: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          AppIcons.activity,
+                                          color: Colors.black,
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        SizedBox(width: 6),
+                                        Image.asset(
+                                          AppIcons.airplaneColor,
+                                          color: Colors.black,
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        SizedBox(width: 6),
+                                        Image.asset(
+                                          AppIcons.hotelBell,
+                                          color: Colors.black,
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.horizontal(
-                              right: Radius.circular(15),
+                            ClipRRect(
+                              borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(15),
+                              ),
+                              child: AppNetworkImage(
+                                imageUrl: itinerary.image.toString(),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            child: Image.asset(
-                              "assets/images/rome.png",
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
