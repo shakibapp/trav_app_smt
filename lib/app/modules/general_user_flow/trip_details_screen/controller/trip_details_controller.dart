@@ -52,26 +52,6 @@ class TripDetailsController extends GetxController {
     expandedStopIndex.value = expandedStopIndex.value == index ? -1 : index;
   }
 
-  void handleReminder(String title) {
-    Get.snackbar(
-      'Reminder Action',
-      'Processing: $title',
-      backgroundColor: const Color(0xFFFFA500),
-      colorText: Colors.white,
-      duration: const Duration(seconds: 2),
-    );
-  }
-
-  void optimizeRoute() {
-    Get.snackbar(
-      'Route Optimization',
-      'Finding the best route for you...',
-      backgroundColor: const Color(0xFFFFA500),
-      colorText: Colors.white,
-      duration: const Duration(seconds: 2),
-    );
-  }
-
   //update priority Remainder
   final RxBool isPriorityLoading = false.obs;
   final Map<String, dynamic> updatedReminderFields = {};

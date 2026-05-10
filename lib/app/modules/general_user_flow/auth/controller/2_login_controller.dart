@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/constants/app_toast.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
@@ -91,7 +92,7 @@ class LoginController extends GetxController {
             AppToast.showError('Please verify your email before logging in.');
             return;
           }else if(isProfileComplete == false){
-            AppToast.showSuccess('Login successful');
+            AppSnackbar.success("Parent Login Success");
             await localService.setToken(token);
             await localService.setRole(role);
             log("Login successful profile incomplete. Token: $token, Role: $role");

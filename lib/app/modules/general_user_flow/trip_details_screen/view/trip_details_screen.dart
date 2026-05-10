@@ -274,7 +274,7 @@ class TripDetailsScreen extends StatelessWidget {
                       height: 30,
                       width: 100,
                       onTap: () {},
-                      name: '${data.daysLeft}',
+                      name: '${data.daysLeft} day left',
                       textColor: Colors.white,
                     ),
                   ],
@@ -599,7 +599,7 @@ class TripDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: appButton(
                         textColor: Colors.white,
-                        onTap: () => controller.optimizeRoute(),
+                        onTap: (){},
                         name: "Assign",
                       ),
                     ),
