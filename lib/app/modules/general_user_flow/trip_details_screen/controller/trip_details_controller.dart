@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
-import 'package:hamishphipps/app/core/constants/app_icons.dart';
+
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
@@ -18,41 +18,39 @@ class TripDetailsController extends GetxController {
   final selectedTabIndex = 0.obs;
   final expandedStopIndex = (-1).obs;
 
-
   @override
   void onInit() {
     super.onInit();
     getSingleTripData("69fc4ba8154098ba82db9081");
-
   }
 
   //get single trip data
-  final Rx<SingleTripDetailsModel> singleTripData = SingleTripDetailsModel().obs;
+  final Rx<SingleTripDetailsModel> singleTripData =
+      SingleTripDetailsModel().obs;
   final RxBool isTripDetailsLoading = false.obs;
-  Future<void> getSingleTripData(String id)async{
-    try{
+  Future<void> getSingleTripData(String id) async {
+    try {
       isTripDetailsLoading.value = true;
-      final response = await networkConfig.ApiRequestHandler(RequestMethod.GET, "${Urls.tripDetail}/$id",
-          {},is_auth: true);
-      if(response != null && response["success"]==true){
-        singleTripData.value = SingleTripDetailsModel.fromJson(response["data"]);
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.GET, "${Urls.tripDetail}/$id", {},
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        singleTripData.value =
+            SingleTripDetailsModel.fromJson(response["data"]);
         log("Get single trip details success ${response['message']}");
-      }else{
+      } else {
         log("get Single trip details failed ${response["message"]}");
       }
-    }catch(e){
+    } catch (e) {
       log("get single trip details error ${e.toString()}");
-    }finally{
+    } finally {
       isTripDetailsLoading.value = false;
     }
   }
 
-
   void toggleStop(int index) {
     expandedStopIndex.value = expandedStopIndex.value == index ? -1 : index;
   }
-
-
 
   void handleReminder(String title) {
     Get.snackbar(
@@ -75,54 +73,220 @@ class TripDetailsController extends GetxController {
   }
 
   //update priority Remainder
-  final RxBool isPriorityLoading= false.obs;
-  Future<void> changePriority()async{
-    try{
+  final RxBool isPriorityLoading = false.obs;
+  final Map<String, dynamic> updatedReminderFields = {};
+  final RxString selectedReminderId = ''.obs;
+
+  /// Helper method to check if passport is expired
+  bool isPassportExpired(DateTime? expiryDate) {
+    if (expiryDate == null) return false;
+    return expiryDate.isBefore(DateTime.now());
+  }
+
+  /// Helper method to get reminder state: "add", "update", or "checked"
+  String getReminderState(PriorityRemainder reminder) {
+    if (reminder.passportCountry == null ||
+        reminder.passportCountry!.isEmpty ||
+        reminder.passportCountry == 'null' ||
+        _isPassportExpiryMissing(reminder.passportExpiry)) {
+      return 'add';
+    }
+
+    if (reminder.passportExpiry != null &&
+        isPassportExpired(reminder.passportExpiry)) {
+      return 'update';
+    }
+
+    if (reminder.isVisaConfirmed == true ||
+        reminder.haveInsurance == true ||
+        (reminder.noVisaRequired == true && reminder.needsAttention == false)) {
+      return 'checked';
+    }
+
+    return 'add';
+  }
+
+  /// Clear updated fields before editing
+  void startEditingReminder(String reminderId) {
+    updatedReminderFields.clear();
+    selectedReminderId.value = reminderId;
+  }
+
+  /// Track field updates
+  void updateReminderField(String fieldName, dynamic value) {
+    updatedReminderFields[fieldName] = value;
+  }
+
+  bool _isPassportExpiryMissing(DateTime? expiryDate) {
+    return expiryDate == null || expiryDate.year <= 1900;
+  }
+
+  String? _normalizePassportExpiry(String? expiry) {
+    if (expiry == null || expiry.isEmpty) return null;
+    try {
+      final parsed = DateTime.parse(expiry);
+      return parsed.toUtc().toIso8601String();
+    } catch (_) {
+      return expiry;
+    }
+  }
+
+  Map<String, dynamic> _buildPriorityReminderData({
+    String? passportCountry,
+    String? passportExpiry,
+    bool? isVisaConfirmed,
+    bool? noVisaRequired,
+    bool? needsAttention,
+    String? visaNotes,
+    bool? haveInsurance,
+  }) {
+    final data = <String, dynamic>{};
+    if (passportCountry != null) data['passportCountry'] = passportCountry;
+    final normalizedExpiry = _normalizePassportExpiry(passportExpiry);
+    if (normalizedExpiry != null) data['passportExpiry'] = normalizedExpiry;
+    if (isVisaConfirmed != null) data['isVisaConfirmed'] = isVisaConfirmed;
+    if (noVisaRequired != null) data['noVisaRequired'] = noVisaRequired;
+    if (needsAttention != null) data['needsAttention'] = needsAttention;
+    if (visaNotes != null) data['visaNotes'] = visaNotes;
+    if (haveInsurance != null) data['haveInsurance'] = haveInsurance;
+    return data;
+  }
+
+  void _printPriorityReminderData(Map<String, dynamic> payload) {
+    final pretty = const JsonEncoder.withIndent('  ').convert(payload);
+    log('Priority reminder preview payload:\n$pretty');
+  }
+
+  /// Send priority reminder update to the API with only changed fields
+  Future<void> _sendPriorityReminderUpdate(
+    String reminderId,
+    Map<String, dynamic> data,
+  ) async {
+    try {
       isPriorityLoading.value = true;
-      final Map<String,dynamic> data ={
-        "passportCountry": "Paris",
-        "passportExpiry": "2028-03-15T00:00:00.000Z",
-        "isVisaConfirmed": true,
-        "noVisaRequired": false,
-        "needsAttention": false,
-        "visaNotes": "Visa approved via embassy",
-        "haveInsurance": true
-      };
-      final response = await networkConfig.ApiRequestHandler(RequestMethod.PUT, "${Urls.priorityStatusChange}/",
-          jsonEncode(data),is_auth: true);
-      if(response != null && response["success"]==true){
+
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.PUT,
+        "${Urls.priorityStatusChange}/$reminderId",
+        jsonEncode(data),
+        is_auth: true,
+      );
+
+      if (response != null && response["success"] == true) {
         AppSnackbar.success("${response["message"]}");
-        log("priority reminders status update success");
-      }else{
+        log("Priority reminder updated successfully");
+        updatedReminderFields.clear();
+        await getSingleTripData(singleTripData.value.id ?? "");
+      } else {
         AppSnackbar.failed("${response["message"]}");
-        log("Priority remainders failed ${response["message"]}");
+        log("Priority reminder update failed ${response["message"]}");
       }
-    }catch(e){
-      log("priority status change error ${e.toString()}");
-    }finally{
+    } catch (e) {
+      log("Priority reminder update error: ${e.toString()}");
+      AppSnackbar.failed("Error updating reminder");
+    } finally {
       isPriorityLoading.value = false;
     }
   }
 
+  Future<void> changePriority(
+    String reminderId, {
+    String? passportCountry,
+    String? passportExpiry,
+    bool? isVisaConfirmed,
+    bool? noVisaRequired,
+    bool? needsAttention,
+    String? visaNotes,
+    bool? haveInsurance,
+    bool previewOnly = false,
+  }) async {
+    final payload = _buildPriorityReminderData(
+      passportCountry: passportCountry,
+      passportExpiry: passportExpiry,
+      isVisaConfirmed: isVisaConfirmed,
+      noVisaRequired: noVisaRequired,
+      needsAttention: needsAttention,
+      visaNotes: visaNotes,
+      haveInsurance: haveInsurance,
+    );
 
-  // Bottom Sheet Methods
-  void showPriorityReminderBottomSheet(PriorityRemainder reminder) {
-    switch (reminder.passportCountry) {
-      case 'Passport':
-        _showPassportBottomSheet();
-        break;
-      case 'Visa':
-        _showVisaBottomSheet();
-        break;
-      case 'Travel Insurance':
-        _showTravelInsuranceBottomSheet();
-        break;
-      default:
-        break;
+    _printPriorityReminderData(payload);
+
+    if (previewOnly) {
+      AppSnackbar.success('Reminder data preview logged.');
+      return;
+    }
+
+    await _sendPriorityReminderUpdate(reminderId, payload);
+  }
+
+  /// Legacy method for full payload update of passport, visa, and insurance
+  Future<void> changePriorityLegacyLegacy({
+    String passportCountry = 'Paris',
+    String passportExpiry = '2028-03-15T00:00:00.000Z',
+    bool isVisaConfirmed = true,
+    bool noVisaRequired = false,
+    bool needsAttention = false,
+    String visaNotes = 'Visa approved via embassy',
+    bool haveInsurance = true,
+  }) async {
+    try {
+      isPriorityLoading.value = true;
+      final Map<String, dynamic> data = {
+        "passportCountry": passportCountry,
+        "passportExpiry": passportExpiry,
+        "isVisaConfirmed": isVisaConfirmed,
+        "noVisaRequired": noVisaRequired,
+        "needsAttention": needsAttention,
+        "visaNotes": visaNotes,
+        "haveInsurance": haveInsurance,
+      };
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.PUT,
+        "${Urls.priorityStatusChange}/",
+        jsonEncode(data),
+        is_auth: true,
+      );
+      if (response != null && response["success"] == true) {
+        AppSnackbar.success("${response["message"]}");
+        log("priority reminders status update success");
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+        log("Priority remainders failed ${response["message"]}");
+      }
+    } catch (e) {
+      log("priority status change error ${e.toString()}");
+    } finally {
+      isPriorityLoading.value = false;
     }
   }
 
-  void _showPassportBottomSheet() {
+  // Bottom Sheet Methods
+  void showPriorityReminderBottomSheet(
+      PriorityRemainder reminder, String type) {
+    final state = getReminderState(reminder);
+    startEditingReminder(reminder.id ?? '');
+
+    if (type == 'Visa') {
+      _showVisaBottomSheet(reminder, state);
+    } else if (type == 'Travel Insurance') {
+      _showTravelInsuranceBottomSheet(reminder, state);
+    } else {
+      _showPassportBottomSheet(reminder, state);
+    }
+  }
+
+  void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
+    final countryController = TextEditingController(
+      text: reminder.passportCountry ?? '',
+    );
+    final expiryController = TextEditingController(
+      text: reminder.passportExpiry != null &&
+              reminder.passportExpiry!.year > 1900
+          ? reminder.passportExpiry!.toIso8601String().split('T')[0]
+          : '',
+    );
+
     Get.bottomSheet(
       Container(
         decoration: const BoxDecoration(
@@ -154,13 +318,30 @@ class TripDetailsController extends GetxController {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        const Text(
-                          'Passport',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Passport',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            Text(
+                              state == 'add'
+                                  ? 'Add your passport details'
+                                  : state == 'update'
+                                      ? 'Update passport details'
+                                      : 'Passport verified',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -188,8 +369,11 @@ class TripDetailsController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
+                      controller: countryController,
+                      onChanged: (value) =>
+                          updateReminderField('passportCountry', value),
                       decoration: InputDecoration(
-                        hintText: 'e.g. Australia',
+                        hintText: 'e.g. Bangladesh',
                         filled: true,
                         fillColor: Colors.grey.shade100,
                         border: OutlineInputBorder(
@@ -213,8 +397,26 @@ class TripDetailsController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
+                      controller: expiryController,
+                      readOnly: true,
+                      onTap: () async {
+                        final selectedDate = await showDatePicker(
+                          context: Get.context!,
+                          initialDate: reminder.passportExpiry != null &&
+                                  reminder.passportExpiry!.year > 1900
+                              ? reminder.passportExpiry!
+                              : DateTime.now().add(const Duration(days: 1)),
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 3650)),
+                        );
+                        if (selectedDate != null) {
+                          expiryController.text =
+                              selectedDate.toIso8601String().split('T')[0];
+                        }
+                      },
                       decoration: InputDecoration(
-                        hintText: 'Day Number 1',
+                        hintText: 'Select expiry date',
                         filled: true,
                         fillColor: Colors.grey.shade100,
                         border: OutlineInputBorder(
@@ -236,7 +438,6 @@ class TripDetailsController extends GetxController {
                           child: appButton(
                             borderColor: AppColors.authOrange,
                             bgColor: Colors.transparent,
-
                             onTap: () {
                               Get.back();
                             },
@@ -245,24 +446,36 @@ class TripDetailsController extends GetxController {
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: appButton(
-                            textColor: Colors.white,
-
-                            onTap: () {
-                              Get.back();
-                              Get.snackbar(
-                                'Success',
-                                'Passport details saved',
-                                backgroundColor: AppColors.authOrange,
-                                colorText: Colors.white,
-                              );
-                            },
-                            name: "Save",
+                          child: Obx(
+                            () => appButton(
+                              textColor: Colors.white,
+                              onTap: () {
+                                if (isPriorityLoading.value) return;
+                                if (countryController.text.isEmpty ||
+                                    expiryController.text.isEmpty) {
+                                  AppSnackbar.failed('Please fill all fields');
+                                  return;
+                                }
+                                changePriority(
+                                  reminder.id ?? '',
+                                  passportCountry: countryController.text,
+                                  passportExpiry: expiryController.text,
+                                  previewOnly: false,
+                                );
+                                Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                  () => Get.back(),
+                                );
+                              },
+                              name: isPriorityLoading.value
+                                  ? "Saving..."
+                                  : "Save",
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -274,8 +487,16 @@ class TripDetailsController extends GetxController {
     );
   }
 
-  void _showVisaBottomSheet() {
-    var selectedVisaStatus = ''.obs;
+  void _showVisaBottomSheet(PriorityRemainder reminder, String state) {
+    final selectedVisaStatus = RxString(
+      reminder.isVisaConfirmed == true
+          ? 'Visa Confirmed/ Obtained'
+          : reminder.noVisaRequired == true
+              ? 'No Visa Required'
+              : reminder.needsAttention == true
+                  ? 'Needs Attention'
+                  : '',
+    );
 
     Get.bottomSheet(
       Container(
@@ -352,8 +573,7 @@ class TripDetailsController extends GetxController {
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color:
-                                  selectedVisaStatus.value ==
+                              color: selectedVisaStatus.value ==
                                       'Visa Confirmed/ Obtained'
                                   ? AppColors.authOrange
                                   : Colors.transparent,
@@ -375,11 +595,16 @@ class TripDetailsController extends GetxController {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  const Text(
-                                    'I have the necessary visa(s) or have confirmed i dont need one',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
+                                  SizedBox(
+                                    width: 300,
+                                    child: Text(
+                                      'I have the necessary visa(s) or have confirmed i dont need one',
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -390,21 +615,18 @@ class TripDetailsController extends GetxController {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color:
-                                        selectedVisaStatus.value ==
+                                    color: selectedVisaStatus.value ==
                                             'Visa Confirmed/ Obtained'
                                         ? AppColors.authOrange
                                         : Colors.grey,
                                     width: 2,
                                   ),
-                                  color:
-                                      selectedVisaStatus.value ==
+                                  color: selectedVisaStatus.value ==
                                           'Visa Confirmed/ Obtained'
                                       ? AppColors.authOrange
                                       : Colors.transparent,
                                 ),
-                                child:
-                                    selectedVisaStatus.value ==
+                                child: selectedVisaStatus.value ==
                                         'Visa Confirmed/ Obtained'
                                     ? const Icon(
                                         Icons.check,
@@ -432,8 +654,8 @@ class TripDetailsController extends GetxController {
                             border: Border.all(
                               color:
                                   selectedVisaStatus.value == 'No Visa Required'
-                                  ? AppColors.authOrange
-                                  : Colors.transparent,
+                                      ? AppColors.authOrange
+                                      : Colors.transparent,
                               width: 2,
                             ),
                           ),
@@ -467,21 +689,18 @@ class TripDetailsController extends GetxController {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color:
-                                        selectedVisaStatus.value ==
+                                    color: selectedVisaStatus.value ==
                                             'No Visa Required'
                                         ? AppColors.authOrange
                                         : Colors.grey,
                                     width: 2,
                                   ),
-                                  color:
-                                      selectedVisaStatus.value ==
+                                  color: selectedVisaStatus.value ==
                                           'No Visa Required'
                                       ? AppColors.authOrange
                                       : Colors.transparent,
                                 ),
-                                child:
-                                    selectedVisaStatus.value ==
+                                child: selectedVisaStatus.value ==
                                         'No Visa Required'
                                     ? const Icon(
                                         Icons.check,
@@ -509,8 +728,8 @@ class TripDetailsController extends GetxController {
                             border: Border.all(
                               color:
                                   selectedVisaStatus.value == 'Needs Attention'
-                                  ? AppColors.authOrange
-                                  : Colors.transparent,
+                                      ? AppColors.authOrange
+                                      : Colors.transparent,
                               width: 2,
                             ),
                           ),
@@ -529,7 +748,7 @@ class TripDetailsController extends GetxController {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  const Text(
+                                  Text(
                                     'I still need to apply for or check visa requirements',
                                     style: TextStyle(
                                       fontSize: 12,
@@ -544,21 +763,18 @@ class TripDetailsController extends GetxController {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color:
-                                        selectedVisaStatus.value ==
+                                    color: selectedVisaStatus.value ==
                                             'Needs Attention'
                                         ? AppColors.authOrange
                                         : Colors.grey,
                                     width: 2,
                                   ),
-                                  color:
-                                      selectedVisaStatus.value ==
+                                  color: selectedVisaStatus.value ==
                                           'Needs Attention'
                                       ? AppColors.authOrange
                                       : Colors.transparent,
                                 ),
-                                child:
-                                    selectedVisaStatus.value ==
+                                child: selectedVisaStatus.value ==
                                         'Needs Attention'
                                     ? const Icon(
                                         Icons.check,
@@ -637,7 +853,6 @@ class TripDetailsController extends GetxController {
                           child: appButton(
                             borderColor: AppColors.authOrange,
                             bgColor: Colors.transparent,
-
                             onTap: () {
                               Get.back();
                             },
@@ -646,25 +861,49 @@ class TripDetailsController extends GetxController {
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: appButton(
-                            textColor: Colors.white,
+                          child: Obx(
+                            () => appButton(
+                              textColor: Colors.white,
+                              onTap: () {
+                                if (isPriorityLoading.value) return;
+                                if (selectedVisaStatus.value.isEmpty) {
+                                  AppSnackbar.failed(
+                                      'Please select a visa status');
+                                  return;
+                                }
 
-                            onTap: () {
-                              Get.back();
-                              Get.snackbar(
-                                'Success',
-                                'Visa status marked as reviewed',
-                                backgroundColor: AppColors.authOrange,
-                                colorText: Colors.white,
-                              );
-                            },
-                            name: "Mark as Reviewed",
+                                final String selection =
+                                    selectedVisaStatus.value;
+                                changePriority(
+                                  reminder.id ?? '',
+                                  isVisaConfirmed:
+                                      selection == 'Visa Confirmed/ Obtained',
+                                  noVisaRequired:
+                                      selection == 'No Visa Required',
+                                  needsAttention:
+                                      selection == 'Needs Attention',
+                                  visaNotes:
+                                      selection == 'Visa Confirmed/ Obtained'
+                                          ? 'Visa approved via embassy'
+                                          : '',
+                                  previewOnly: false,
+                                );
+                                Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                  () => Get.back(),
+                                );
+                              },
+                              name: isPriorityLoading.value
+                                  ? "Saving..."
+                                  : "Mark as Reviewed",
+                            ),
                           ),
                         ),
                       ],
                     ),
-                     SizedBox(height: 20,),
-                   
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -676,8 +915,10 @@ class TripDetailsController extends GetxController {
     );
   }
 
-  void _showTravelInsuranceBottomSheet() {
-    var selectedInsuranceStatus = ''.obs;
+  void _showTravelInsuranceBottomSheet(
+      PriorityRemainder reminder, String state) {
+    final selectedInsuranceStatus =
+        RxString(reminder.haveInsurance == true ? 'Yes, I have insurance' : '');
 
     Get.bottomSheet(
       Container(
@@ -705,7 +946,7 @@ class TripDetailsController extends GetxController {
                           ),
                           child: const Icon(
                             Icons.shield,
-                            color:AppColors.authOrange,
+                            color: AppColors.authOrange,
                             size: 24,
                           ),
                         ),
@@ -754,8 +995,7 @@ class TripDetailsController extends GetxController {
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color:
-                                  selectedInsuranceStatus.value ==
+                              color: selectedInsuranceStatus.value ==
                                       'Yes, I have insurance'
                                   ? AppColors.authOrange
                                   : Colors.transparent,
@@ -792,21 +1032,18 @@ class TripDetailsController extends GetxController {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color:
-                                        selectedInsuranceStatus.value ==
+                                    color: selectedInsuranceStatus.value ==
                                             'Yes, I have insurance'
                                         ? AppColors.authOrange
                                         : Colors.grey,
                                     width: 2,
                                   ),
-                                  color:
-                                      selectedInsuranceStatus.value ==
+                                  color: selectedInsuranceStatus.value ==
                                           'Yes, I have insurance'
                                       ? AppColors.authOrange
                                       : Colors.transparent,
                                 ),
-                                child:
-                                    selectedInsuranceStatus.value ==
+                                child: selectedInsuranceStatus.value ==
                                         'Yes, I have insurance'
                                     ? const Icon(
                                         Icons.check,
@@ -832,8 +1069,7 @@ class TripDetailsController extends GetxController {
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color:
-                                  selectedInsuranceStatus.value ==
+                              color: selectedInsuranceStatus.value ==
                                       'Not yet/ Need to get'
                                   ? AppColors.authOrange
                                   : Colors.transparent,
@@ -870,21 +1106,18 @@ class TripDetailsController extends GetxController {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color:
-                                        selectedInsuranceStatus.value ==
+                                    color: selectedInsuranceStatus.value ==
                                             'Not yet/ Need to get'
                                         ? AppColors.authOrange
                                         : Colors.grey,
                                     width: 2,
                                   ),
-                                  color:
-                                      selectedInsuranceStatus.value ==
+                                  color: selectedInsuranceStatus.value ==
                                           'Not yet/ Need to get'
                                       ? AppColors.authOrange
                                       : Colors.transparent,
                                 ),
-                                child:
-                                    selectedInsuranceStatus.value ==
+                                child: selectedInsuranceStatus.value ==
                                         'Not yet/ Need to get'
                                     ? const Icon(
                                         Icons.check,
@@ -906,7 +1139,6 @@ class TripDetailsController extends GetxController {
                           child: appButton(
                             borderColor: AppColors.authOrange,
                             bgColor: Colors.transparent,
-
                             onTap: () {
                               Get.back();
                             },
@@ -915,26 +1147,42 @@ class TripDetailsController extends GetxController {
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: appButton(
-                            textColor: Colors.white,
+                          child: Obx(
+                            () => appButton(
+                              textColor: Colors.white,
+                              onTap: () {
+                                if (isPriorityLoading.value) return;
+                                if (selectedInsuranceStatus.value.isEmpty) {
+                                  AppSnackbar.failed(
+                                      'Please select an insurance status');
+                                  return;
+                                }
 
-                            onTap: () {
-                              
-                              Get.snackbar(
-                                'Success',
-                                'Insurance status confirmed',
-                                backgroundColor: AppColors.authOrange,
-                                colorText: Colors.white,
-                              );
-                              Get.back();
-                            },
-                            name: "Save",
+                                final bool hasInsurance =
+                                    selectedInsuranceStatus.value ==
+                                        'Yes, I have insurance';
+
+                                changePriority(
+                                  reminder.id ?? '',
+                                  haveInsurance: hasInsurance,
+                                  previewOnly: false,
+                                );
+                                Future.delayed(
+                                  const Duration(milliseconds: 500),
+                                  () => Get.back(),
+                                );
+                              },
+                              name: isPriorityLoading.value
+                                  ? "Saving..."
+                                  : "Save",
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
-                    
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
@@ -26,11 +25,7 @@ class TripDetailsScreen extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: Obx(() {
             if (controller.isTripDetailsLoading.value) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (controller.singleTripData.value == null) {
-              return Text("No Data Found");
+              return _buildLoadingSkeleton();
             } else {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,6 +158,83 @@ class TripDetailsScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildLoadingSkeleton() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        const ShimmerBox(
+            width: 180,
+            height: 24,
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 150,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: 2,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              return Container(
+                width: 300,
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 12,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    ShimmerBox(
+                        width: 40,
+                        height: 40,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    SizedBox(height: 14),
+                    ShimmerBox(width: 120, height: 18),
+                    SizedBox(height: 8),
+                    ShimmerBox(width: 180, height: 14),
+                    SizedBox(height: 14),
+                    ShimmerBox(
+                        width: 100,
+                        height: 32,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 24),
+        const ShimmerBox(
+            width: double.infinity,
+            height: 20,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        const SizedBox(height: 12),
+        const ShimmerBox(
+            width: double.infinity,
+            height: 90,
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        const SizedBox(height: 12),
+        const ShimmerBox(
+            width: double.infinity,
+            height: 90,
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        const SizedBox(height: 12),
+        const ShimmerBox(
+            width: double.infinity,
+            height: 90,
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+      ],
+    );
+  }
+
   Widget _buildRemindersSection(TripDetailsController controller) {
     return SizedBox(
       height: 150,
@@ -248,23 +320,96 @@ class TripDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildPriorityRemindersSection(TripDetailsController controller) {
+    final reminders = controller.singleTripData.value.priorityRemainders ?? [];
+    final passportReminder =
+        reminders.isNotEmpty ? reminders[0] : PriorityRemainder();
+    final visaReminder =
+        reminders.length > 1 ? reminders[1] : PriorityRemainder();
+    final insuranceReminder =
+        reminders.length > 2 ? reminders[2] : PriorityRemainder();
+
+    String _buttonLabel(String type, PriorityRemainder reminder) {
+      if (type == 'Passport') {
+        if (reminder.passportCountry == null ||
+            reminder.passportCountry!.isEmpty ||
+            reminder.passportCountry == 'null' ||
+            reminder.passportExpiry == null ||
+            reminder.passportExpiry!.year <= 1900) {
+          return 'Add';
+        }
+        if (reminder.passportExpiry!.isBefore(DateTime.now())) {
+          return 'Update';
+        }
+        return 'Checked';
+      }
+
+      if (type == 'Visa') {
+        if (reminder.isVisaConfirmed == true ||
+            reminder.noVisaRequired == true) {
+          return 'Checked';
+        }
+        if (reminder.needsAttention == true) {
+          return 'Update';
+        }
+        return 'Add';
+      }
+
+      if (type == 'Travel Insurance') {
+        return reminder.haveInsurance == true ? 'Checked' : 'Add';
+      }
+
+      return 'Add';
+    }
+
+    final passportChecked = passportReminder.passportCountry != null &&
+        passportReminder.passportCountry!.isNotEmpty &&
+        passportReminder.passportCountry != 'null' &&
+        passportReminder.passportExpiry != null &&
+        passportReminder.passportExpiry!.year > 1900 &&
+        !passportReminder.passportExpiry!.isBefore(DateTime.now());
+
+    final visaChecked = visaReminder.isVisaConfirmed == true ||
+        visaReminder.noVisaRequired == true;
+    final insuranceChecked = insuranceReminder.haveInsurance == true;
+    final allChecked = passportChecked && visaChecked && insuranceChecked;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Priority Reminders',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
+        priorityRemindersStatusBanner(completed: allChecked),
         const SizedBox(height: 15),
-        tripPriority(name: 'Passport', image: AppIcons.passport, onTap: () {  }, buttonName: 'Add'),
-        SizedBox(height: 6,),
-        tripPriority(name: 'Visa', image: AppIcons.visa, onTap: () {  }, buttonName: 'Add'),
-        SizedBox(height: 6,),
-        tripPriority(name: 'Travel Insurance', image: AppIcons.travAlerts, onTap: () {  }, buttonName: 'Add'),
+        tripPriority(
+          name: 'Passport',
+          image: AppIcons.passport,
+          onTap: () => controller.showPriorityReminderBottomSheet(
+            passportReminder,
+            'Passport',
+          ),
+          buttonName: _buttonLabel('Passport', passportReminder),
+          isChecked: passportChecked,
+        ),
+        const SizedBox(height: 6),
+        tripPriority(
+          name: 'Visa',
+          image: AppIcons.visa,
+          onTap: () => controller.showPriorityReminderBottomSheet(
+            visaReminder,
+            'Visa',
+          ),
+          buttonName: _buttonLabel('Visa', visaReminder),
+          isChecked: visaChecked,
+        ),
+        const SizedBox(height: 6),
+        tripPriority(
+          name: 'Travel Insurance',
+          image: AppIcons.agreement,
+          onTap: () => controller.showPriorityReminderBottomSheet(
+            insuranceReminder,
+            'Travel Insurance',
+          ),
+          buttonName: _buttonLabel('Travel Insurance', insuranceReminder),
+          isChecked: insuranceChecked,
+        ),
       ],
     );
   }
@@ -395,48 +540,6 @@ class TripDetailsScreen extends StatelessWidget {
   }
 
   // Helper Widgets
-
-  Widget _reminderCard(String title, String subtitle) {
-    return Container(
-      width: 250,
-      margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey)),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: appButton(
-                  height: 30,
-                  onTap: () {},
-                  name: "Dismiss",
-                  bgColor: Color(0xFFf7ebe4),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: appButton(
-                  height: 30,
-                  onTap: () {},
-                  name: "Done",
-                  bgColor: AppColors.authOrange,
-                  textColor: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildOptimizeRouteSection(TripDetailsController controller) {
     return Padding(

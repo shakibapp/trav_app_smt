@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/profile/controller/profile_controller.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_images.dart';
@@ -15,7 +16,8 @@ import '../../create_plan/city/view/city_view.dart';
 import '../controller/home_controller.dart';
 
 class HomeScreen extends GetWidget<HomeController> {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  final userController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class HomeScreen extends GetWidget<HomeController> {
               children: [
                 SizedBox(height: 50.h),
                 // Greeting Section
-                _buildGreetingSection(),
+                _buildGreetingSection(userController),
 
                 SizedBox(height: 10.h),
                 Text(
@@ -77,8 +79,8 @@ class HomeScreen extends GetWidget<HomeController> {
                                   controller.upcomingTripsFromApi[index];
                               return Obx(() {
                                 return InkWell(
-                                  onTap: () =>
-                                      controller.getTripDetailById(trip.id.toString()),
+                                  onTap: () => controller
+                                      .getTripDetailById(trip.id.toString()),
                                   borderRadius: BorderRadius.circular(20.r),
                                   child: Container(
                                     margin: EdgeInsets.only(right: 5.h),
@@ -116,25 +118,31 @@ class HomeScreen extends GetWidget<HomeController> {
                                         //   ),
                                         // ),
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(20.r),
-                                          child: trip.images != null && trip.images!.isNotEmpty
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                          child: trip.images != null &&
+                                                  trip.images!.isNotEmpty
                                               ? PageView.builder(
-                                            itemCount: trip.images!.length,
-                                            itemBuilder: (_, imgIndex) {
-                                              return AppNetworkImage(
-                                                imageUrl: trip.images![imgIndex]??"https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                          )
+                                                  itemCount:
+                                                      trip.images!.length,
+                                                  itemBuilder: (_, imgIndex) {
+                                                    return AppNetworkImage(
+                                                      imageUrl: trip.images![
+                                                              imgIndex] ??
+                                                          "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                                      width: double.infinity,
+                                                      height: double.infinity,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                )
                                               : AppNetworkImage(
-                                            imageUrl: "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
+                                                  imageUrl:
+                                                      "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
 
                                         // Status badge (always top-left)
@@ -284,7 +292,7 @@ class HomeScreen extends GetWidget<HomeController> {
                       if (itinerary.priorityRemainders != null &&
                           itinerary.priorityRemainders!.isNotEmpty)
                         ...itinerary.priorityRemainders!.map(
-                              (reminder) => Column(
+                          (reminder) => Column(
                             children: [
                               SizedBox(height: 10.h),
                               priorityRemainder(
@@ -331,8 +339,13 @@ class HomeScreen extends GetWidget<HomeController> {
                     color: AppColors.blackColor,
                   ),
                 ),
-                Text("${controller.tripDetail.value.itineraries!.length} Stops(Total)"),
-                SizedBox(height: 10,),
+                Obx(() {
+                  return Text(
+                      "${controller.tripDetail.value.itineraries!.length} Stops(Total)");
+                }),
+                SizedBox(
+                  height: 10,
+                ),
 
                 SizedBox(
                   height: 150.h,
@@ -353,7 +366,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                 return const SizedBox.shrink();
                               }
                               return GestureDetector(
-                                onTap:(){},
+                                onTap: () {},
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 180.h,
@@ -362,35 +375,37 @@ class HomeScreen extends GetWidget<HomeController> {
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                       color: Colors.grey.shade200,
-
                                     ),
                                   ),
                                   child: Center(
                                     child: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           width: 170,
                                           height: 100,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(15),
+                                                BorderRadius.circular(15),
                                           ),
                                           child: AppNetworkImage(
                                             height: 170,
                                             imageUrl: itinerary.image,
-                                            borderRadius:
-                                            BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15)),
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(15),
+                                                topLeft: Radius.circular(15)),
                                           ),
                                         ),
                                         Padding(
-                                          padding:  EdgeInsets.only(left: 8.0),
+                                          padding: EdgeInsets.only(left: 8.0),
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 "${itinerary.name}",
@@ -410,11 +425,9 @@ class HomeScreen extends GetWidget<HomeController> {
                                                   color: AppColors.blackColor,
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         ),
-
                                       ],
                                     ),
                                   ),
@@ -425,7 +438,6 @@ class HomeScreen extends GetWidget<HomeController> {
                   }),
                 ),
                 SizedBox(height: 10.h),
-
 
                 SizedBox(height: 20.h),
                 Text(
@@ -445,13 +457,12 @@ class HomeScreen extends GetWidget<HomeController> {
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount:remi.remainders!.length,
+                      itemCount: remi.remainders!.length,
                       itemBuilder: (_, index) {
                         final remainder = remi.remainders![index];
                         return TripRemindersSection(
                           title: remainder.title ?? 'Reminder',
-                          arrivingDate:
-                              remainder.description ?? '',
+                          arrivingDate: remainder.description ?? '',
                           onBook: () {},
                         );
                       },
@@ -472,62 +483,79 @@ class HomeScreen extends GetWidget<HomeController> {
     );
   }
 
-  Widget _buildGreetingSection() {
+  Widget _buildGreetingSection(ProfileController controller) {
     return Padding(
       padding: EdgeInsets.only(top: 16.h, bottom: 14.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: Obx(() {
+        if (controller.isUserProfileLoading.value) {
+          return CircularProgressIndicator();
+        } else {
+          final user = controller.userProfile.value;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () => Get.to(CityViewScreen()),
-                child: Container(
-                  width: 44.w,
-                  height: 44.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(0xFFE9E9EF),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'H',
-                      style: globaltextInterTight(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.blackColor,
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => Get.to(CityViewScreen()),
+                    child: Container(
+                      width: 44.w,
+                      height: 44.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFFE9E9EF),
+                      ),
+                      child: Center(
+                        child: AppNetworkImage(
+                          height: 40,
+                          width: 40,
+                          borderRadius: BorderRadius.circular(100),
+                          imageUrl: user!.profileImage.toString(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hello, Hamish!',
-                    style: globaltextInterTight(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.secondaryColor,
-                    ),
-                  ),
-                  Text(
-                    'Good Morning!',
-                    style: globaltextInterTight(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.blackColor,
-                    ),
+                  SizedBox(width: 6.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hello, ${user.fullName}',
+                        style: globaltextInterTight(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      Text(
+                        getGreeting(),
+                        style: globaltextInterTight(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
-          ),
-        ],
-      ),
+          );
+        }
+      }),
     );
+  }
+
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+
+    if (hour < 12) {
+      return 'Good Morning!';
+    } else if (hour < 17) {
+      return 'Good Afternoon!';
+    } else {
+      return 'Good Evening!';
+    }
   }
 
   Widget _buildTripsLoadingShimmer() {
