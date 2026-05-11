@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
@@ -223,7 +224,7 @@ class TripDetailsController extends GetxController {
       };
       final response = await networkConfig.ApiRequestHandler(
         RequestMethod.PUT,
-        "${Urls.priorityStatusChange}/",
+        "${Urls.priorityStatusChange}/69fc4ba8154098ba82db9081",
         jsonEncode(data),
         is_auth: true,
       );
@@ -468,15 +469,11 @@ class TripDetailsController extends GetxController {
   }
 
   void _showVisaBottomSheet(PriorityRemainder reminder, String state) {
-    final selectedVisaStatus = RxString(
-      reminder.isVisaConfirmed == true
-          ? 'Visa Confirmed/ Obtained'
-          : reminder.noVisaRequired == true
-              ? 'No Visa Required'
-              : reminder.needsAttention == true
-                  ? 'Needs Attention'
-                  : '',
-    );
+    final isVisaConfirmed = (reminder.isVisaConfirmed ?? false).obs;
+    final noVisaRequired = (reminder.noVisaRequired ?? false).obs;
+    final needsAttention = (reminder.needsAttention ?? false).obs;
+    final notesController =
+        TextEditingController(text: reminder.visaNotes ?? '');
 
     Get.bottomSheet(
       Container(
@@ -542,263 +539,39 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Option 1
+                    // Option 1: Visa Confirmed
                     Obx(
-                      () => GestureDetector(
-                        onTap: () => selectedVisaStatus.value =
-                            'Visa Confirmed/ Obtained',
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedVisaStatus.value ==
-                                      'Visa Confirmed/ Obtained'
-                                  ? AppColors.authOrange
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Visa Confirmed/ Obtained',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  SizedBox(
-                                    width: 300,
-                                    child: Text(
-                                      'I have the necessary visa(s) or have confirmed i dont need one',
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: selectedVisaStatus.value ==
-                                            'Visa Confirmed/ Obtained'
-                                        ? AppColors.authOrange
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                  color: selectedVisaStatus.value ==
-                                          'Visa Confirmed/ Obtained'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                                ),
-                                child: selectedVisaStatus.value ==
-                                        'Visa Confirmed/ Obtained'
-                                    ? const Icon(
-                                        Icons.check,
-                                        size: 16,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                              ),
-                            ],
-                          ),
-                        ),
+                      () => _buildToggleOption(
+                        title: 'Visa Confirmed/ Obtained',
+                        subtitle:
+                            'I have the necessary visa(s) or have confirmed i dont need one',
+                        isSelected: isVisaConfirmed.value,
+                        onTap: () => isVisaConfirmed.toggle(),
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Option 2
+                    // Option 2: No Visa Required
                     Obx(
-                      () => GestureDetector(
-                        onTap: () =>
-                            selectedVisaStatus.value = 'No Visa Required',
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color:
-                                  selectedVisaStatus.value == 'No Visa Required'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'No Visa Required',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  const Text(
-                                    'My passport allows visa-free entry to all destinations',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: selectedVisaStatus.value ==
-                                            'No Visa Required'
-                                        ? AppColors.authOrange
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                  color: selectedVisaStatus.value ==
-                                          'No Visa Required'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                                ),
-                                child: selectedVisaStatus.value ==
-                                        'No Visa Required'
-                                    ? const Icon(
-                                        Icons.check,
-                                        size: 16,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                              ),
-                            ],
-                          ),
-                        ),
+                      () => _buildToggleOption(
+                        title: 'No Visa Required',
+                        subtitle:
+                            'My passport allows visa-free entry to all destinations',
+                        isSelected: noVisaRequired.value,
+                        onTap: () => noVisaRequired.toggle(),
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Option 3
+                    // Option 3: Needs Attention
                     Obx(
-                      () => GestureDetector(
-                        onTap: () =>
-                            selectedVisaStatus.value = 'Needs Attention',
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color:
-                                  selectedVisaStatus.value == 'Needs Attention'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Needs Attention',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'I still need to apply for or check visa requirements',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: selectedVisaStatus.value ==
-                                            'Needs Attention'
-                                        ? AppColors.authOrange
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                  color: selectedVisaStatus.value ==
-                                          'Needs Attention'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                                ),
-                                child: selectedVisaStatus.value ==
-                                        'Needs Attention'
-                                    ? const Icon(
-                                        Icons.check,
-                                        size: 16,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                              ),
-                            ],
-                          ),
-                        ),
+                      () => _buildToggleOption(
+                        title: 'Needs Attention',
+                        subtitle:
+                            'I still need to apply for or check visa requirements',
+                        isSelected: needsAttention.value,
+                        onTap: () => needsAttention.toggle(),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Ask AI Button
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.back();
-                          Get.snackbar(
-                            'AI Assistant',
-                            'Opening Trav AI for visa guidance...',
-                            backgroundColor: AppColors.authOrange,
-                            colorText: Colors.white,
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.authOrange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                        ),
-                        child: const Text(
-                          'Ask Trav (AI)',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
                     // Notes Section
                     const Text(
                       'Notes',
@@ -810,6 +583,7 @@ class TripDetailsController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
+                      controller: notesController,
                       maxLines: 3,
                       decoration: InputDecoration(
                         hintText: 'describe',
@@ -846,26 +620,12 @@ class TripDetailsController extends GetxController {
                               textColor: Colors.white,
                               onTap: () {
                                 if (isPriorityLoading.value) return;
-                                if (selectedVisaStatus.value.isEmpty) {
-                                  AppSnackbar.failed(
-                                      'Please select a visa status');
-                                  return;
-                                }
-
-                                final String selection =
-                                    selectedVisaStatus.value;
                                 changePriority(
                                   reminder.id ?? '',
-                                  isVisaConfirmed:
-                                      selection == 'Visa Confirmed/ Obtained',
-                                  noVisaRequired:
-                                      selection == 'No Visa Required',
-                                  needsAttention:
-                                      selection == 'Needs Attention',
-                                  visaNotes:
-                                      selection == 'Visa Confirmed/ Obtained'
-                                          ? 'Visa approved via embassy'
-                                          : '',
+                                  isVisaConfirmed: isVisaConfirmed.value,
+                                  noVisaRequired: noVisaRequired.value,
+                                  needsAttention: needsAttention.value,
+                                  visaNotes: notesController.text,
                                   previewOnly: false,
                                 );
                                 Future.delayed(
@@ -881,9 +641,7 @@ class TripDetailsController extends GetxController {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -897,8 +655,7 @@ class TripDetailsController extends GetxController {
 
   void _showTravelInsuranceBottomSheet(
       PriorityRemainder reminder, String state) {
-    final selectedInsuranceStatus =
-        RxString(reminder.haveInsurance == true ? 'Yes, I have insurance' : '');
+    final hasInsurance = (reminder.haveInsurance ?? false).obs;
 
     Get.bottomSheet(
       Container(
@@ -964,151 +721,24 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Option 1
+                    // Option 1: Yes, I have insurance
                     Obx(
-                      () => GestureDetector(
-                        onTap: () => selectedInsuranceStatus.value =
-                            'Yes, I have insurance',
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedInsuranceStatus.value ==
-                                      'Yes, I have insurance'
-                                  ? AppColors.authOrange
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Yes, I have insurance',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  const Text(
-                                    'I have travel insurance coverage for this trip',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: selectedInsuranceStatus.value ==
-                                            'Yes, I have insurance'
-                                        ? AppColors.authOrange
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                  color: selectedInsuranceStatus.value ==
-                                          'Yes, I have insurance'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                                ),
-                                child: selectedInsuranceStatus.value ==
-                                        'Yes, I have insurance'
-                                    ? const Icon(
-                                        Icons.check,
-                                        size: 16,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                              ),
-                            ],
-                          ),
-                        ),
+                      () => _buildToggleOption(
+                        title: 'Yes, I have insurance',
+                        subtitle:
+                            'I have travel insurance coverage for this trip',
+                        isSelected: hasInsurance.value,
+                        onTap: () => hasInsurance.value = true,
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Option 2
+                    // Option 2: Not yet/ Need to get
                     Obx(
-                      () => GestureDetector(
-                        onTap: () => selectedInsuranceStatus.value =
-                            'Not yet/ Need to get',
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedInsuranceStatus.value ==
-                                      'Not yet/ Need to get'
-                                  ? AppColors.authOrange
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Not yet/ Need to get',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  const Text(
-                                    'I still need to purchase travel insurance',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: selectedInsuranceStatus.value ==
-                                            'Not yet/ Need to get'
-                                        ? AppColors.authOrange
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                  color: selectedInsuranceStatus.value ==
-                                          'Not yet/ Need to get'
-                                      ? AppColors.authOrange
-                                      : Colors.transparent,
-                                ),
-                                child: selectedInsuranceStatus.value ==
-                                        'Not yet/ Need to get'
-                                    ? const Icon(
-                                        Icons.check,
-                                        size: 16,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                              ),
-                            ],
-                          ),
-                        ),
+                      () => _buildToggleOption(
+                        title: 'Not yet/ Need to get',
+                        subtitle: 'I still need to purchase travel insurance',
+                        isSelected: !hasInsurance.value,
+                        onTap: () => hasInsurance.value = false,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -1132,19 +762,9 @@ class TripDetailsController extends GetxController {
                               textColor: Colors.white,
                               onTap: () {
                                 if (isPriorityLoading.value) return;
-                                if (selectedInsuranceStatus.value.isEmpty) {
-                                  AppSnackbar.failed(
-                                      'Please select an insurance status');
-                                  return;
-                                }
-
-                                final bool hasInsurance =
-                                    selectedInsuranceStatus.value ==
-                                        'Yes, I have insurance';
-
                                 changePriority(
                                   reminder.id ?? '',
-                                  haveInsurance: hasInsurance,
+                                  haveInsurance: hasInsurance.value,
                                   previewOnly: false,
                                 );
                                 Future.delayed(
@@ -1160,9 +780,7 @@ class TripDetailsController extends GetxController {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -1171,6 +789,76 @@ class TripDetailsController extends GetxController {
         ),
       ),
       isScrollControlled: true,
+    );
+  }
+
+  Widget _buildToggleOption({
+    required String title,
+    required String subtitle,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected ? AppColors.authOrange : Colors.transparent,
+            width: 2,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: 250.w,
+                  child: Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? AppColors.authOrange : Colors.grey,
+                  width: 2,
+                ),
+                color: isSelected ? AppColors.authOrange : Colors.transparent,
+              ),
+              child: isSelected
+                  ? const Icon(
+                      Icons.check,
+                      size: 16,
+                      color: Colors.white,
+                    )
+                  : null,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

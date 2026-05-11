@@ -329,36 +329,21 @@ class TripDetailsScreen extends StatelessWidget {
         reminders.length > 2 ? reminders[2] : PriorityRemainder();
 
     String _buttonLabel(String type, PriorityRemainder reminder) {
+      bool isChecked = false;
       if (type == 'Passport') {
-        if (reminder.passportCountry == null ||
-            reminder.passportCountry!.isEmpty ||
-            reminder.passportCountry == 'null' ||
-            reminder.passportExpiry == null ||
-            reminder.passportExpiry!.year <= 1900) {
-          return 'Add';
-        }
-        if (reminder.passportExpiry!.isBefore(DateTime.now())) {
-          return 'Update';
-        }
-        return 'Checked';
+        isChecked = reminder.passportCountry != null &&
+            reminder.passportCountry!.isNotEmpty &&
+            reminder.passportCountry != 'null' &&
+            reminder.passportExpiry != null &&
+            reminder.passportExpiry!.year > 1900 &&
+            !reminder.passportExpiry!.isBefore(DateTime.now());
+      } else if (type == 'Visa') {
+        isChecked = reminder.isVisaConfirmed == true ||
+            reminder.noVisaRequired == true;
+      } else if (type == 'Travel Insurance') {
+        isChecked = reminder.haveInsurance == true;
       }
-
-      if (type == 'Visa') {
-        if (reminder.isVisaConfirmed == true ||
-            reminder.noVisaRequired == true) {
-          return 'Checked';
-        }
-        if (reminder.needsAttention == true) {
-          return 'Update';
-        }
-        return 'Add';
-      }
-
-      if (type == 'Travel Insurance') {
-        return reminder.haveInsurance == true ? 'Checked' : 'Add';
-      }
-
-      return 'Add';
+      return isChecked ? 'Checked' : 'Add';
     }
 
     final passportChecked = passportReminder.passportCountry != null &&

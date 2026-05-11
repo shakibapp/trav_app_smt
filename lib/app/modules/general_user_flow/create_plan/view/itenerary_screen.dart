@@ -482,7 +482,7 @@ class ItineraryView extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: backButton(),
         ),
-        title: const Text(
+        title: Text(
           "Your Itinerary",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
