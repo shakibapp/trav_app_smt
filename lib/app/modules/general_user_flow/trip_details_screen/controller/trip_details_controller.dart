@@ -22,7 +22,7 @@ class TripDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getSingleTripData("69fc4ba8154098ba82db9081");
+    //getSingleTripData("69fc4ba8154098ba82db9081");
   }
 
   //get single trip data
@@ -121,16 +121,16 @@ class TripDetailsController extends GetxController {
     String? visaNotes,
     bool? haveInsurance,
   }) {
-    final data = <String, dynamic>{};
-    if (passportCountry != null) data['passportCountry'] = passportCountry;
-    final normalizedExpiry = _normalizePassportExpiry(passportExpiry);
-    if (normalizedExpiry != null) data['passportExpiry'] = normalizedExpiry;
-    if (isVisaConfirmed != null) data['isVisaConfirmed'] = isVisaConfirmed;
-    if (noVisaRequired != null) data['noVisaRequired'] = noVisaRequired;
-    if (needsAttention != null) data['needsAttention'] = needsAttention;
-    if (visaNotes != null) data['visaNotes'] = visaNotes;
-    if (haveInsurance != null) data['haveInsurance'] = haveInsurance;
-    return data;
+    return {
+      'passportCountry': passportCountry ?? '',
+      'passportExpiry': _normalizePassportExpiry(passportExpiry) ??
+          '1900-01-01T00:00:00.000Z',
+      'isVisaConfirmed': isVisaConfirmed ?? false,
+      'noVisaRequired': noVisaRequired ?? false,
+      'needsAttention': needsAttention ?? false,
+      'visaNotes': visaNotes ?? '',
+      'haveInsurance': haveInsurance ?? false,
+    };
   }
 
   void _printPriorityReminderData(Map<String, dynamic> payload) {
@@ -138,7 +138,7 @@ class TripDetailsController extends GetxController {
     log('Priority reminder preview payload:\n$pretty');
   }
 
-  /// Send priority reminder update to the API with only changed fields
+  /// Send priority reminder update to the API
   Future<void> _sendPriorityReminderUpdate(
     String reminderId,
     Map<String, dynamic> data,
@@ -170,6 +170,7 @@ class TripDetailsController extends GetxController {
     }
   }
 
+  /// Main method — merges existing reminder data with new values before sending
   Future<void> changePriority(
     String reminderId, {
     String? passportCountry,
@@ -181,14 +182,23 @@ class TripDetailsController extends GetxController {
     bool? haveInsurance,
     bool previewOnly = false,
   }) async {
+    // Find the existing reminder by id
+    final existingReminder = singleTripData.value.priorityRemainders
+        ?.firstWhereOrNull((r) => r.id == reminderId);
+
+    // Merge: use passed value if provided, otherwise fall back to existing data
     final payload = _buildPriorityReminderData(
-      passportCountry: passportCountry,
-      passportExpiry: passportExpiry,
-      isVisaConfirmed: isVisaConfirmed,
-      noVisaRequired: noVisaRequired,
-      needsAttention: needsAttention,
-      visaNotes: visaNotes,
-      haveInsurance: haveInsurance,
+      passportCountry: passportCountry ?? existingReminder?.passportCountry,
+      passportExpiry: passportExpiry ??
+          (existingReminder?.passportExpiry != null &&
+                  existingReminder!.passportExpiry!.year > 1900
+              ? existingReminder.passportExpiry!.toIso8601String()
+              : null),
+      isVisaConfirmed: isVisaConfirmed ?? existingReminder?.isVisaConfirmed,
+      noVisaRequired: noVisaRequired ?? existingReminder?.noVisaRequired,
+      needsAttention: needsAttention ?? existingReminder?.needsAttention,
+      visaNotes: visaNotes ?? existingReminder?.visaNotes,
+      haveInsurance: haveInsurance ?? existingReminder?.haveInsurance,
     );
 
     _printPriorityReminderData(payload);
@@ -199,47 +209,6 @@ class TripDetailsController extends GetxController {
     }
 
     await _sendPriorityReminderUpdate(reminderId, payload);
-  }
-
-  /// Legacy method for full payload update of passport, visa, and insurance
-  Future<void> changePriorityLegacyLegacy({
-    String passportCountry = 'Paris',
-    String passportExpiry = '2028-03-15T00:00:00.000Z',
-    bool isVisaConfirmed = true,
-    bool noVisaRequired = false,
-    bool needsAttention = false,
-    String visaNotes = 'Visa approved via embassy',
-    bool haveInsurance = true,
-  }) async {
-    try {
-      isPriorityLoading.value = true;
-      final Map<String, dynamic> data = {
-        "passportCountry": passportCountry,
-        "passportExpiry": passportExpiry,
-        "isVisaConfirmed": isVisaConfirmed,
-        "noVisaRequired": noVisaRequired,
-        "needsAttention": needsAttention,
-        "visaNotes": visaNotes,
-        "haveInsurance": haveInsurance,
-      };
-      final response = await networkConfig.ApiRequestHandler(
-        RequestMethod.PUT,
-        "${Urls.priorityStatusChange}/69fc4ba8154098ba82db9081",
-        jsonEncode(data),
-        is_auth: true,
-      );
-      if (response != null && response["success"] == true) {
-        AppSnackbar.success("${response["message"]}");
-        log("priority reminders status update success");
-      } else {
-        AppSnackbar.failed("${response["message"]}");
-        log("Priority remainders failed ${response["message"]}");
-      }
-    } catch (e) {
-      log("priority status change error ${e.toString()}");
-    } finally {
-      isPriorityLoading.value = false;
-    }
   }
 
   // Bottom Sheet Methods
@@ -419,9 +388,7 @@ class TripDetailsController extends GetxController {
                           child: appButton(
                             borderColor: AppColors.authOrange,
                             bgColor: Colors.transparent,
-                            onTap: () {
-                              Get.back();
-                            },
+                            onTap: () => Get.back(),
                             name: "Cancel",
                           ),
                         ),
@@ -539,7 +506,6 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Option 1: Visa Confirmed
                     Obx(
                       () => _buildToggleOption(
                         title: 'Visa Confirmed/ Obtained',
@@ -550,7 +516,6 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Option 2: No Visa Required
                     Obx(
                       () => _buildToggleOption(
                         title: 'No Visa Required',
@@ -561,7 +526,6 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Option 3: Needs Attention
                     Obx(
                       () => _buildToggleOption(
                         title: 'Needs Attention',
@@ -572,7 +536,6 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Notes Section
                     const Text(
                       'Notes',
                       style: TextStyle(
@@ -600,16 +563,13 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Buttons
                     Row(
                       children: [
                         Expanded(
                           child: appButton(
                             borderColor: AppColors.authOrange,
                             bgColor: Colors.transparent,
-                            onTap: () {
-                              Get.back();
-                            },
+                            onTap: () => Get.back(),
                             name: "Cancel",
                           ),
                         ),
@@ -721,7 +681,6 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Option 1: Yes, I have insurance
                     Obx(
                       () => _buildToggleOption(
                         title: 'Yes, I have insurance',
@@ -732,7 +691,6 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    // Option 2: Not yet/ Need to get
                     Obx(
                       () => _buildToggleOption(
                         title: 'Not yet/ Need to get',
@@ -742,16 +700,13 @@ class TripDetailsController extends GetxController {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Buttons
                     Row(
                       children: [
                         Expanded(
                           child: appButton(
                             borderColor: AppColors.authOrange,
                             bgColor: Colors.transparent,
-                            onTap: () {
-                              Get.back();
-                            },
+                            onTap: () => Get.back(),
                             name: "Cancel",
                           ),
                         ),
@@ -829,7 +784,7 @@ class TripDetailsController extends GetxController {
                   width: 250.w,
                   child: Text(
                     subtitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                     ),
@@ -849,11 +804,7 @@ class TripDetailsController extends GetxController {
                 color: isSelected ? AppColors.authOrange : Colors.transparent,
               ),
               child: isSelected
-                  ? const Icon(
-                      Icons.check,
-                      size: 16,
-                      color: Colors.white,
-                    )
+                  ? const Icon(Icons.check, size: 16, color: Colors.white)
                   : null,
             ),
           ],

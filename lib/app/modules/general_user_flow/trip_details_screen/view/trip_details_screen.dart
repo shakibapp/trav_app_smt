@@ -5,6 +5,7 @@ import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
 import 'package:hamishphipps/app/core/widgets/network_image.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/view/tripItinerary_overview_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/controller/trip_details_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
@@ -13,11 +14,13 @@ import 'package:intl/intl.dart';
 import '../widget/trip_details_widget.dart';
 
 class TripDetailsScreen extends StatelessWidget {
-  TripDetailsScreen({super.key});
+  final String tripId;
+  TripDetailsScreen({super.key, required this.tripId});
   final controller = Get.put(TripDetailsController());
 
   @override
   Widget build(BuildContext context) {
+    controller.getSingleTripData(tripId);
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SafeArea(
@@ -32,6 +35,9 @@ class TripDetailsScreen extends StatelessWidget {
                 children: [
                   _buildHeader(controller),
                   _buildRemindersSection(controller),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildPriorityRemindersSection(controller),
                   _buildItinerarySection(controller),
                   SizedBox(height: 20),
@@ -101,7 +107,6 @@ class TripDetailsScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      // const SizedBox(height: 8),
                       Wrap(
                         children: [
                           _buildInfoChip(
@@ -167,9 +172,9 @@ class TripDetailsScreen extends StatelessWidget {
             width: 180,
             height: 24,
             borderRadius: BorderRadius.all(Radius.circular(8))),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         SizedBox(
-          height: 150,
+          height: 180,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: 2,
@@ -321,42 +326,33 @@ class TripDetailsScreen extends StatelessWidget {
 
   Widget _buildPriorityRemindersSection(TripDetailsController controller) {
     final reminders = controller.singleTripData.value.priorityRemainders ?? [];
-    final passportReminder =
-        reminders.isNotEmpty ? reminders[0] : PriorityRemainder();
-    final visaReminder =
-        reminders.length > 1 ? reminders[1] : PriorityRemainder();
-    final insuranceReminder =
-        reminders.length > 2 ? reminders[2] : PriorityRemainder();
 
-    String _buttonLabel(String type, PriorityRemainder reminder) {
-      bool isChecked = false;
-      if (type == 'Passport') {
-        isChecked = reminder.passportCountry != null &&
-            reminder.passportCountry!.isNotEmpty &&
-            reminder.passportCountry != 'null' &&
-            reminder.passportExpiry != null &&
-            reminder.passportExpiry!.year > 1900 &&
-            !reminder.passportExpiry!.isBefore(DateTime.now());
-      } else if (type == 'Visa') {
-        isChecked = reminder.isVisaConfirmed == true ||
-            reminder.noVisaRequired == true;
-      } else if (type == 'Travel Insurance') {
-        isChecked = reminder.haveInsurance == true;
-      }
-      return isChecked ? 'Checked' : 'Add';
-    }
+    // ✅ Use ONE single reminder object for all 3 types
+    final reminder = reminders.isNotEmpty ? reminders[0] : PriorityRemainder();
 
-    final passportChecked = passportReminder.passportCountry != null &&
-        passportReminder.passportCountry!.isNotEmpty &&
-        passportReminder.passportCountry != 'null' &&
-        passportReminder.passportExpiry != null &&
-        passportReminder.passportExpiry!.year > 1900 &&
-        !passportReminder.passportExpiry!.isBefore(DateTime.now());
+    // ✅ All checks use same reminder object
+    final passportChecked = reminder.passportCountry != null &&
+        reminder.passportCountry!.isNotEmpty &&
+        reminder.passportCountry != 'null' &&
+        reminder.passportExpiry != null &&
+        reminder.passportExpiry!.year > 1900 &&
+        !reminder.passportExpiry!.isBefore(DateTime.now());
 
-    final visaChecked = visaReminder.isVisaConfirmed == true ||
-        visaReminder.noVisaRequired == true;
-    final insuranceChecked = insuranceReminder.haveInsurance == true;
+    final visaChecked =
+        reminder.isVisaConfirmed == true || reminder.noVisaRequired == true;
+
+    final insuranceChecked = reminder.haveInsurance == true;
+
     final allChecked = passportChecked && visaChecked && insuranceChecked;
+
+    // ✅ Button label helper using same reminder
+    String buttonLabel(String type) {
+      if (type == 'Passport') return passportChecked ? 'Checked' : 'Add';
+      if (type == 'Visa') return visaChecked ? 'Checked' : 'Add';
+      if (type == 'Travel Insurance')
+        return insuranceChecked ? 'Checked' : 'Add';
+      return 'Add';
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,10 +363,10 @@ class TripDetailsScreen extends StatelessWidget {
           name: 'Passport',
           image: AppIcons.passport,
           onTap: () => controller.showPriorityReminderBottomSheet(
-            passportReminder,
+            reminder,
             'Passport',
           ),
-          buttonName: _buttonLabel('Passport', passportReminder),
+          buttonName: buttonLabel('Passport'),
           isChecked: passportChecked,
         ),
         const SizedBox(height: 6),
@@ -378,10 +374,10 @@ class TripDetailsScreen extends StatelessWidget {
           name: 'Visa',
           image: AppIcons.visa,
           onTap: () => controller.showPriorityReminderBottomSheet(
-            visaReminder,
+            reminder,
             'Visa',
           ),
-          buttonName: _buttonLabel('Visa', visaReminder),
+          buttonName: buttonLabel('Visa'),
           isChecked: visaChecked,
         ),
         const SizedBox(height: 6),
@@ -389,10 +385,10 @@ class TripDetailsScreen extends StatelessWidget {
           name: 'Travel Insurance',
           image: AppIcons.agreement,
           onTap: () => controller.showPriorityReminderBottomSheet(
-            insuranceReminder,
+            reminder,
             'Travel Insurance',
           ),
-          buttonName: _buttonLabel('Travel Insurance', insuranceReminder),
+          buttonName: buttonLabel('Travel Insurance'),
           isChecked: insuranceChecked,
         ),
       ],
@@ -444,7 +440,7 @@ class TripDetailsScreen extends StatelessWidget {
                   SizedBox(width: 15),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.to(TripItineraryView(itineraryId: itinerary.id.toString(),)),
                       child: Card(
                         color: Colors.grey.shade100,
                         shape: RoundedRectangleBorder(
@@ -524,8 +520,6 @@ class TripDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Helper Widgets
-
   Widget _buildOptimizeRouteSection(TripDetailsController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -584,7 +578,7 @@ class TripDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: appButton(
                         textColor: Colors.white,
-                        onTap: (){},
+                        onTap: () {},
                         name: "Assign",
                       ),
                     ),

@@ -22,7 +22,6 @@ class DatePickerView extends StatelessWidget {
               children: [
                 // Back button
                 _buildBackButton(),
-                Divider(),
 
                 const SizedBox(height: 16),
 
@@ -399,7 +398,7 @@ class DatePickerView extends StatelessWidget {
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
-        onPressed: () => Get.to(InterestView()),
+        onPressed: () => Get.to(()=>InterestView()),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.authOrange,
           disabledBackgroundColor: Colors.grey.shade300,

@@ -32,8 +32,6 @@ class CityViewScreen extends StatelessWidget {
                   backButton(),
 
                   const SizedBox(height: 16),
-                  const Divider(),
-                  const SizedBox(height: 16),
 
                   _buildHelpCard(),
                   const SizedBox(height: 24),
@@ -266,7 +264,10 @@ class CityViewScreen extends StatelessWidget {
                   (region) => Chip(
                     label: Text(region.name),
                     onDeleted: () => controller.toggleRegion(region),
-                    deleteIcon:  Icon(Icons.close, size: 16,),
+                    deleteIcon: Icon(
+                      Icons.close,
+                      size: 16,
+                    ),
                   ),
                 )
                 .toList(),

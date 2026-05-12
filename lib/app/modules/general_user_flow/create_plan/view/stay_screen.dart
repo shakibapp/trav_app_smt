@@ -4,6 +4,7 @@ import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/controller/create_plan_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/view/itenerary_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/view/trip_details_screen.dart';
 
 import '../city/controller/city_controller.dart';
 import '../controller/create_plan_calender_controller.dart';
@@ -188,12 +189,7 @@ class StayView extends StatelessWidget {
                     onPressed: createPlanController.isSubmitting.value ||
                             createPlanController.isManualSubmitting.value
                         ? null
-                        : () {
-                            Get.to(() => ItineraryView(
-                                itineraryId: controller
-                                    .locations.first.itineraryId
-                                    .toString()));
-                          },
+                        : controller.goTripDetails,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.authOrange,
                       shape: RoundedRectangleBorder(

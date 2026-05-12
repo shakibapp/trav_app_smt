@@ -466,7 +466,7 @@ class ItineraryView extends StatelessWidget {
   final String itineraryId;
   final ItineraryController controller = Get.put(ItineraryController());
 
-  ItineraryView({Key? key, required this.itineraryId}) : super(key: key);
+  ItineraryView({super.key, required this.itineraryId});
 
   @override
   Widget build(BuildContext context) {

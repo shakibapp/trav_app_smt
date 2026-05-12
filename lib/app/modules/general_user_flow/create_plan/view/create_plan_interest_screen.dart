@@ -58,8 +58,8 @@ class InterestView extends StatelessWidget {
 
             // Grid of Interests
             Expanded(
-              child: Obx(
-                () => GridView.builder(
+              child: Obx(() {
+                return GridView.builder(
                   padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -102,8 +102,8 @@ class InterestView extends StatelessWidget {
                       ),
                     );
                   },
-                ),
-              ),
+                );
+              }),
             ),
 
             // Next Button

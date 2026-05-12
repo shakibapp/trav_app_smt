@@ -16,27 +16,13 @@ class ItineraryDetailsController extends GetxController {
   RxList<Activity> suggestedActivities = <Activity>[].obs;
   RxList<Activity> selectedActivities = <Activity>[].obs;
   RxBool isLoading = false.obs;
-  @override
-  void onInit() {
-    super.onInit();
 
-    getItineraryOverview("69eeed3b57523b7608fc8d67");
-  }
 
   void changeTab(int index) {
     selectedTabIndex.value = index;
   }
 
-  // void addActivity(Activity activity) {
-  //   final updatedActivity = activity.copyWith(isAdded: true);
-  //   selectedActivities.add(updatedActivity);
-
-  //   // Update suggested list
-  //   final index = suggestedActivities.indexWhere((a) => a.id == activity.id);
-  //   if (index != -1) {
-  //     suggestedActivities[index] = updatedActivity;
-  //   }
-  // }
+ 
 
   void removeActivity(String activityId) {
     selectedActivities.removeWhere((a) => a.id == activityId);

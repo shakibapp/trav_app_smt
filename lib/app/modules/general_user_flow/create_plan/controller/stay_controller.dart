@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
-import 'package:hamishphipps/app/core/widgets/app_snackbar.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/view/trip_details_screen.dart';
+
 
 class StayController extends GetxController {
   String? tripId;
@@ -90,6 +91,10 @@ class StayController extends GetxController {
     } else {
       AppSnackbar.failed('Failed to update itinerary.');
     }
+  }
+
+  void goTripDetails(){
+    Get.to(() => TripDetailsScreen(tripId:tripId.toString()));
   }
 }
 

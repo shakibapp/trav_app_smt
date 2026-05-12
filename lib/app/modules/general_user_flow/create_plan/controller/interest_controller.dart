@@ -21,7 +21,7 @@ class InterestController extends GetxController {
   // Toggle function
   void toggleSelection(int index) {
     interests[index].isSelected = !interests[index].isSelected;
-    interests.refresh(); // UI update korar jonno
+     interests.refresh(); // UI update korar jonno
   }
 }
 class Interest {

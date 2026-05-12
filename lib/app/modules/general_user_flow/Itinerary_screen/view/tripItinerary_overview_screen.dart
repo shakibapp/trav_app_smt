@@ -10,11 +10,14 @@ import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widg
 import 'package:intl/intl.dart';
 
 class TripItineraryView extends StatelessWidget {
-  const TripItineraryView({super.key});
+  final String itineraryId;
+   TripItineraryView({super.key, required this.itineraryId});
+   final controller = Get.put(ItineraryDetailsController());
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ItineraryDetailsController());
+    
+    controller.getItineraryOverview(itineraryId.toString());
 
     return Scaffold(
       backgroundColor: AppColors.bgColor,
