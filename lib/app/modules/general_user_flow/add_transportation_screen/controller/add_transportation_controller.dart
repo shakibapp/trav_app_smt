@@ -25,6 +25,13 @@ class TransportationController extends GetxController {
   final totalCostController = TextEditingController();
   final notesController = TextEditingController();
 
+  // New specific controllers
+  final trainOperatorController = TextEditingController();
+  final trainNumberController = TextEditingController();
+  final busCompanyController = TextEditingController();
+  final serviceNumberController = TextEditingController();
+  final carNumberPlateController = TextEditingController();
+
   // Date and Time Controllers
   final departureDateController = TextEditingController();
   final departureTimeController = TextEditingController();
@@ -51,6 +58,10 @@ class TransportationController extends GetxController {
   // Validate all fields
   bool validateForm() {
     if (formKey.currentState!.validate()) {
+      if (selectedTransportationType.value == null) {
+        AppSnackbar.failed("Please select a transportation type");
+        return false;
+      }
       isFormValid.value = true;
       return true;
     }
@@ -76,20 +87,25 @@ class TransportationController extends GetxController {
     update();
   }
 
+  String toIsoDate(String value) {
+    try {
+      final date = DateFormat('dd/MM/yyyy').parseStrict(value);
+      return DateTime.utc(
+        date.year,
+        date.month,
+        date.day,
+      ).toIso8601String();
+    } catch (e) {
+      log("Error parsing date: $e");
+      return value; // Fallback
+    }
+  }
 
-
-
-String toIsoDate(String value) {
-  final date = DateFormat('dd/MM/yy').parseStrict(value);
-  return DateTime.utc(
-    date.year,
-    date.month,
-    date.day,
-  ).toIso8601String();
-}
-//create new transportation
+  //create new transportation
   final RxBool isTransportationLoading = false.obs;
   Future<void> createTransportation(String id) async {
+    if (!validateForm()) return;
+
     try {
       isTransportationLoading.value = true;
       final Map<String, dynamic> data = {
@@ -101,30 +117,50 @@ String toIsoDate(String value) {
         "arrivalDate": toIsoDate(arrivalDateController.text),
         "arrivalTime": arrivalTimeController.text,
         "bookingPlatform": selectedBookingPlatform.value,
-        "bookingReference": bookingReferenceController.text,
-        "airline": airlineController.text,
-        "flightNumber": flightNumberController.text,
-        "terminal": terminalController.text,
-        "gate": gateController.text,
-        "currency":selectedCurrency.value,
-        "totalCost": double.parse(totalCostController.text),
-        "notes": notesController.text
+        "currency": selectedCurrency.value,
+        "totalCost": double.tryParse(totalCostController.text) ?? 0.0,
       };
+
+      // Helper to add non-empty fields
+      void addIfNotEmpty(String key, String value) {
+        if (value.isNotEmpty) {
+          data[key] = value;
+        }
+      }
+
+      addIfNotEmpty("bookingReference", bookingReferenceController.text);
+      addIfNotEmpty("airline", airlineController.text);
+      addIfNotEmpty("flightNumber", flightNumberController.text);
+      addIfNotEmpty("terminal", terminalController.text);
+      addIfNotEmpty("gate", gateController.text);
+      addIfNotEmpty("trainOperator", trainOperatorController.text);
+      addIfNotEmpty("trainNumber", trainNumberController.text);
+      addIfNotEmpty("busCompany", busCompanyController.text);
+      addIfNotEmpty("serviceNumber", serviceNumberController.text);
+      addIfNotEmpty("carNumberPlate", carNumberPlateController.text);
+      addIfNotEmpty("notes", notesController.text);
+      addIfNotEmpty("seat", seatController.text);
+
+      log("Payload: ${jsonEncode(data)}");
+
       final response = await networkConfig.ApiRequestHandler(
-          RequestMethod.POST, "${Urls.createTransportation}/$id", jsonEncode(data),
+          RequestMethod.POST,
+          "${Urls.createTransportation}/$id",
+          jsonEncode(data),
           is_auth: true);
-      if (response != null && response["success"]==true){
-       await Get.put(ItineraryDetailsController()).getItineraryOverview(id);
+      if (response != null && response["success"] == true) {
+        await Get.put(ItineraryDetailsController()).getItineraryOverview(id);
         Get.back();
         AppSnackbar.success("${response["message"]}");
         log("create transportation success ${response["message"]}");
-      }else{
-        AppSnackbar.failed("${response["message"]}");
+      } else {
+        AppSnackbar.failed("${response["message"] ?? 'Failed to create transportation'}");
         log("Create Transportation failed ${response["message"]}");
       }
     } catch (e) {
       log("Create transportation error ${e.toString()}");
-    }finally{
+      AppSnackbar.failed("An error occurred");
+    } finally {
       isTransportationLoading.value = false;
     }
   }
@@ -144,14 +180,17 @@ String toIsoDate(String value) {
     seatController.clear();
     totalCostController.clear();
     notesController.clear();
+    trainOperatorController.clear();
+    trainNumberController.clear();
+    busCompanyController.clear();
+    serviceNumberController.clear();
+    carNumberPlateController.clear();
     selectedTransportationType.value = null;
     selectedBookingPlatform.value = 'Skyscanner';
     selectedCurrency.value = 'EUR';
     isFormValid.value = false;
     formKey.currentState?.reset();
   }
-
-
 
   @override
   void onClose() {
@@ -169,6 +208,11 @@ String toIsoDate(String value) {
     seatController.dispose();
     totalCostController.dispose();
     notesController.dispose();
+    trainOperatorController.dispose();
+    trainNumberController.dispose();
+    busCompanyController.dispose();
+    serviceNumberController.dispose();
+    carNumberPlateController.dispose();
     super.onClose();
   }
 }

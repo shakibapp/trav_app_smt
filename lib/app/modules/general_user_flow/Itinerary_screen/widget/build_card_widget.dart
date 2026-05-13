@@ -142,24 +142,24 @@ buildBookingOption({
             ],
           ),
         ),
-        GestureDetector(
-          onTap: onExplore,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.authOrange,
-              borderRadius: BorderRadius.circular(100),
-            ),
-            child: const Text(
-              'Explore',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: onExplore,
+        //   child: Container(
+        //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        //     decoration: BoxDecoration(
+        //       color: AppColors.authOrange,
+        //       borderRadius: BorderRadius.circular(100),
+        //     ),
+        //     child: const Text(
+        //       'Explore',
+        //       style: TextStyle(
+        //         color: Colors.white,
+        //         fontSize: 12,
+        //         fontWeight: FontWeight.w600,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     ),
   );

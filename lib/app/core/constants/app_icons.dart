@@ -68,4 +68,8 @@ class AppIcons {
   static const String editButton = "assets/icons/editButton.png";
   static const String deleteButton = "assets/icons/deleteButton.png";
   static const String alertCircle = "assets/icons/alert-circle.png";
+  static const String airb = "assets/icons/airb.png";
+  static const String hostelWorld = "assets/icons/hostelworld.png";
+  static const String booking = "assets/icons/booking.png";
+  static const String noData = "assets/icons/nodata.jpg";
 }

@@ -68,7 +68,7 @@ class AddTransportationView extends StatelessWidget {
                         const SizedBox(height: 8),
                         AppInputTextField(
                           controller: controller.departureDateController,
-                          hintText: 'DD/MM/YY',
+                          hintText: 'DD/MM/YYYY',
                           readOnly: true,
                           onTap: () => _selectDate(
                             context,
@@ -136,7 +136,7 @@ class AddTransportationView extends StatelessWidget {
                         const SizedBox(height: 8),
                         AppInputTextField(
                           controller: controller.arrivalDateController,
-                          hintText: 'DD/MM/YY',
+                          hintText: 'DD/MM/YYYY',
                           readOnly: true,
                           onTap: () => _selectDate(
                             context,
@@ -196,17 +196,8 @@ class AddTransportationView extends StatelessWidget {
               _buildBookingReferenceSection(),
               const SizedBox(height: 24),
 
-              // Airline & Flight Number
-              _buildAirlineFlightSection(),
-              const SizedBox(height: 24),
-
-              // Terminal & Gate
-              _buildTerminalGateSection(),
-              const SizedBox(height: 24),
-
-              // Seat
-              _buildSeatSection(),
-              const SizedBox(height: 24),
+              // Conditional Fields based on Transportation Type
+              Obx(() => _buildConditionalFields()),
 
               // Currency & Total Cost
               _buildCurrencyCostSection(),
@@ -226,6 +217,169 @@ class AddTransportationView extends StatelessWidget {
     );
   }
 
+  Widget _buildConditionalFields() {
+    final type = controller.selectedTransportationType.value;
+    if (type == null) return const SizedBox.shrink();
+
+    switch (type) {
+      case 'Flight':
+        return Column(
+          children: [
+            _buildAirlineFlightSection(),
+            const SizedBox(height: 24),
+            _buildTerminalGateSection(),
+            const SizedBox(height: 24),
+            _buildSeatSection(),
+            const SizedBox(height: 24),
+          ],
+        );
+      case 'Train':
+        return Column(
+          children: [
+            _buildTrainSpecificSection(),
+            const SizedBox(height: 24),
+            _buildSeatSection(),
+            const SizedBox(height: 24),
+          ],
+        );
+      case 'Bus':
+        return Column(
+          children: [
+            _buildBusSpecificSection(),
+            const SizedBox(height: 24),
+            _buildSeatSection(),
+            const SizedBox(height: 24),
+          ],
+        );
+      case 'Car':
+        return Column(
+          children: [
+            _buildCarSpecificSection(),
+            const SizedBox(height: 24),
+          ],
+        );
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildTrainSpecificSection() {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'TRAIN OPERATOR (OPTIONAL)',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              AppInputTextField(
+                controller: controller.trainOperatorController,
+                hintText: 'e.g. Eurostar',
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'TRAIN NUMBER (OPTIONAL)',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              AppInputTextField(
+                controller: controller.trainNumberController,
+                hintText: 'e.g. 9044',
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBusSpecificSection() {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'BUS COMPANY (OPTIONAL)',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              AppInputTextField(
+                controller: controller.busCompanyController,
+                hintText: 'e.g. National Express',
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'SERVICE NUMBER (OPTIONAL)',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              AppInputTextField(
+                controller: controller.serviceNumberController,
+                hintText: 'e.g. A1',
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCarSpecificSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'CAR NUMBER PLATE (OPTIONAL)',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 8),
+        AppInputTextField(
+          controller: controller.carNumberPlateController,
+          hintText: 'e.g. ABC 1234',
+        ),
+      ],
+    );
+  }
+
   Widget _buildTransportationTypeSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +396,7 @@ class AddTransportationView extends StatelessWidget {
         Obx(
           () => SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Wrap(
+            child: Row(
               children: [
                 _buildTransportationButton(
                   'Flight',
@@ -302,7 +456,7 @@ class AddTransportationView extends StatelessWidget {
     return GestureDetector(
       onTap: () => controller.selectTransportationType(value),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFFFF8C42) : Colors.grey[100],
           borderRadius: BorderRadius.circular(8),
@@ -315,14 +469,14 @@ class AddTransportationView extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 20,
+              size: 24,
               color: isSelected ? Colors.white : Colors.grey[600],
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: isSelected ? Colors.white : Colors.grey[600],
               ),
@@ -355,7 +509,6 @@ class AddTransportationView extends StatelessWidget {
                   AppInputTextField(
                     controller: controller.departureLocationController,
                     hintText: 'e.g. Melbourne Airport T?',
-
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Required';
@@ -383,7 +536,6 @@ class AddTransportationView extends StatelessWidget {
                   AppInputTextField(
                     controller: controller.arrivalLocationController,
                     hintText: 'e.g. Rome Airport',
-
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Required';
@@ -691,7 +843,6 @@ class AddTransportationView extends StatelessWidget {
         Expanded(
           child: appButton(
             bgColor: Colors.transparent,
-
             onTap: () {
               controller.clearForm();
               Get.back();
@@ -701,16 +852,17 @@ class AddTransportationView extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: Obx((){
+          child: Obx(() {
             return appButton(
-            textColor: Colors.white,
-            loading: controller.isTransportationLoading.value,
-            onTap: ()async{
-              await controller.createTransportation(id.toString());
-            },
-            name: "Save",
-          );
-          })),
+              textColor: Colors.white,
+              loading: controller.isTransportationLoading.value,
+              onTap: () async {
+                await controller.createTransportation(id.toString());
+              },
+              name: "Save",
+            );
+          }),
+        ),
       ],
     );
   }
@@ -719,12 +871,12 @@ class AddTransportationView extends StatelessWidget {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
     ).then((selectedDate) {
       if (selectedDate != null) {
         controller.text =
-            '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year.toString().substring(2)}';
+            '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}';
       }
     });
   }

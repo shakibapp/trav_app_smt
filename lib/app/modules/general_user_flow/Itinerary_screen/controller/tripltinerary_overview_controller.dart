@@ -18,6 +18,7 @@ class ItineraryDetailsController extends GetxController {
   RxBool isLoading = false.obs;
 
 
+
   void changeTab(int index) {
     selectedTabIndex.value = index;
   }
@@ -132,4 +133,8 @@ class ItineraryDetailsController extends GetxController {
       isLoadingOverview.value = false;
     }
   }
+
+
+  //stay ---
+  RxInt selectedAccommodationIndex = 0.obs;
 }

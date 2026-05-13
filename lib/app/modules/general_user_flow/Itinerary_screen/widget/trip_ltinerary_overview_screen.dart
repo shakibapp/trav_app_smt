@@ -27,18 +27,18 @@ class TripITineraryOverviewScreen extends StatelessWidget {
               SizedBox(width: 10),
               BuildStatCard(
                 icon: AppIcons.activity,
-                value: '${itinerary.activities!.length ?? 0}',
+                value: '${itinerary.activities?.length ?? 0}',
                 label: 'Total Activity',
               ),
               SizedBox(width: 10),
               BuildStatCard(
                 icon: AppIcons.appointment,
-                value: '${itinerary.accommodations!.length ?? 0}',
+                value: '${itinerary.accommodations?.length ?? 0}',
                 label: 'Total Bookings',
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 14),
           const Text(
             'Quick Info',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -48,7 +48,7 @@ class TripITineraryOverviewScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: itinerary.remainders!.length,
+              itemCount: itinerary.remainders?.length ?? 0,
               itemBuilder: (context, index) {
                 final remainder = itinerary.remainders![index];
                 return Padding(
@@ -57,9 +57,15 @@ class TripITineraryOverviewScreen extends StatelessWidget {
                     ),
                     child: buildQuickInfoItem(
                       icon: Icons.notifications,
-                      title: remainder.title!,
-                      date: remainder.description.toString(),
-                      onTap: () {},
+                      title: remainder.title ?? "No Title",
+                      date: remainder.description?.toString() ?? "",
+                      onTap: () {
+                        if (index == 0) {
+                          controller.selectedTabIndex.value = 2;
+                        } else if (index == 1) {
+                          controller.selectedTabIndex.value = 1;
+                        }
+                      },
                     ));
               })
         ],
