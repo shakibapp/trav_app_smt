@@ -82,9 +82,12 @@ class LoginController extends GetxController {
             return;
           } else {
             AppToast.showSuccess('Login successful');
+
             await localService.setToken(token);
             await localService.setRole(role);
-           // Get.offAllNamed(AppRoutes.NAVBAR);
+
+            Get.offAllNamed(AppRoutes.PREFERENCES);
+
             log("Login successful. Token: $token, Role: $role");
           }
         } else if (role == "USER") {
@@ -96,7 +99,7 @@ class LoginController extends GetxController {
             await localService.setToken(token);
             await localService.setRole(role);
             log("Login successful profile incomplete. Token: $token, Role: $role");
-            Get.offAllNamed(AppRoutes.PREFERENCES);
+
           } else {
             AppToast.showSuccess('Login successful');
             await localService.setToken(token);
