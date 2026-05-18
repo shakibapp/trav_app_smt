@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../../../core/services/local_data.dart';
 import '../../../../routes/app_routes.dart';
+import '../../../parent_flow/nav_bar/ui/nav_bar_screen.dart';
 
 class SplashController extends GetxController {
   final localService = LocalService.localService;
@@ -23,12 +24,11 @@ class SplashController extends GetxController {
     if (token != null && token.isNotEmpty) {
       // Token exists - navigate to home
       if (role == "PARENT") {
-        // Get.offAllNamed(AppRoutes.PARENT_HOME);
-      } else {
+         Get.to(()=>NavBarScreen());
+      } else if(role == "USER") {
         Get.offAllNamed(AppRoutes.NAVBAR);
       }
 
-      Get.offAllNamed(AppRoutes.NAVBAR);
     } else {
       // No token - navigate to login
       Get.offAllNamed(AppRoutes.LOGIN);

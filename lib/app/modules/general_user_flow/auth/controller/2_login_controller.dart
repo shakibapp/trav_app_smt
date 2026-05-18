@@ -10,6 +10,8 @@ import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/core/services/local_data.dart';
 import 'package:hamishphipps/app/routes/app_routes.dart';
 
+import '../../../parent_flow/nav_bar/ui/nav_bar_screen.dart';
+
 class LoginController extends GetxController {
   final networkConfig = NetworkConfigV1.instance;
   final localService = LocalService.localService;
@@ -86,7 +88,7 @@ class LoginController extends GetxController {
             await localService.setToken(token);
             await localService.setRole(role);
 
-            Get.offAllNamed(AppRoutes.PREFERENCES);
+            Get.to(() =>  NavBarScreen());
 
             log("Login successful. Token: $token, Role: $role");
           }
