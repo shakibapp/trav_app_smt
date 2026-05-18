@@ -81,7 +81,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.PARENT_NAVBAR,
-      page: () => const parent_nav.NavBarScreen(),
+      page: () =>  parent_nav.NavBarScreen(),
       binding: ParentNavBarBinding(),
     ),
     GetPage(

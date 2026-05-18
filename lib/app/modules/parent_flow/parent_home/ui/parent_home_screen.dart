@@ -8,10 +8,14 @@ import 'package:hamishphipps/app/core/constants/app_icons.dart';
 import 'package:hamishphipps/app/core/constants/app_images.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
 import 'package:hamishphipps/app/core/widgets/app_bg.dart';
+import '../../../../core/widgets/network_image.dart';
+import '../../../../routes/app_routes.dart';
+import '../../../general_user_flow/profile/controller/profile_controller.dart';
 import '../controller/parent_home_controller.dart';
 
 class ParentHomeScreen extends GetView<ParentHomeController> {
-  const ParentHomeScreen({super.key});
+   ParentHomeScreen({super.key});
+  final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,35 +33,36 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
           children: [
             SizedBox(height: 60.h),
             // Header
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 24.r,
-                  backgroundImage: AssetImage(AppImages.tripBg),
-                ),
-                SizedBox(width: 12.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello, Hamish!",
-                      style: globalTextStyle(
-                        fontSize: 12.sp,
-                        color: AppColors.greyColor,
-                      ),
-                    ),
-                    Text(
-                      "Good Morning!",
-                      style: globalTextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 30.h),
+            // Row(
+            //   children: [
+            //     CircleAvatar(
+            //       radius: 24.r,
+            //       backgroundImage: AssetImage(AppImages.tripBg),
+            //     ),
+            //     SizedBox(width: 12.w),
+            //     Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Text(
+            //           "Hello, Hamish!",
+            //           style: globalTextStyle(
+            //             fontSize: 12.sp,
+            //             color: AppColors.greyColor,
+            //           ),
+            //         ),
+            //         Text(
+            //           "Good Morning!",
+            //           style: globalTextStyle(
+            //             fontSize: 18.sp,
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
+            _buildGreetingSection(profileController),
+            //SizedBox(height: 10.h),
             // Stay Connected Title
             Text(
               "Stay Connected",
@@ -106,7 +111,7 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "Checked in at accomodation . 2:45 PM",
+                    "Checked in at accommodation . 2:45 PM",
                     style: globalTextStyle(
                       fontSize: 12.sp,
                       color: AppColors.whiteColor.withOpacity(0.9),
@@ -285,4 +290,75 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
       ),
     );
   }
+
+
+   Widget _buildGreetingSection(ProfileController controller) {
+     return Padding(
+       padding: EdgeInsets.only(top: 16.h, bottom: 14.h),
+       child: Obx(() {
+         if (controller.isUserProfileLoading.value) {
+           return CircularProgressIndicator();
+         } else {
+           final user = controller.userProfile.value;
+           return Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Row(
+                 children: [
+                   GestureDetector(
+                     onTap: ()=>Get.toNamed(AppRoutes.PROFILE_ACCOUNT),
+                     child: Container(
+                       width: 44.w,
+                       height: 44.w,
+                       decoration: BoxDecoration(
+                         shape: BoxShape.circle,
+                         color: Color(0xFFE9E9EF),
+                       ),
+                       child: Center(
+                         child: AppNetworkImage(
+                           height: 40,
+                           width: 40,
+                           borderRadius: BorderRadius.circular(100),
+                           imageUrl: user!.profileImage.toString(),
+                         ),
+                       ),
+                     ),
+                   ),
+                   SizedBox(width: 6.w),
+                   Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Text(
+                         'Hello, ${user.fullName}',
+                         style: globaltextInterTight(
+                           fontSize: 12.sp,
+                           fontWeight: FontWeight.w500,
+                           color: AppColors.secondaryColor,
+                         ),
+                       ),
+                       Text(
+                         getGreeting(),
+                         style: globaltextInterTight(
+                           fontSize: 16.sp,
+                           fontWeight: FontWeight.w800,
+                           color: AppColors.blackColor,
+                         ),
+                       ),
+                     ],
+                   ),
+                 ],
+               ),
+             ],
+           );
+         }
+       }),
+     );
+   }
+
+   String getGreeting() {
+     final hour = DateTime.now().hour;
+     if (hour < 12) return 'Good Morning!';
+     if (hour < 17) return 'Good Afternoon!';
+     return 'Good Evening!';
+   }
 }

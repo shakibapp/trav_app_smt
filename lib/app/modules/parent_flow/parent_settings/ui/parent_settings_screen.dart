@@ -7,10 +7,12 @@ import 'package:hamishphipps/app/core/constants/app_images.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
 import 'package:hamishphipps/app/core/widgets/app_bg.dart';
 import 'package:hamishphipps/app/core/widgets/custom_button_widget.dart';
+import '../../../general_user_flow/profile/controller/profile_controller.dart';
 import '../controller/parent_settings_controller.dart';
 
 class ParentSettingsScreen extends GetView<ParentSettingsController> {
-  const ParentSettingsScreen({super.key});
+   ParentSettingsScreen({super.key});
+   final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,22 @@ class ParentSettingsScreen extends GetView<ParentSettingsController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 60.h),
-            Text(
-              "Settings",
-              style: globalTextStyle(
-                fontSize: 28.sp,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Settings",
+                  style: globalTextStyle(
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                    onPressed: ()=>profileController.onLogoutTap(),
+                    icon: Icon(Icons.logout,color: Colors.red,))
+
+              ],
             ),
             Text(
               "Manage your connections and alerts",

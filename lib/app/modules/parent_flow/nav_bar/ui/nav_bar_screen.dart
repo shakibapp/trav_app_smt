@@ -10,12 +10,14 @@ import '../../../../core/constants/app_colors.dart';
 import '../controller/parent_nav_bar_controller.dart';
 import 'widgets/trav_bottom_nav_bar.dart';
 
-class NavBarScreen extends GetWidget<ParentNavBarController> {
-  const NavBarScreen({super.key});
+class NavBarScreen extends StatelessWidget {
+   NavBarScreen({super.key});
+  final controller = Get.put(ParentNavBarController());
+
 
   @override
   Widget build(BuildContext context) {
-    final pages = const <Widget>[
+    final pages =  <Widget>[
       ParentHomeScreen(),
       ParentTripsScreen(),
       ParentAlertsScreen(),
