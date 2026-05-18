@@ -351,7 +351,8 @@ class SignupScreen extends GetWidget<SignupController> {
           // Terms & Conditions Checkbox
           Obx(
             () => Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Checkbox(
                   value: controller.isTermsAgreed.value,
@@ -360,65 +361,62 @@ class SignupScreen extends GetWidget<SignupController> {
                   side: const BorderSide(color: AppColors.authOrange),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8.h),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'I agree to the ',
-                            style: globaltextInterTight(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.greyColor,
-                              lineHeight: 1.4,
-                            ),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'I agree to the ',
+                          style: globaltextInterTight(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.greyColor,
+                            lineHeight: 1.4,
                           ),
-                          WidgetSpan(
-                            child: GestureDetector(
-                              onTap: () {
-                                // Navigate to Terms of Service
-                                // Get.toNamed(AppRoutes.TERMS_OF_SERVICE);
-                              },
-                              child: Text(
-                                'Terms of Service',
-                                style: globaltextInterTight(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.authOrange,
-                                  lineHeight: 1.4,
-                                ),
+                        ),
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigate to Terms of Service
+                              // Get.toNamed(AppRoutes.TERMS_OF_SERVICE);
+                            },
+                            child: Text(
+                              'Terms of Service',
+                              style: globaltextInterTight(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.authOrange,
+                                lineHeight: 1.4,
                               ),
                             ),
                           ),
-                          TextSpan(
-                            text: ' and ',
-                            style: globaltextInterTight(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.greyColor,
-                              lineHeight: 1.4,
-                            ),
+                        ),
+                        TextSpan(
+                          text: ' and ',
+                          style: globaltextInterTight(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.greyColor,
+                            lineHeight: 1.4,
                           ),
-                          WidgetSpan(
-                            child: GestureDetector(
-                              onTap: () {
-                                // Navigate to Privacy Policy
-                                // Get.toNamed(AppRoutes.PRIVACY_POLICY);
-                              },
-                              child: Text(
-                                'Privacy Policy',
-                                style: globaltextInterTight(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.authOrange,
-                                  lineHeight: 1.4,
-                                ),
+                        ),
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigate to Privacy Policy
+                              // Get.toNamed(AppRoutes.PRIVACY_POLICY);
+                            },
+                            child: Text(
+                              'Privacy Policy',
+                              style: globaltextInterTight(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.authOrange,
+                                lineHeight: 1.4,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

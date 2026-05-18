@@ -58,8 +58,8 @@ class CityViewScreen extends StatelessWidget {
                   _sectionTitle("Browse by Region"),
                   const SizedBox(height: 12),
                   _regionSection(),
-                  const SizedBox(height: 16),
-                  _selectedRegions(),
+                  // const SizedBox(height: 16),
+                  // _selectedRegions(),
 
                   const SizedBox(height: 24),
 
@@ -87,9 +87,9 @@ class CityViewScreen extends StatelessWidget {
                   }),
 
                   // ---------------- SELECTED ----------------
-                  _selectedCities(),
+                  // _selectedCities(),
 
-                  const SizedBox(height: 30),
+                  // const SizedBox(height: 30),
 
                   _nextButton(),
                 ],
@@ -237,6 +237,11 @@ class CityViewScreen extends StatelessWidget {
           return FilterChip(
             label: Text(city.name),
             selected: selected,
+            selectedColor: AppColors.authOrange,
+            checkmarkColor: Colors.white,
+            labelStyle: TextStyle(
+              color: selected ? Colors.white : Colors.black,
+            ),
             onSelected: (_) => controller.toggleCity(city),
           );
         }).toList(),

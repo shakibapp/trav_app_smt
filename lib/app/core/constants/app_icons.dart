@@ -72,4 +72,5 @@ class AppIcons {
   static const String hostelWorld = "assets/icons/hostelworld.png";
   static const String booking = "assets/icons/booking.png";
   static const String noData = "assets/icons/nodata.jpg";
+  static const String newTravel1 = "assets/icons/new_travel.png";
 }

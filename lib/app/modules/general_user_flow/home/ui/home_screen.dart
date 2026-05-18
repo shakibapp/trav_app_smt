@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_images.dart';
 import 'package:hamishphipps/app/core/widgets/custom_button_widget.dart';
 import 'package:hamishphipps/app/core/widgets/network_image.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/home/ui/widgets/trip_priority_reminders_section.dart';
+
 import 'package:hamishphipps/app/modules/general_user_flow/home/ui/widgets/trip_reminders_section.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -51,7 +51,8 @@ class HomeScreen extends GetWidget<HomeController> {
                 SizedBox(height: 50.h),
                 _buildGreetingSection(userController),
                 Obx(() {
-                  if (controller.upcomingTripsFromApi.isEmpty || controller.isLoadingTrips.value) {
+                  if (controller.upcomingTripsFromApi.isEmpty ||
+                      controller.isLoadingTrips.value) {
                     return const SizedBox.shrink();
                   }
                   return Column(
@@ -88,8 +89,36 @@ class HomeScreen extends GetWidget<HomeController> {
                                   itemBuilder: (_, index) {
                                     final trip =
                                         controller.upcomingTripsFromApi[index];
+                                    String dateInfo = '';
+                                    if (trip.startDate != null &&
+                                        trip.endDate != null) {
+                                      try {
+                                        final startStr = DateFormat('MMM d')
+                                            .format(trip.startDate!);
+                                        final endStr = DateFormat('MMM d')
+                                            .format(trip.endDate!);
+                                        final days = trip.endDate!
+                                            .difference(trip.startDate!)
+                                            .inDays;
+                                        dateInfo =
+                                            '$startStr – $endStr · $days days · \$${trip.budget ?? 0}';
+                                      } catch (e) {
+                                        dateInfo =
+                                            'Dates unknown · \$${trip.budget ?? 0}';
+                                      }
+                                    } else {
+                                      dateInfo =
+                                          'Dates unknown · \$${trip.budget ?? 0}';
+                                    }
+                                    final String tripCity =
+                                        (trip.city != null &&
+                                                trip.city!.isNotEmpty)
+                                            ? trip.city!.join(', ')
+                                            : 'Unknown Destination';
+
                                     return Obx(() {
                                       return InkWell(
+                                        key: ValueKey(trip.id),
                                         onTap: () =>
                                             controller.getTripDetailById(
                                                 trip.id.toString()),
@@ -174,7 +203,8 @@ class HomeScreen extends GetWidget<HomeController> {
                                                               20.r),
                                                     ),
                                                     child: Text(
-                                                      trip.status.toString(),
+                                                      trip.status?.toString() ??
+                                                          'Upcoming',
                                                       style:
                                                           globaltextInterTight(
                                                         fontSize: 12.sp,
@@ -234,8 +264,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                                                     .start,
                                                             children: [
                                                               Text(
-                                                                trip.city!
-                                                                    .join(', '),
+                                                                tripCity,
                                                                 maxLines: 1,
                                                                 overflow:
                                                                     TextOverflow
@@ -256,10 +285,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                                               SizedBox(
                                                                   height: 4.h),
                                                               Text(
-                                                                '${DateFormat('MMM d').format(DateTime.parse(trip.startDate.toString()))} – '
-                                                                '${DateFormat('MMM d').format(DateTime.parse(trip.endDate.toString()))} '
-                                                                '· ${DateTime.parse(trip.endDate.toString()).difference(DateTime.parse(trip.startDate.toString())).inDays} days '
-                                                                '\$${trip.budget}',
+                                                                dateInfo,
                                                                 maxLines: 1,
                                                                 overflow:
                                                                     TextOverflow
@@ -307,6 +333,9 @@ class HomeScreen extends GetWidget<HomeController> {
                     return SizedBox.shrink();
                   }
 
+                  // ← access priorityRemainders here to register dependency
+                  final _ = controller.tripDetail.value.priorityRemainders;
+
                   return _buildPriorityRemindersSection(context, controller);
                 }),
 
@@ -314,7 +343,8 @@ class HomeScreen extends GetWidget<HomeController> {
                   if (controller.isLoadingTripDetail.value) {
                     return _buildDestinationsLoadingShimmer();
                   }
-                  final itineraries = controller.tripDetail.value.itineraries ?? [];
+                  final itineraries =
+                      controller.tripDetail.value.itineraries ?? [];
                   if (itineraries.isEmpty) return const SizedBox.shrink();
 
                   return Column(
@@ -358,17 +388,24 @@ class HomeScreen extends GetWidget<HomeController> {
                                 child: Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        width: 170,
+                                        width: 100,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         child: AppNetworkImage(
-                                          height: 170,
-                                          imageUrl: itinerary.image,
+                                          height: 100,
+                                          width: 100,
+                                          imageUrl:
+                                              itinerary.image?.isNotEmpty ??
+                                                      false
+                                                  ? itinerary.image
+                                                  : '',
                                           borderRadius: const BorderRadius.only(
                                             topRight: Radius.circular(15),
                                             topLeft: Radius.circular(15),
@@ -376,10 +413,13 @@ class HomeScreen extends GetWidget<HomeController> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "${itinerary.name}",
@@ -659,38 +699,41 @@ class HomeScreen extends GetWidget<HomeController> {
   }
 
   Widget _buildDestinationsLoadingShimmer() {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: 4,
-      padding: EdgeInsets.zero,
-      separatorBuilder: (_, index) => SizedBox(width: 10.w),
-      itemBuilder: (_, index) => Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: Container(
-          height: 120.h,
-          width: 100.w,
-          margin: EdgeInsets.only(right: 5.h),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          padding: EdgeInsets.all(10.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 72.h,
-                width: double.infinity,
-                color: Colors.white,
-              ),
-              Container(
-                height: 12.h,
-                width: double.infinity,
-                color: Colors.white,
-              ),
-              Container(height: 12.h, width: 50.w, color: Colors.white),
-            ],
+    return SizedBox(
+      height: 150.h,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: 4,
+        padding: EdgeInsets.zero,
+        separatorBuilder: (_, index) => SizedBox(width: 10.w),
+        itemBuilder: (_, index) => Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(
+            height: 120.h,
+            width: 100.w,
+            margin: EdgeInsets.only(right: 5.h),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            padding: EdgeInsets.all(10.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 72.h,
+                  width: double.infinity,
+                  color: Colors.white,
+                ),
+                Container(
+                  height: 12.h,
+                  width: double.infinity,
+                  color: Colors.white,
+                ),
+                Container(height: 12.h, width: 50.w, color: Colors.white),
+              ],
+            ),
           ),
         ),
       ),
@@ -1027,7 +1070,7 @@ class HomeScreen extends GetWidget<HomeController> {
               shape: BoxShape.circle,
             ),
             child: Image.asset(
-              AppIcons.noData,
+              AppIcons.newTravel1,
               height: 80.h,
               errorBuilder: (context, error, stackTrace) => Icon(
                 Icons.card_travel_outlined,

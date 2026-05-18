@@ -79,7 +79,10 @@ class TripDetailsScreen extends StatelessWidget {
             height: 220.h,
             child: Stack(
               children: [
-                AppNetworkImage(imageUrl: data.images![0]),
+                AppNetworkImage(
+                    imageUrl: data.images?.isNotEmpty ?? false
+                        ? data.images![0]
+                        : ''),
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -100,7 +103,9 @@ class TripDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.region!.join(","),
+                        (data.region != null && data.region!.isNotEmpty)
+                            ? data.region!.join(",")
+                            : 'Unknown Region',
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
@@ -110,8 +115,8 @@ class TripDetailsScreen extends StatelessWidget {
                       Wrap(
                         children: [
                           _buildInfoChip(
-                            formatDateRange(data.startDate.toString(),
-                                data.endDate.toString()),
+                            formatDateRange(data.startDate?.toString(),
+                                data.endDate?.toString()),
                           ),
                         ],
                       )
@@ -127,16 +132,27 @@ class TripDetailsScreen extends StatelessWidget {
     );
   }
 
-  String formatDateRange(String startDate, String endDate) {
-    final start = DateTime.parse(startDate);
-    final end = DateTime.parse(endDate);
+  String formatDateRange(String? startDate, String? endDate) {
+    if (startDate == null ||
+        startDate == 'null' ||
+        endDate == null ||
+        endDate == 'null') {
+      return 'Dates unknown';
+    }
 
-    if (start.year == end.year) {
-      return '${DateFormat('MMM d').format(start)} – '
-          '${DateFormat('MMM d, y').format(end)}';
-    } else {
-      return '${DateFormat('MMM d, y').format(start)} – '
-          '${DateFormat('MMM d, y').format(end)}';
+    try {
+      final start = DateTime.parse(startDate);
+      final end = DateTime.parse(endDate);
+
+      if (start.year == end.year) {
+        return '${DateFormat('MMM d').format(start)} – '
+            '${DateFormat('MMM d, y').format(end)}';
+      } else {
+        return '${DateFormat('MMM d, y').format(start)} – '
+            '${DateFormat('MMM d, y').format(end)}';
+      }
+    } catch (e) {
+      return 'Dates unknown';
     }
   }
 
@@ -245,7 +261,7 @@ class TripDetailsScreen extends StatelessWidget {
       height: 150,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: controller.singleTripData.value.remainders!.length,
+        itemCount: controller.singleTripData.value.remainders?.length ?? 0,
         itemBuilder: (context, index) {
           final data = controller.singleTripData.value.remainders![index];
           return Container(
@@ -413,7 +429,7 @@ class TripDetailsScreen extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: controller.singleTripData.value.itineraries!.length,
+            itemCount: controller.singleTripData.value.itineraries?.length ?? 0,
             itemBuilder: (context, index) {
               final itinerary =
                   controller.singleTripData.value.itineraries![index];
@@ -440,7 +456,9 @@ class TripDetailsScreen extends StatelessWidget {
                   SizedBox(width: 15),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => Get.to(TripItineraryView(itineraryId: itinerary.id.toString(),)),
+                      onTap: () => Get.to(TripItineraryView(
+                        itineraryId: itinerary.id.toString(),
+                      )),
                       child: Card(
                         color: Colors.grey.shade100,
                         shape: RoundedRectangleBorder(
@@ -502,6 +520,9 @@ class TripDetailsScreen extends StatelessWidget {
                                 right: Radius.circular(15),
                               ),
                               child: AppNetworkImage(
+                                height: 100,
+                                width: 100,
+                                borderRadius: BorderRadius.circular(10),
                                 imageUrl: itinerary.image.toString(),
                                 fit: BoxFit.cover,
                               ),

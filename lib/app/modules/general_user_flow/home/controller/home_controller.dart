@@ -89,6 +89,7 @@ class HomeController extends GetxController {
       );
       if (response != null && response['success'] == true) {
         tripDetail.value = TripDetailModel.fromJson(response['data']);
+        tripDetail.refresh();
         log("Trip detail fetched successfully for trip ID: $tripId");
         log("Trip Detail: ${response['data']}");
       } else {
@@ -462,12 +463,195 @@ String getReminderState(PriorityRemainder reminder) {
     );
   }
 
+  // void _showVisaBottomSheet(PriorityRemainder reminder, String state) {
+  //   final isVisaConfirmed = (reminder.isVisaConfirmed ?? false).obs;
+  //   final noVisaRequired = (reminder.noVisaRequired ?? false).obs;
+  //   final needsAttention = (reminder.needsAttention ?? false).obs;
+  //   final notesController =
+  //       TextEditingController(text: reminder.visaNotes ?? '');
+  //
+  //   Get.bottomSheet(
+  //     Container(
+  //       decoration: const BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  //       ),
+  //       child: SingleChildScrollView(
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             // Header
+  //             Padding(
+  //               padding: const EdgeInsets.all(16),
+  //               child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   Row(
+  //                     children: [
+  //                       Container(
+  //                         padding: const EdgeInsets.all(8),
+  //                         decoration: BoxDecoration(
+  //                           color: const Color(0xFFffe7d9),
+  //                           borderRadius: BorderRadius.circular(8),
+  //                         ),
+  //                         child: const Icon(
+  //                           Icons.badge,
+  //                           color: AppColors.authOrange,
+  //                           size: 24,
+  //                         ),
+  //                       ),
+  //                       const SizedBox(width: 12),
+  //                       const Text(
+  //                         'Visa',
+  //                         style: TextStyle(
+  //                           fontSize: 18,
+  //                           fontWeight: FontWeight.w600,
+  //                           color: Colors.black87,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   GestureDetector(
+  //                     onTap: () => Get.back(),
+  //                     child: const Icon(Icons.close, size: 24),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             const Divider(),
+  //             Padding(
+  //               padding: const EdgeInsets.all(16),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   const Text(
+  //                     'Have you checked visa requirements?',
+  //                     style: TextStyle(
+  //                       fontSize: 14,
+  //                       fontWeight: FontWeight.w600,
+  //                       color: Colors.black87,
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 16),
+  //                   Obx(
+  //                     () => _buildToggleOption(
+  //                       title: 'Visa Confirmed/ Obtained',
+  //                       subtitle:
+  //                           'I have the necessary visa(s) or have confirmed i dont need one',
+  //                       isSelected: isVisaConfirmed.value,
+  //                       onTap: () => isVisaConfirmed.toggle(),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 12),
+  //                   Obx(
+  //                     () => _buildToggleOption(
+  //                       title: 'No Visa Required',
+  //                       subtitle:
+  //                           'My passport allows visa-free entry to all destinations',
+  //                       isSelected: noVisaRequired.value,
+  //                       onTap: () => noVisaRequired.toggle(),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 12),
+  //                   Obx(
+  //                     () => _buildToggleOption(
+  //                       title: 'Needs Attention',
+  //                       subtitle:
+  //                           'I still need to apply for or check visa requirements',
+  //                       isSelected: needsAttention.value,
+  //                       onTap: () => needsAttention.toggle(),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 20),
+  //                   const Text(
+  //                     'Notes',
+  //                     style: TextStyle(
+  //                       fontSize: 12,
+  //                       fontWeight: FontWeight.w600,
+  //                       color: Colors.grey,
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 8),
+  //                   TextFormField(
+  //                     controller: notesController,
+  //                     maxLines: 3,
+  //                     decoration: InputDecoration(
+  //                       hintText: 'describe',
+  //                       filled: true,
+  //                       fillColor: Colors.grey.shade100,
+  //                       border: OutlineInputBorder(
+  //                         borderRadius: BorderRadius.circular(10),
+  //                         borderSide: BorderSide.none,
+  //                       ),
+  //                       contentPadding: const EdgeInsets.symmetric(
+  //                         horizontal: 16,
+  //                         vertical: 12,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 20),
+  //                   Row(
+  //                     children: [
+  //                       Expanded(
+  //                         child: appButton(
+  //                           borderColor: AppColors.authOrange,
+  //                           bgColor: Colors.transparent,
+  //                           onTap: () => Get.back(),
+  //                           name: "Cancel",
+  //                         ),
+  //                       ),
+  //                       const SizedBox(width: 12),
+  //                       Expanded(
+  //                         child: Obx(
+  //                           () => appButton(
+  //                             textColor: Colors.white,
+  //                             onTap: () {
+  //                               if (isPriorityLoading.value) return;
+  //                               changePriority(
+  //                                 reminder.id ?? '',
+  //                                 isVisaConfirmed: isVisaConfirmed.value,
+  //                                 noVisaRequired: noVisaRequired.value,
+  //                                 needsAttention: needsAttention.value,
+  //                                 visaNotes: notesController.text,
+  //                                 previewOnly: false,
+  //                               );
+  //                               Future.delayed(
+  //                                 const Duration(milliseconds: 500),
+  //                                 () => Get.back(),
+  //                               );
+  //                             },
+  //                             name: isPriorityLoading.value
+  //                                 ? "Saving..."
+  //                                 : "Mark as Reviewed",
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   const SizedBox(height: 20),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //     isScrollControlled: true,
+  //   );
+  // }
   void _showVisaBottomSheet(PriorityRemainder reminder, String state) {
-    final isVisaConfirmed = (reminder.isVisaConfirmed ?? false).obs;
-    final noVisaRequired = (reminder.noVisaRequired ?? false).obs;
-    final needsAttention = (reminder.needsAttention ?? false).obs;
-    final notesController =
-        TextEditingController(text: reminder.visaNotes ?? '');
+    // ✅ Single RxString instead of 3 separate RxBool
+    String _initialOption = '';
+    if (reminder.isVisaConfirmed == true) {
+      _initialOption = 'confirmed';
+    } else if (reminder.noVisaRequired == true) {
+      _initialOption = 'no_visa';
+    } else if (reminder.needsAttention == true) {
+      _initialOption = 'attention';
+    }
+
+    final selectedOption = _initialOption.obs; // ✅ Only one selected at a time
+    final notesController = TextEditingController(text: reminder.visaNotes ?? '');
 
     Get.bottomSheet(
       Container(
@@ -479,7 +663,6 @@ String getReminderState(PriorityRemainder reminder) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Header
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -493,20 +676,12 @@ String getReminderState(PriorityRemainder reminder) {
                             color: const Color(0xFFffe7d9),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Icon(
-                            Icons.badge,
-                            color: AppColors.authOrange,
-                            size: 24,
-                          ),
+                          child: const Icon(Icons.badge, color: AppColors.authOrange, size: 24),
                         ),
                         const SizedBox(width: 12),
                         const Text(
                           'Visa',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
                         ),
                       ],
                     ),
@@ -525,50 +700,36 @@ String getReminderState(PriorityRemainder reminder) {
                   children: [
                     const Text(
                       'Have you checked visa requirements?',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87),
                     ),
                     const SizedBox(height: 16),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'Visa Confirmed/ Obtained',
-                        subtitle:
-                            'I have the necessary visa(s) or have confirmed i dont need one',
-                        isSelected: isVisaConfirmed.value,
-                        onTap: () => isVisaConfirmed.toggle(),
-                      ),
-                    ),
+
+                    // ✅ Obx একটাই, selectedOption দিয়ে তিনটা option control হচ্ছে
+                    Obx(() => _buildToggleOption(
+                      title: 'Visa Confirmed / Obtained',
+                      subtitle: 'I have the necessary visa(s) or have confirmed I don\'t need one',
+                      isSelected: selectedOption.value == 'confirmed',
+                      onTap: () => selectedOption.value = 'confirmed', // ✅ Select করলে বাকিগুলো auto deselect
+                    )),
                     const SizedBox(height: 12),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'No Visa Required',
-                        subtitle:
-                            'My passport allows visa-free entry to all destinations',
-                        isSelected: noVisaRequired.value,
-                        onTap: () => noVisaRequired.toggle(),
-                      ),
-                    ),
+                    Obx(() => _buildToggleOption(
+                      title: 'No Visa Required',
+                      subtitle: 'My passport allows visa-free entry to all destinations',
+                      isSelected: selectedOption.value == 'no_visa',
+                      onTap: () => selectedOption.value = 'no_visa',
+                    )),
                     const SizedBox(height: 12),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'Needs Attention',
-                        subtitle:
-                            'I still need to apply for or check visa requirements',
-                        isSelected: needsAttention.value,
-                        onTap: () => needsAttention.toggle(),
-                      ),
-                    ),
+                    Obx(() => _buildToggleOption(
+                      title: 'Needs Attention',
+                      subtitle: 'I still need to apply for or check visa requirements',
+                      isSelected: selectedOption.value == 'attention',
+                      onTap: () => selectedOption.value = 'attention',
+                    )),
+
                     const SizedBox(height: 20),
                     const Text(
                       'Notes',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -582,10 +743,7 @@ String getReminderState(PriorityRemainder reminder) {
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -602,26 +760,26 @@ String getReminderState(PriorityRemainder reminder) {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Obx(
-                            () => appButton(
+                                () => appButton(
                               textColor: Colors.white,
                               onTap: () {
                                 if (isPriorityLoading.value) return;
+
+                                // ✅ selectedOption থেকে bool values বের করা
                                 changePriority(
                                   reminder.id ?? '',
-                                  isVisaConfirmed: isVisaConfirmed.value,
-                                  noVisaRequired: noVisaRequired.value,
-                                  needsAttention: needsAttention.value,
+                                  isVisaConfirmed: selectedOption.value == 'confirmed',
+                                  noVisaRequired: selectedOption.value == 'no_visa',
+                                  needsAttention: selectedOption.value == 'attention',
                                   visaNotes: notesController.text,
                                   previewOnly: false,
                                 );
                                 Future.delayed(
                                   const Duration(milliseconds: 500),
-                                  () => Get.back(),
+                                      () => Get.back(),
                                 );
                               },
-                              name: isPriorityLoading.value
-                                  ? "Saving..."
-                                  : "Mark as Reviewed",
+                              name: isPriorityLoading.value ? "Saving..." : "Mark as Reviewed",
                             ),
                           ),
                         ),
@@ -638,7 +796,6 @@ String getReminderState(PriorityRemainder reminder) {
       isScrollControlled: true,
     );
   }
-
   void _showTravelInsuranceBottomSheet(
       PriorityRemainder reminder, String state) {
     final hasInsurance = (reminder.haveInsurance ?? false).obs;
