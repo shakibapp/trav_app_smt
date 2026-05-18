@@ -4,6 +4,7 @@ import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/view/stay_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
+import '../../nav_bar/controller/nav_bar_controller.dart';
 import '../controller/budget_controller.dart';
 import '../controller/create_plan_controller.dart';
 
@@ -72,21 +73,30 @@ class BudgetView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                Border.all(color: Color(0xFFfcdcc9)),
+                                color: Color(0xFFfdf3ec),
+                              ),
+                              child: Image.asset(
+                                item.icon,
+                                height: 40,
+                                width: 40,
+                              ),
+                            ),
+
+                            SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(color: Color(0xFFfcdcc9)),
-                                    color: Color(0xFFfdf3ec),
-                                  ),
-                                  child: Image.asset(
-                                    item.icon,
-                                    height: 40,
-                                    width: 40,
+                                Text(
+                                  item.title,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 Container(
@@ -102,7 +112,7 @@ class BudgetView extends StatelessWidget {
                                     ),
                                   ),
                                   child: Text(
-                                    "\$${item.amount}",
+                                    "${item.amount}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
@@ -110,14 +120,6 @@ class BudgetView extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              item.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
                             ),
                             Text(
                               item.description,
@@ -176,18 +178,25 @@ class BudgetView extends StatelessWidget {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: createPlanController.isSubmitting.value ||
-                              createPlanController.isManualSubmitting.value
+                          createPlanController.isManualSubmitting.value
                           ? null
                           : () async {
-                              final success = createPlanController.useAiTrip
-                                  ? await createPlanController
-                                      .createTripHelperAi()
-                                  : await createPlanController
-                                      .createTripManually();
-                              if (success) {
-                                Get.to(() => StayView());
-                              }
-                            },
+                        final success = createPlanController.useAiTrip
+                            ? await createPlanController.createTripHelperAi()
+                            : await createPlanController.createTripManually();
+
+                        if (success) {
+                          if (createPlanController.useAiTrip) {
+                            final navController = Get.find<NavBarController>();
+                            navController.setIndex(0);
+                            Get.offAllNamed('/navbar');
+
+                          } else {
+                            // Manual trip → Go to Stay Screen
+                            Get.off(() => StayView());
+                          }
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.authOrange,
                         elevation: 5,

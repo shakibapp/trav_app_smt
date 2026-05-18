@@ -64,18 +64,27 @@ class CreatePlanController extends GetxController {
         is_auth: true,
       );
 
-      if (response == null || response['success'] != true) return false;
+      if (response != null || response['success'] == true) {
+        tripResponse(response['data']);
+        log("${response}");
+        Get.snackbar(
+          'Trip Created',
+          'AI trip created successfully',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+        return true;
+      }else{
 
-      tripResponse(response['data']);
+        Get.snackbar(
+          'Trip Created',
+          'AI trip created Failed',
+          backgroundColor: Colors.red,
+          colorText: Colors.black,
+        );
+        return false;
+      }
 
-      Get.snackbar(
-        'Trip Created',
-        'AI trip created successfully',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-
-      return true;
     } finally {
       isSubmitting(false);
     }
@@ -143,7 +152,7 @@ class CreatePlanController extends GetxController {
 
     final base = {
       "region": selectedRegions,
-      "city": cityList,
+      "city": selectedCities,
       "startDate": _formatDate(startDate),
       "endDate": _formatDate(endDate),
       "totalDays": totalDays,

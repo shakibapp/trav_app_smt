@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _menu(),
             SizedBox(height: 30.h),
             _logout(),
-            SizedBox(height: 18.h),
+            SizedBox(height: 58.h),
           ],
         ),
       ),

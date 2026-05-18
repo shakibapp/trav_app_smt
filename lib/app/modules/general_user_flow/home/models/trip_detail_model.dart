@@ -1,5 +1,4 @@
 
-
 class TripDetailModel {
     final String? id;
     final String? userId;

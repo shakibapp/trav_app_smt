@@ -1,4 +1,3 @@
-
 [
   {
     "id": "region_europe",
@@ -102,7 +101,7 @@
     "regionId": "region_europe",
     "countryId": "country_france",
     "isPopular": true,
-    "image": "https://images.unsplash.com/photo-1583265266785-aab9e443ee68?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_nice",
@@ -111,7 +110,7 @@
     "regionId": "region_europe",
     "countryId": "country_france",
     "isPopular": true,
-    "image": "images/cities/city_nice.jpg"
+    "image": "https://images.unsplash.com/photo-1491166617655-0723a0661b24?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_lyon",
@@ -120,7 +119,7 @@
     "regionId": "region_europe",
     "countryId": "country_france",
     "isPopular": false,
-    "image": "images/cities/city_lyon.jpg"
+    "image": "https://images.unsplash.com/photo-1569597867579-445d22114c6b?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_rome",
@@ -129,7 +128,7 @@
     "regionId": "region_europe",
     "countryId": "country_italy",
     "isPopular": true,
-    "image": "images/cities/city_rome.jpg"
+    "image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_venice",
@@ -138,7 +137,7 @@
     "regionId": "region_europe",
     "countryId": "country_italy",
     "isPopular": true,
-    "image": "images/cities/city_venice.jpg"
+    "image": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_milan",
@@ -147,7 +146,7 @@
     "regionId": "region_europe",
     "countryId": "country_italy",
     "isPopular": true,
-    "image": "images/cities/city_milan.jpg"
+    "image": "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_florence",
@@ -156,7 +155,7 @@
     "regionId": "region_europe",
     "countryId": "country_italy",
     "isPopular": true,
-    "image": "images/cities/city_florence.jpg"
+    "image": "https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_barcelona",
@@ -165,7 +164,7 @@
     "regionId": "region_europe",
     "countryId": "country_spain",
     "isPopular": true,
-    "image": "images/cities/city_barcelona.jpg"
+    "image": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_madrid",
@@ -174,7 +173,7 @@
     "regionId": "region_europe",
     "countryId": "country_spain",
     "isPopular": true,
-    "image": "images/cities/city_madrid.jpg"
+    "image": "https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_seville",
@@ -183,7 +182,7 @@
     "regionId": "region_europe",
     "countryId": "country_spain",
     "isPopular": false,
-    "image": "images/cities/city_seville.jpg"
+    "image": "https://images.unsplash.com/photo-1529921879218-f99546ddc3b1?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_berlin",
@@ -192,7 +191,7 @@
     "regionId": "region_europe",
     "countryId": "country_germany",
     "isPopular": true,
-    "image": "images/cities/city_berlin.jpg"
+    "image": "https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_munich",
@@ -201,7 +200,7 @@
     "regionId": "region_europe",
     "countryId": "country_germany",
     "isPopular": true,
-    "image": "images/cities/city_munich.jpg"
+    "image": "https://images.unsplash.com/photo-1595867818082-083862f3d630?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_hamburg",
@@ -210,7 +209,7 @@
     "regionId": "region_europe",
     "countryId": "country_germany",
     "isPopular": false,
-    "image": "images/cities/city_hamburg.jpg"
+    "image": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_london",
@@ -219,7 +218,7 @@
     "regionId": "region_europe",
     "countryId": "country_uk",
     "isPopular": true,
-    "image": "images/cities/city_london.jpg"
+    "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_edinburgh",
@@ -228,7 +227,7 @@
     "regionId": "region_europe",
     "countryId": "country_uk",
     "isPopular": true,
-    "image": "images/cities/city_edinburgh.jpg"
+    "image": "https://images.unsplash.com/photo-1506377872008-6645d9d29ef7?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_amsterdam",
@@ -237,7 +236,7 @@
     "regionId": "region_europe",
     "countryId": "country_netherlands",
     "isPopular": true,
-    "image": "images/cities/city_amsterdam.jpg"
+    "image": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_lisbon",
@@ -246,7 +245,7 @@
     "regionId": "region_europe",
     "countryId": "country_portugal",
     "isPopular": true,
-    "image": "images/cities/city_lisbon.jpg"
+    "image": "https://images.unsplash.com/photo-1513735492246-483525079686?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_porto",
@@ -255,7 +254,7 @@
     "regionId": "region_europe",
     "countryId": "country_portugal",
     "isPopular": true,
-    "image": "images/cities/city_porto.jpg"
+    "image": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_athens",
@@ -264,7 +263,7 @@
     "regionId": "region_europe",
     "countryId": "country_greece",
     "isPopular": true,
-    "image": "images/cities/city_athens.jpg"
+    "image": "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_santorini",
@@ -273,7 +272,7 @@
     "regionId": "region_europe",
     "countryId": "country_greece",
     "isPopular": true,
-    "image": "images/cities/city_santorini.jpg"
+    "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_zurich",
@@ -282,7 +281,7 @@
     "regionId": "region_europe",
     "countryId": "country_switzerland",
     "isPopular": true,
-    "image": "images/cities/city_zurich.jpg"
+    "image": "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_geneva",
@@ -291,7 +290,7 @@
     "regionId": "region_europe",
     "countryId": "country_switzerland",
     "isPopular": false,
-    "image": "images/cities/city_geneva.jpg"
+    "image": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_prague",
@@ -300,7 +299,7 @@
     "regionId": "region_europe",
     "countryId": "country_czechia",
     "isPopular": true,
-    "image": "images/cities/city_prague.jpg"
+    "image": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_japan",
@@ -369,7 +368,7 @@
     "regionId": "region_asia",
     "countryId": "country_japan",
     "isPopular": true,
-    "image": "images/cities/city_tokyo.jpg"
+    "image": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_osaka",
@@ -378,7 +377,7 @@
     "regionId": "region_asia",
     "countryId": "country_japan",
     "isPopular": true,
-    "image": "images/cities/city_osaka.jpg"
+    "image": "https://images.unsplash.com/photo-1589452271712-64b8a66c7b71?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_kyoto",
@@ -387,7 +386,7 @@
     "regionId": "region_asia",
     "countryId": "country_japan",
     "isPopular": true,
-    "image": "images/cities/city_kyoto.jpg"
+    "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_hiroshima",
@@ -396,7 +395,7 @@
     "regionId": "region_asia",
     "countryId": "country_japan",
     "isPopular": false,
-    "image": "images/cities/city_hiroshima.jpg"
+    "image": "https://images.unsplash.com/photo-1570135460074-e29e70edae1d?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_bangkok",
@@ -405,7 +404,7 @@
     "regionId": "region_asia",
     "countryId": "country_thailand",
     "isPopular": true,
-    "image": "images/cities/city_bangkok.jpg"
+    "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_chiangmai",
@@ -414,7 +413,7 @@
     "regionId": "region_asia",
     "countryId": "country_thailand",
     "isPopular": true,
-    "image": "images/cities/city_chiangmai.jpg"
+    "image": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_phuket",
@@ -423,7 +422,7 @@
     "regionId": "region_asia",
     "countryId": "country_thailand",
     "isPopular": true,
-    "image": "images/cities/city_phuket.jpg"
+    "image": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_mumbai",
@@ -432,7 +431,7 @@
     "regionId": "region_asia",
     "countryId": "country_india",
     "isPopular": true,
-    "image": "images/cities/city_mumbai.jpg"
+    "image": "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_delhi",
@@ -441,7 +440,7 @@
     "regionId": "region_asia",
     "countryId": "country_india",
     "isPopular": true,
-    "image": "images/cities/city_delhi.jpg"
+    "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_jaipur",
@@ -450,7 +449,7 @@
     "regionId": "region_asia",
     "countryId": "country_india",
     "isPopular": true,
-    "image": "images/cities/city_jaipur.jpg"
+    "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_goa",
@@ -459,7 +458,7 @@
     "regionId": "region_asia",
     "countryId": "country_india",
     "isPopular": true,
-    "image": "images/cities/city_goa.jpg"
+    "image": "https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_beijing",
@@ -468,7 +467,7 @@
     "regionId": "region_asia",
     "countryId": "country_china",
     "isPopular": true,
-    "image": "images/cities/city_beijing.jpg"
+    "image": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_shanghai",
@@ -477,7 +476,7 @@
     "regionId": "region_asia",
     "countryId": "country_china",
     "isPopular": true,
-    "image": "images/cities/city_shanghai.jpg"
+    "image": "https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_hanoi",
@@ -486,7 +485,7 @@
     "regionId": "region_asia",
     "countryId": "country_vietnam",
     "isPopular": true,
-    "image": "images/cities/city_hanoi.jpg"
+    "image": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_hcmc",
@@ -495,7 +494,7 @@
     "regionId": "region_asia",
     "countryId": "country_vietnam",
     "isPopular": true,
-    "image": "images/cities/city_hcmc.jpg"
+    "image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_bali",
@@ -504,7 +503,7 @@
     "regionId": "region_asia",
     "countryId": "country_indonesia",
     "isPopular": true,
-    "image": "images/cities/city_bali.jpg"
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_jakarta",
@@ -513,7 +512,7 @@
     "regionId": "region_asia",
     "countryId": "country_indonesia",
     "isPopular": false,
-    "image": "images/cities/city_jakarta.jpg"
+    "image": "https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_kualalumpur",
@@ -522,7 +521,7 @@
     "regionId": "region_asia",
     "countryId": "country_malaysia",
     "isPopular": true,
-    "image": "images/cities/city_kualalumpur.jpg"
+    "image": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_singapore",
@@ -531,7 +530,7 @@
     "regionId": "region_asia",
     "countryId": "country_singapore",
     "isPopular": true,
-    "image": "images/cities/city_singapore.jpg"
+    "image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_seoul",
@@ -540,7 +539,7 @@
     "regionId": "region_asia",
     "countryId": "country_south_korea",
     "isPopular": true,
-    "image": "images/cities/city_seoul.jpg"
+    "image": "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_busan",
@@ -549,7 +548,7 @@
     "regionId": "region_asia",
     "countryId": "country_south_korea",
     "isPopular": true,
-    "image": "images/cities/city_busan.jpg"
+    "image": "https://images.unsplash.com/photo-1570482620310-aeac36a4deb8?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_kathmandu",
@@ -558,7 +557,7 @@
     "regionId": "region_asia",
     "countryId": "country_nepal",
     "isPopular": true,
-    "image": "images/cities/city_kathmandu.jpg"
+    "image": "https://images.unsplash.com/photo-1582654291086-f39f9e66b2f7?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_usa",
@@ -585,7 +584,7 @@
     "regionId": "region_north_america",
     "countryId": "country_usa",
     "isPopular": true,
-    "image": "images/cities/city_newyork.jpg"
+    "image": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_losangeles",
@@ -594,7 +593,7 @@
     "regionId": "region_north_america",
     "countryId": "country_usa",
     "isPopular": true,
-    "image": "images/cities/city_losangeles.jpg"
+    "image": "https://images.unsplash.com/photo-1534190760961-74e8c1c5c3da?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_sanfrancisco",
@@ -603,7 +602,7 @@
     "regionId": "region_north_america",
     "countryId": "country_usa",
     "isPopular": true,
-    "image": "images/cities/city_sanfrancisco.jpg"
+    "image": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_lasvegas",
@@ -612,7 +611,7 @@
     "regionId": "region_north_america",
     "countryId": "country_usa",
     "isPopular": true,
-    "image": "images/cities/city_lasvegas.jpg"
+    "image": "https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_miami",
@@ -621,7 +620,7 @@
     "regionId": "region_north_america",
     "countryId": "country_usa",
     "isPopular": true,
-    "image": "images/cities/city_miami.jpg"
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_chicago",
@@ -630,7 +629,7 @@
     "regionId": "region_north_america",
     "countryId": "country_usa",
     "isPopular": true,
-    "image": "images/cities/city_chicago.jpg"
+    "image": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_toronto",
@@ -639,7 +638,7 @@
     "regionId": "region_north_america",
     "countryId": "country_canada",
     "isPopular": true,
-    "image": "images/cities/city_toronto.jpg"
+    "image": "https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_vancouver",
@@ -648,7 +647,7 @@
     "regionId": "region_north_america",
     "countryId": "country_canada",
     "isPopular": true,
-    "image": "images/cities/city_vancouver.jpg"
+    "image": "https://images.unsplash.com/photo-1559511260-66a654ae982a?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_mexicocity",
@@ -657,7 +656,7 @@
     "regionId": "region_north_america",
     "countryId": "country_mexico",
     "isPopular": true,
-    "image": "images/cities/city_mexicocity.jpg"
+    "image": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_cancun",
@@ -666,7 +665,7 @@
     "regionId": "region_north_america",
     "countryId": "country_mexico",
     "isPopular": true,
-    "image": "images/cities/city_cancun.jpg"
+    "image": "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_brazil",
@@ -705,7 +704,7 @@
     "regionId": "region_south_america",
     "countryId": "country_brazil",
     "isPopular": true,
-    "image": "images/cities/city_rio.jpg"
+    "image": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_saopaulo",
@@ -714,7 +713,7 @@
     "regionId": "region_south_america",
     "countryId": "country_brazil",
     "isPopular": true,
-    "image": "images/cities/city_saopaulo.jpg"
+    "image": "https://images.unsplash.com/photo-1578002769827-fa0d87b0ee07?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_buenosaires",
@@ -723,7 +722,7 @@
     "regionId": "region_south_america",
     "countryId": "country_argentina",
     "isPopular": true,
-    "image": "images/cities/city_buenosaires.jpg"
+    "image": "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_lima",
@@ -732,7 +731,7 @@
     "regionId": "region_south_america",
     "countryId": "country_peru",
     "isPopular": true,
-    "image": "images/cities/city_lima.jpg"
+    "image": "https://images.unsplash.com/photo-1531968455001-5c5272a41129?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_cusco",
@@ -741,7 +740,7 @@
     "regionId": "region_south_america",
     "countryId": "country_peru",
     "isPopular": true,
-    "image": "images/cities/city_cusco.jpg"
+    "image": "https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_bogota",
@@ -750,7 +749,7 @@
     "regionId": "region_south_america",
     "countryId": "country_colombia",
     "isPopular": true,
-    "image": "images/cities/city_bogota.jpg"
+    "image": "https://images.unsplash.com/photo-1562183241-840b8af0721e?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_cartagena",
@@ -759,7 +758,7 @@
     "regionId": "region_south_america",
     "countryId": "country_colombia",
     "isPopular": true,
-    "image": "images/cities/city_cartagena.jpg"
+    "image": "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_santiago",
@@ -768,7 +767,7 @@
     "regionId": "region_south_america",
     "countryId": "country_chile",
     "isPopular": true,
-    "image": "images/cities/city_santiago.jpg"
+    "image": "https://images.unsplash.com/photo-1597349699654-35d23f77c21e?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_egypt",
@@ -807,7 +806,7 @@
     "regionId": "region_africa",
     "countryId": "country_egypt",
     "isPopular": true,
-    "image": "images/cities/city_cairo.jpg"
+    "image": "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_luxor",
@@ -816,7 +815,7 @@
     "regionId": "region_africa",
     "countryId": "country_egypt",
     "isPopular": true,
-    "image": "images/cities/city_luxor.jpg"
+    "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_marrakech",
@@ -825,7 +824,7 @@
     "regionId": "region_africa",
     "countryId": "country_morocco",
     "isPopular": true,
-    "image": "images/cities/city_marrakech.jpg"
+    "image": "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_casablanca",
@@ -834,7 +833,7 @@
     "regionId": "region_africa",
     "countryId": "country_morocco",
     "isPopular": false,
-    "image": "images/cities/city_casablanca.jpg"
+    "image": "https://images.unsplash.com/photo-1553899017-4aef14c79e0d?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_fes",
@@ -843,7 +842,7 @@
     "regionId": "region_africa",
     "countryId": "country_morocco",
     "isPopular": true,
-    "image": "images/cities/city_fes.jpg"
+    "image": "https://images.unsplash.com/photo-1565791380713-1756b9a05343?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_capetown",
@@ -852,7 +851,7 @@
     "regionId": "region_africa",
     "countryId": "country_south_africa",
     "isPopular": true,
-    "image": "images/cities/city_capetown.jpg"
+    "image": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_johannesburg",
@@ -861,7 +860,7 @@
     "regionId": "region_africa",
     "countryId": "country_south_africa",
     "isPopular": false,
-    "image": "images/cities/city_johannesburg.jpg"
+    "image": "https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_nairobi",
@@ -870,7 +869,7 @@
     "regionId": "region_africa",
     "countryId": "country_kenya",
     "isPopular": true,
-    "image": "images/cities/city_nairobi.jpg"
+    "image": "https://images.unsplash.com/photo-1614531341773-3bff8b7cb3fc?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_zanzibar",
@@ -879,7 +878,7 @@
     "regionId": "region_africa",
     "countryId": "country_tanzania",
     "isPopular": true,
-    "image": "images/cities/city_zanzibar.jpg"
+    "image": "https://images.unsplash.com/photo-1612699896716-6bfce39e0b03?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_australia",
@@ -906,7 +905,7 @@
     "regionId": "region_oceania",
     "countryId": "country_australia",
     "isPopular": true,
-    "image": "images/cities/city_sydney.jpg"
+    "image": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_melbourne",
@@ -915,7 +914,7 @@
     "regionId": "region_oceania",
     "countryId": "country_australia",
     "isPopular": true,
-    "image": "images/cities/city_melbourne.jpg"
+    "image": "https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_brisbane",
@@ -924,7 +923,7 @@
     "regionId": "region_oceania",
     "countryId": "country_australia",
     "isPopular": true,
-    "image": "images/cities/city_brisbane.jpg"
+    "image": "https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_goldcoast",
@@ -933,7 +932,7 @@
     "regionId": "region_oceania",
     "countryId": "country_australia",
     "isPopular": true,
-    "image": "images/cities/city_goldcoast.jpg"
+    "image": "https://images.unsplash.com/photo-1572431447238-425af66a273b?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_auckland",
@@ -942,7 +941,7 @@
     "regionId": "region_oceania",
     "countryId": "country_newzealand",
     "isPopular": true,
-    "image": "images/cities/city_auckland.jpg"
+    "image": "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_queenstown",
@@ -951,7 +950,7 @@
     "regionId": "region_oceania",
     "countryId": "country_newzealand",
     "isPopular": true,
-    "image": "images/cities/city_queenstown.jpg"
+    "image": "https://images.unsplash.com/photo-1589196728541-1d3e04cf617d?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_nadi",
@@ -960,7 +959,7 @@
     "regionId": "region_oceania",
     "countryId": "country_fiji",
     "isPopular": true,
-    "image": "images/cities/city_nadi.jpg"
+    "image": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_uae",
@@ -1005,7 +1004,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_uae",
     "isPopular": true,
-    "image": "images/cities/city_dubai.jpg"
+    "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_abudhabi",
@@ -1014,7 +1013,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_uae",
     "isPopular": true,
-    "image": "images/cities/city_abudhabi.jpg"
+    "image": "https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_istanbul",
@@ -1023,7 +1022,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_turkey",
     "isPopular": true,
-    "image": "images/cities/city_istanbul.jpg"
+    "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_cappadocia",
@@ -1032,7 +1031,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_turkey",
     "isPopular": true,
-    "image": "images/cities/city_cappadocia.jpg"
+    "image": "https://images.unsplash.com/photo-1570939274717-7eda259b3773?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_antalya",
@@ -1041,7 +1040,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_turkey",
     "isPopular": true,
-    "image": "images/cities/city_antalya.jpg"
+    "image": "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_petra",
@@ -1050,7 +1049,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_jordan",
     "isPopular": true,
-    "image": "images/cities/city_petra.jpg"
+    "image": "https://images.unsplash.com/photo-1548786811-dd6e453ccca7?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_amman",
@@ -1059,7 +1058,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_jordan",
     "isPopular": false,
-    "image": "images/cities/city_amman.jpg"
+    "image": "https://images.unsplash.com/photo-1580834341580-8c17a3a630ca?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_telaviv",
@@ -1068,7 +1067,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_israel",
     "isPopular": true,
-    "image": "images/cities/city_telaviv.jpg"
+    "image": "https://images.unsplash.com/photo-1544015759-237f4a4e1b3e?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_jerusalem",
@@ -1077,7 +1076,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_israel",
     "isPopular": true,
-    "image": "images/cities/city_jerusalem.jpg"
+    "image": "https://images.unsplash.com/photo-1562979314-bee7453e911c?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_muscat",
@@ -1086,7 +1085,7 @@
     "regionId": "region_middle_east",
     "countryId": "country_oman",
     "isPopular": true,
-    "image": "images/cities/city_muscat.jpg"
+    "image": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_riyadh",
@@ -1095,6 +1094,6 @@
     "regionId": "region_middle_east",
     "countryId": "country_saudi",
     "isPopular": true,
-    "image": "images/cities/city_riyadh.jpg"
+    "image": "https://images.unsplash.com/photo-1586273856767-f18ceb9d4b5a?w=800&auto=format&fit=crop"
   }
 ]

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/widgets/app_input_textfield.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -109,6 +110,23 @@ class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
                 );
               }),
               SizedBox(height: 10.h),
+              Text(
+                'PASSPORT EXPIRY',
+                style: globaltextInterTight(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.secondaryColor,
+                  lineHeight: 1.2,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              AppInputTextField(
+                readOnly: true,
+                hintText: "Expiry Date",
+                controller: controller.passportExpiryTEC,
+                onTap: () => controller.pickPassportExpiryDate(context), // এটা যোগ করো
+                suffixIcon: Icon(Icons.calendar_month, color: Colors.grey),
+              ),
               Text(
                 'Visa requirements are based on your passport',
                 style: globaltextInterTight(

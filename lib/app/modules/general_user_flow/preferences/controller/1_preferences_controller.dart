@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hamishphipps/app/core/constants/app_toast.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
@@ -8,6 +10,7 @@ import 'package:hamishphipps/app/routes/app_routes.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/country_list.dart';
 
 class PreferencesController extends GetxController {
@@ -22,7 +25,7 @@ class PreferencesController extends GetxController {
   // Step 3
   final homeCountry = ''.obs;
   final passportIssuingCountry = ''.obs;
-
+  final passportExpiryTEC =TextEditingController();
   // Options
   final ageRanges = const ['Under 18', '18-24', '25-34', '35-44', 'Over 45'];
 
@@ -87,6 +90,9 @@ class PreferencesController extends GetxController {
         "age": selectedAgeRange.value,
         "homeCountry": homeCountry.value,
         "passportCountry": passportIssuingCountry.value,
+        "passportExpiry": passportExpiryDate.value != null
+            ? "${passportExpiryDate.value!.year}-${passportExpiryDate.value!.month.toString().padLeft(2, '0')}-${passportExpiryDate.value!.day.toString().padLeft(2, '0')}T00:00:00.000Z"
+            : "",
       };
       // Add the data field as JSON string to the request
       request.fields["data"] = jsonEncode(updateData);
@@ -116,5 +122,40 @@ class PreferencesController extends GetxController {
     } finally {
       isUpdateLoading.value = false;
     }
+  }
+
+  final passportExpiryDate = Rxn<DateTime>(); // actual date store
+
+  Future<void> pickPassportExpiryDate(BuildContext context) async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now,
+      lastDate: DateTime(now.year + 20),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.authOrange,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      passportExpiryDate.value = picked;
+      // UI তে readable format
+      passportExpiryTEC.text = "${picked.day.toString().padLeft(2, '0')} ${_monthName(picked.month)} ${picked.year}";
+    }
+  }
+
+  String _monthName(int month) {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[month - 1];
   }
 }
