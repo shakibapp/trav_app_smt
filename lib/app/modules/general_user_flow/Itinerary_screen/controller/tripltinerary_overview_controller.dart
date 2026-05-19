@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/core/services/local_data.dart';
@@ -17,13 +20,9 @@ class ItineraryDetailsController extends GetxController {
   RxList<Activity> selectedActivities = <Activity>[].obs;
   RxBool isLoading = false.obs;
 
-
-
   void changeTab(int index) {
     selectedTabIndex.value = index;
   }
-
- 
 
   void removeActivity(String activityId) {
     selectedActivities.removeWhere((a) => a.id == activityId);
@@ -134,7 +133,34 @@ class ItineraryDetailsController extends GetxController {
     }
   }
 
-
   //stay ---
   RxInt selectedAccommodationIndex = 0.obs;
+
+  //create activity with Ai
+  final RxBool isAlCreateActivityLoading = false.obs;
+  final preferance = TextEditingController();
+  Future<void> createActivityWithAI(String itineraryId) async {
+    try {
+      isAlCreateActivityLoading.value = true;
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.POST,
+          "${Urls.baseUrl}/ai/generate-activities/$itineraryId",
+          jsonEncode({
+            "preferences": preferance.text,
+          }),
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        await getItineraryOverview(itineraryId);
+        Get.back();
+        AppSnackbar.success("${response["message"]}");
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+        log("AI create activity failed ${response['message']}");
+      }
+    } catch (e) {
+      log("AI create activity error ${e.toString()}");
+    } finally {
+      isAlCreateActivityLoading.value = false;
+    }
+  }
 }

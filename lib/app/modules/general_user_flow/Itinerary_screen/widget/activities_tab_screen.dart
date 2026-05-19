@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,7 +6,6 @@ import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 
-import 'package:hamishphipps/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
 import '../../add_activity/controller/add_activity_controller.dart';
@@ -72,7 +69,62 @@ class ActivitiesTabScreen extends StatelessWidget {
                       width: double.infinity,
                       textColor: Colors.white,
                       onTap: () {
-                        log("id-----${controller.itineraryOverview.value.id.toString()}");
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Ask Trav (AI)',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Text('Your Preferences'),
+                                  const SizedBox(height: 8),
+                                  TextField(
+                                    controller: controller.preferance,
+                                    maxLines: 4,
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          'e.g. I love outdoor adventures, local food...',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Obx(
+                                    () => appButton(
+                                        onTap: () async {
+                                          await controller.createActivityWithAI(
+                                            controller
+                                                .itineraryOverview.value.id
+                                                .toString(),
+                                          );
+                                          Get.back();
+                                        },
+                                        loading: controller
+                                            .isAlCreateActivityLoading.value,
+                                        width: double.infinity,
+                                        textColor: Colors.white,
+                                        name: "Generate Activities"),
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
                       },
                       name: "Ask Trav (AI)",
                     ),
@@ -310,15 +362,6 @@ class ActivitiesTabScreen extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 16),
-        // appButton(
-        //   width: double.infinity,
-        //   bgColor: Colors.transparent,
-        //   borderColor: Colors.black,
-        //   textColor: Colors.black,
-        //   onTap: () {},
-        //   name: "Add New",
-        // ),
         SizedBox(height: 30),
       ],
     );
