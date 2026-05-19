@@ -81,11 +81,11 @@ class ParentsScreen extends GetWidget<ParentsController> {
         CustomTextFormWidget(
           sectionTitle: '',
           needSectionTitle: false,
-          textEditingController: controller.parentEmailController,
+          textEditingController: controller.emailTEC,
           hintText: 'parent email',
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.done,
-          validator: controller.validateEmail,
+          
         ),
       ],
     );
@@ -146,18 +146,22 @@ class ParentsScreen extends GetWidget<ParentsController> {
   }
 
   Widget _buildInviteButtonSmall() {
-    return CustomButtonWidget(
-      label: 'Invite',
-      onPressed: controller.onInvitePressed,
-      fullWidth: true,
-      bgColor: AppColors.authOrange,
-      fgColor: AppColors.whiteColor,
-      textStyle: globaltextInterTight(
-        fontSize: 16.sp,
-        fontWeight: FontWeight.w700,
-        color: AppColors.whiteColor,
-        lineHeight: 1.1,
-      ),
+    return Obx((){
+        return CustomButtonWidget(
+          label: 'Invite',
+          onPressed: ()=>controller.inviteParent(),
+          fullWidth: true,
+          bgColor: AppColors.authOrange,
+          fgColor: AppColors.whiteColor,
+          loading: controller.isParentLoading.value,
+          textStyle: globaltextInterTight(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w700,
+            color: AppColors.whiteColor,
+            lineHeight: 1.1,
+          ),
+        );
+      }
     );
   }
 }

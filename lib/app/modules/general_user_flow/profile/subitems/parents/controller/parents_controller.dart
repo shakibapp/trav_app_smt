@@ -1,45 +1,57 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 
 class ParentsController extends GetxController {
-  final parentEmail = ''.obs;
+  final _networkConfig = NetworkConfigV1.instance;
+
   final selectedRelation = 'Father'.obs;
   final isLoading = false.obs;
 
-  late TextEditingController parentEmailController;
+
 
   final relationOptions = ['Father', 'Mother', 'Others'];
+  final emailTEC = TextEditingController();
 
-  @override
-  void onInit() {
-    super.onInit();
-    parentEmailController = TextEditingController();
-  }
-
-  @override
-  void onClose() {
-    parentEmailController.dispose();
-    super.onClose();
-  }
+  
 
   void setRelation(String relation) {
     selectedRelation.value = relation;
   }
 
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email is required';
-    }
-    final emailRegex = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    );
-    if (!emailRegex.hasMatch(value)) {
-      return 'Enter a valid email';
-    }
-    return null;
-  }
 
-  void onInvitePressed() {
-    // TODO: Implement invite functionality
+
+  final RxBool isParentLoading = false.obs;
+  Future<void> inviteParent() async {
+    if(emailTEC.text.isEmpty){
+      AppSnackbar.failed("Email is required");
+      return;
+    }
+    try {
+      isParentLoading.value = true;
+      final response = await _networkConfig.ApiRequestHandler(
+          RequestMethod.POST,
+          "${Urls.baseUrl}/users/invite-parent",
+          jsonEncode({
+            "email":emailTEC.text,
+            
+          }),
+          is_auth: true
+          );
+      if (response != null && response["success"] == true) {
+        AppSnackbar.success("${response["message"]}");
+      } else {
+        AppSnackbar.failed("${response["message"]}");
+      }
+    } catch (e) {
+      log("Parent invite failed ${e.toString()}  ");
+    } finally {
+      isParentLoading.value = false;
+    }
   }
 }

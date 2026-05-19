@@ -532,11 +532,11 @@ class AddActivityController extends GetxController {
 
   @override
   void onClose() {
-    activityNameController.dispose();
-    locationController.dispose();
-    expenseController.dispose();
-    startTimeController.dispose();
-    endTimeController.dispose();
+    activityNameController.removeListener(_validateActivityName);
+    locationController.removeListener(_validateLocation);
+    expenseController.removeListener(_validateExpense);
+    startTimeController.removeListener(_validateStartTime);
+    endTimeController.removeListener(_validateEndTimes);
     super.onClose();
   }
 }

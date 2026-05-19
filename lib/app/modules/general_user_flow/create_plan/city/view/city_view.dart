@@ -49,6 +49,21 @@ class CityViewScreen extends StatelessWidget {
                   _searchBar(),
 
                   const SizedBox(height: 12),
+                  Obx(() {
+                    if (controller.searchQuery.value.isNotEmpty) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _sectionTitle("Search Results"),
+                          const SizedBox(height: 12),
+                          _citySection(controller.searchResults),
+                          const SizedBox(height: 24),
+                        ],
+                      );
+                    }
+                    return const SizedBox();
+                  }),
+                  const SizedBox(height: 12),
 
                   _tipMessage(),
 
@@ -71,20 +86,6 @@ class CityViewScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // ---------------- SEARCH RESULTS ----------------
-                  Obx(() {
-                    if (controller.searchQuery.value.isNotEmpty) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _sectionTitle("Search Results"),
-                          const SizedBox(height: 12),
-                          _citySection(controller.searchResults),
-                          const SizedBox(height: 24),
-                        ],
-                      );
-                    }
-                    return const SizedBox();
-                  }),
 
                   // ---------------- SELECTED ----------------
                   // _selectedCities(),

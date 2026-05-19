@@ -5,8 +5,10 @@ import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_images.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
 import 'package:hamishphipps/app/core/widgets/app_bg.dart';
+import 'package:hamishphipps/app/modules/parent_flow/parent_alerts/model/parent_alets_model.dart';
+import 'package:hamishphipps/app/modules/parent_flow/parent_home/controller/parent_home_controller.dart';
 
-class ParentAlertsScreen extends StatelessWidget {
+class ParentAlertsScreen extends GetView<ParentHomeController> {
   const ParentAlertsScreen({super.key});
 
   @override
@@ -14,7 +16,7 @@ class ParentAlertsScreen extends StatelessWidget {
     return BackgroundScreen(
       bgImg: AppImages.tripBgLight,
       child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -33,36 +35,43 @@ class ParentAlertsScreen extends StatelessWidget {
                 color: AppColors.greyColor,
               ),
             ),
-            SizedBox(height: 30.h),
-            // Expanded Alert item
-            _buildDetailedAlert(
-              icon: Icons.error_outline,
-              title: "Not arrived in Airport yet.",
-              subtitle: "Expected check-in has not been confirmed.",
-              time: "2:45 PM",
-              reason: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-            ),
-            SizedBox(height: 15.h),
-            _buildSimpleAlert(
-              icon: Icons.check_circle_outline,
-              title: "Checked in successfully",
-              subtitle: "Accomodation - Rome",
-              time: "2:45 PM",
-            ),
-            SizedBox(height: 15.h),
-            _buildSimpleAlert(
-              icon: Icons.flight_takeoff,
-              title: "Arrived in airport",
-              subtitle: "Melbourne - Venice (Today)",
-              time: "2:45 PM",
-            ),
-            SizedBox(height: 15.h),
-            _buildSimpleAlert(
-              icon: Icons.flight_land,
-              title: "Arrived in Rome safely.",
-              subtitle: "Flight landed safely.",
-              time: "2:45 PM",
-            ),
+            SizedBox(height: 20.h),
+
+            // ✅ API data থেকে alerts show
+            Obx(() {
+              if (controller.isAlertsLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (controller.alerts.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 40.h),
+                    child: Text(
+                      "No alerts yet.",
+                      style: globalTextStyle(
+                        fontSize: 13.sp,
+                        color: AppColors.greyColor,
+                      ),
+                    ),
+                  ),
+                );
+              }
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.alerts.length,
+                itemBuilder: (context, index) {
+                  final alert = controller.alerts[index];
+                  // প্রথমটা detailed (reason আছে), বাকিগুলো simple
+                  if (index == 0 && alert.detail != null) {
+                    return _buildDetailedAlert(alert);
+                  }
+                  return _buildSimpleAlert(alert);
+                },
+              );
+            }),
+
             SizedBox(height: 100.h),
           ],
         ),
@@ -70,14 +79,52 @@ class ParentAlertsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailedAlert({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required String time,
-    required String reason,
-  }) {
+  // icon + color — type অনুযায়ী
+  IconData _getIcon(String? type) {
+    switch (type) {
+      case 'Flight_Delayed':
+        return Icons.flight_takeoff;
+      case 'Flight_Cancelled':
+        return Icons.cancel_outlined;
+      case 'CheckIn':
+        return Icons.check_circle_outline;
+      case 'Hotel':
+        return Icons.hotel;
+      case 'Not_Arrived':
+        return Icons.error_outline;
+      default:
+        return Icons.notifications_outlined;
+    }
+  }
+
+  Color _getColor(String? type) {
+    switch (type) {
+      case 'Flight_Cancelled':
+        return Colors.red;
+      case 'CheckIn':
+        return Colors.green;
+      case 'Hotel':
+        return Colors.blue;
+      default:
+        return Colors.orange;
+    }
+  }
+
+  String _formatTime(DateTime? dt) {
+    if (dt == null) return '';
+    final local = dt.toLocal();
+    final hour = local.hour % 12 == 0 ? 12 : local.hour % 12;
+    final minute = local.minute.toString().padLeft(2, '0');
+    final period = local.hour >= 12 ? 'PM' : 'AM';
+    return '$hour:$minute $period';
+  }
+
+  Widget _buildDetailedAlert(ParentAlertModel alert) {
+    final icon = _getIcon(alert.type);
+    final color = _getColor(alert.type);
+
     return Container(
+      margin: EdgeInsets.only(bottom: 15.h),
       padding: EdgeInsets.all(15.w),
       decoration: BoxDecoration(
         color: const Color(0xFFFBFBFB),
@@ -92,10 +139,10 @@ class ParentAlertsScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.w),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
+                  color: color.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: Colors.orange, size: 20.sp),
+                child: Icon(icon, color: color, size: 20.sp),
               ),
               SizedBox(width: 15.w),
               Expanded(
@@ -103,19 +150,28 @@ class ParentAlertsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
-                      style: globalTextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                      alert.summary ?? '',
+                      style: globalTextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
-                      subtitle,
-                      style: globalTextStyle(fontSize: 11.sp, color: AppColors.greyColor),
+                      alert.type ?? '',
+                      style: globalTextStyle(
+                        fontSize: 11.sp,
+                        color: AppColors.greyColor,
+                      ),
                     ),
                   ],
                 ),
               ),
               Text(
-                time,
-                style: globalTextStyle(fontSize: 11.sp, color: AppColors.greyColor),
+                _formatTime(alert.createdAt),
+                style: globalTextStyle(
+                  fontSize: 11.sp,
+                  color: AppColors.greyColor,
+                ),
               ),
             ],
           ),
@@ -123,12 +179,15 @@ class ParentAlertsScreen extends StatelessWidget {
           Divider(color: Colors.grey.shade200),
           SizedBox(height: 10.h),
           Text(
-            "View Reason",
-            style: globalTextStyle(fontSize: 12.sp, color: AppColors.greyColor),
+            "Detail",
+            style: globalTextStyle(
+              fontSize: 12.sp,
+              color: AppColors.greyColor,
+            ),
           ),
           SizedBox(height: 5.h),
           Text(
-            reason,
+            alert.detail ?? '',
             style: globalTextStyle(
               fontSize: 11.sp,
               color: Colors.orange.shade700,
@@ -140,13 +199,12 @@ class ParentAlertsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSimpleAlert({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required String time,
-  }) {
+  Widget _buildSimpleAlert(ParentAlertModel alert) {
+    final icon = _getIcon(alert.type);
+    final color = _getColor(alert.type);
+
     return Container(
+      margin: EdgeInsets.only(bottom: 15.h),
       padding: EdgeInsets.all(15.w),
       decoration: BoxDecoration(
         color: const Color(0xFFFBFBFB),
@@ -157,10 +215,10 @@ class ParentAlertsScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
-              color: Colors.orange.withOpacity(0.1),
+              color: color.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.orange, size: 20.sp),
+            child: Icon(icon, color: color, size: 20.sp),
           ),
           SizedBox(width: 15.w),
           Expanded(
@@ -168,19 +226,30 @@ class ParentAlertsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
-                  style: globalTextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                  alert.summary ?? '',
+                  style: globalTextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
-                  subtitle,
-                  style: globalTextStyle(fontSize: 11.sp, color: AppColors.greyColor),
+                  alert.detail ?? '',
+                  style: globalTextStyle(
+                    fontSize: 11.sp,
+                    color: AppColors.greyColor,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
           Text(
-            time,
-            style: globalTextStyle(fontSize: 11.sp, color: AppColors.greyColor),
+            _formatTime(alert.createdAt),
+            style: globalTextStyle(
+              fontSize: 11.sp,
+              color: AppColors.greyColor,
+            ),
           ),
         ],
       ),

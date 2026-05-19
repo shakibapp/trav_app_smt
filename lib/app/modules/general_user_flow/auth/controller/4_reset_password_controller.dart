@@ -45,7 +45,7 @@ class ResetPasswordController extends GetxController {
   }
 
 final RxBool isResetLoading = false.obs;
-   Future<void> onResetPassword() async {
+   Future<void> onResetPassword(String email) async {
     if (!formKey.currentState!.validate()) {
       return;
     }
@@ -56,7 +56,7 @@ final RxBool isResetLoading = false.obs;
         RequestMethod.POST,
         Urls.resetPassword,
         {
-          "email": newPasswordController.text.trim(),
+          "email": email.trim(),
           "password": confirmPasswordController.text.trim(),
         },
       );
@@ -78,8 +78,6 @@ final RxBool isResetLoading = false.obs;
 
   @override
   void onClose() {
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
     super.onClose();
   }
 }

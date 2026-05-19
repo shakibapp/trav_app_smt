@@ -197,11 +197,5 @@ class AccountController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    fullNameController.dispose();
-    userNameController.dispose();
-    emailTEC.dispose();
-    super.onClose();
-  }
+ 
 }

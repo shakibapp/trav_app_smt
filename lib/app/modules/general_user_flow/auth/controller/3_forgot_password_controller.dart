@@ -63,7 +63,6 @@ final RxBool isForgotLoading = false.obs;
 
   @override
   void onClose() {
-    emailController.dispose();
     super.onClose();
   }
 }

@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_toast.dart';
@@ -51,6 +53,7 @@ class VerifyOtpController extends GetxController {
         
         if (isForPasswordReset) {
           Get.to(()=>ResetPasswordScreen(email: email.trim()));
+          log("user email to -----$email");
         } else {
          Get.offAllNamed(AppRoutes.LOGIN);
         }
@@ -114,7 +117,6 @@ class VerifyOtpController extends GetxController {
 
   @override
   void onClose() {
-    otpController.dispose();
     super.onClose();
   }
 }

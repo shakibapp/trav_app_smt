@@ -274,15 +274,6 @@ class AccommodationController extends GetxController {
 
   @override
   void onClose() {
-    accommodationNameController.dispose();
-    addressController.dispose();
-    bookingReferenceController.dispose();
-    numberOfGuestsController.dispose();
-    totalCostController.dispose();
-    amountOwingController.dispose();
-    notesController.dispose();
-    checkInDateController.dispose();
-    checkOutDateController.dispose();
     super.onClose();
   }
 }

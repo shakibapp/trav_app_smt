@@ -135,7 +135,6 @@ class ProfileController extends GetxController {
   }
 
   Future<void> onLogoutTap() async {
-
     _showLogoutDialog();
   }
 
@@ -216,7 +215,7 @@ class ProfileController extends GetxController {
                       onTap: () async {
                         Get.back();
                         await LocalService.localService.clearUserData();
-                        Get.offAllNamed(AppRoutes.LOGIN);
+                        Get.offNamed(AppRoutes.LOGIN);
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 12.h),

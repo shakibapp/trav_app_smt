@@ -194,25 +194,6 @@ class TransportationController extends GetxController {
 
   @override
   void onClose() {
-    departureLocationController.dispose();
-    arrivalLocationController.dispose();
-    departureDateController.dispose();
-    departureTimeController.dispose();
-    arrivalDateController.dispose();
-    arrivalTimeController.dispose();
-    bookingReferenceController.dispose();
-    airlineController.dispose();
-    flightNumberController.dispose();
-    terminalController.dispose();
-    gateController.dispose();
-    seatController.dispose();
-    totalCostController.dispose();
-    notesController.dispose();
-    trainOperatorController.dispose();
-    trainNumberController.dispose();
-    busCompanyController.dispose();
-    serviceNumberController.dispose();
-    carNumberPlateController.dispose();
     super.onClose();
   }
 }

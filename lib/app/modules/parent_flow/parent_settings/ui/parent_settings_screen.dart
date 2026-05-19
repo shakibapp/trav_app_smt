@@ -11,8 +11,8 @@ import '../../../general_user_flow/profile/controller/profile_controller.dart';
 import '../controller/parent_settings_controller.dart';
 
 class ParentSettingsScreen extends GetView<ParentSettingsController> {
-   ParentSettingsScreen({super.key});
-   final profileController = Get.put(ProfileController());
+  ParentSettingsScreen({super.key});
+  final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +41,11 @@ class ParentSettingsScreen extends GetView<ParentSettingsController> {
                   ),
                 ),
                 IconButton(
-                    onPressed: ()=>profileController.onLogoutTap(),
-                    icon: Icon(Icons.logout,color: Colors.red,))
-
+                    onPressed: () => profileController.onLogoutTap(),
+                    icon: Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                    ))
               ],
             ),
             Text(
@@ -66,16 +68,16 @@ class ParentSettingsScreen extends GetView<ParentSettingsController> {
             SizedBox(height: 15.h),
             Obx(() => _buildSwitchItem(
                   title: "Flight Alerts",
-                  value: controller.flightAlerts.value,
-                  onChanged: controller.toggleFlightAlerts,
+                  value: controller.flightAlert.value,
+                  onChanged: controller.toggleFlightAlert,
                 )),
             Obx(() => _buildSwitchItem(
-                  title: "Check-in alerts",
-                  value: controller.checkInAlerts.value,
-                  onChanged: controller.toggleCheckInAlerts,
+                  title: "Check-in Reminders",
+                  value: controller.checkInReminders.value,
+                  onChanged: controller.toggleCheckInReminders,
                 )),
             Obx(() => _buildSwitchItem(
-                  title: "Delay updates",
+                  title: "Delay Updates",
                   value: controller.delayUpdates.value,
                   onChanged: controller.toggleDelayUpdates,
                 )),
@@ -83,6 +85,16 @@ class ParentSettingsScreen extends GetView<ParentSettingsController> {
                   title: "Arrive Alerts",
                   value: controller.arriveAlerts.value,
                   onChanged: controller.toggleArriveAlerts,
+                )),
+            Obx(() => _buildSwitchItem(
+                  title: "Passport Alerts",
+                  value: controller.passportAlert.value,
+                  onChanged: controller.togglePassportAlert,
+                )),
+            Obx(() => _buildSwitchItem(
+                  title: "Marketing Emails",
+                  value: controller.marketingEmails.value,
+                  onChanged: controller.toggleMarketingEmails,
                 )),
             SizedBox(height: 30.h),
             // Notification Channels
@@ -109,18 +121,54 @@ class ParentSettingsScreen extends GetView<ParentSettingsController> {
                   icon: Icons.email_outlined,
                   iconColor: Colors.green,
                 )),
-            SizedBox(height: 20.h),
-            Center(
-              child: Text(
-                "You can choose one or multiple notification channels.",
-                style: globalTextStyle(fontSize: 10.sp, color: AppColors.greyColor),
-              ),
-            ),
+            //SizedBox(height: 30.h),
+            // System Notifications
+            // Text(
+            //   "SYSTEM NOTIFICATIONS",
+            //   style: globalTextStyle(
+            //     fontSize: 12.sp,
+            //     fontWeight: FontWeight.bold,
+            //     color: AppColors.lightSilverColor,
+            //   ),
+            // ),
+            // SizedBox(height: 15.h),
+            // Obx(() => _buildSwitchItem(
+            //       title: "New User Alerts",
+            //       value: controller.newUserNotifications.value,
+            //       onChanged: controller.toggleNewUserNotifications,
+            //       icon: Icons.person_add_alt_1_outlined,
+            //       iconColor: Colors.blue,
+            //     )),
+            // Obx(() => _buildSwitchItem(
+            //       title: "Trip Milestones",
+            //       value: controller.tripMilestoneNotifications.value,
+            //       onChanged: controller.toggleTripMilestoneNotifications,
+            //       icon: Icons.emoji_events_outlined,
+            //       iconColor: Colors.blue,
+            //     )),
+            // Obx(() => _buildSwitchItem(
+            //       title: "User Suspensions",
+            //       value: controller.userSuspensionNotifications.value,
+            //       onChanged: controller.toggleUserSuspensionNotifications,
+            //       icon: Icons.gavel_outlined,
+            //       iconColor: Colors.blue,
+            //     )),
+            // SizedBox(height: 20.h),
+            // Center(
+            //   child: Text(
+            //     "You can choose one or multiple notification channels.",
+            //     style: globalTextStyle(fontSize: 10.sp, color: AppColors.greyColor),
+            //   ),
+            // ),
             SizedBox(height: 30.h),
-            CustomButtonWidget.primary(
-              label: "Save Changes",
-              onPressed: controller.saveChanges,
-              fullWidth: true,
+            Obx(
+              () => CustomButtonWidget.primary(
+                label: "Save Changes",
+                loading: controller.isLoading.value,
+                onPressed:
+                    controller.isLoading.value ? null : controller.saveChanges,
+                fullWidth: true,
+              ),
             ),
             SizedBox(height: 100.h),
           ],

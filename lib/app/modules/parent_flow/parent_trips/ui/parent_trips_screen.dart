@@ -1,3 +1,5 @@
+// parent_trips_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -5,12 +7,17 @@ import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_images.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
 import 'package:hamishphipps/app/core/widgets/app_bg.dart';
+import 'package:hamishphipps/app/modules/parent_flow/parent_trips/controller/parent_trip_overview.dart';
+
+import 'package:hamishphipps/app/modules/parent_flow/parent_trips/model/trip_overview_model.dart';
 
 class ParentTripsScreen extends StatelessWidget {
   const ParentTripsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ParentTripOverviewController());
+
     return BackgroundScreen(
       bgImg: AppImages.tripBgLight,
       child: SingleChildScrollView(
@@ -34,56 +41,75 @@ class ParentTripsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30.h),
+
             // Full Route Card
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20.w),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFBFBFB),
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Full Route",
-                        style: globalTextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
+            Obx(() {
+              if (controller.isTripOverViewLoadin.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              final routes = controller.tripOverView.value.route ?? [];
+
+              return Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20.w),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFBFBFB),
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Full Route",
+                          style: globalTextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Icon(Icons.close, size: 20.sp, color: AppColors.greyColor.withOpacity(0.5)),
-                    ],
-                  ),
-                  SizedBox(height: 30.h),
-                  _buildTimelineItem(
-                    title: "Melbourne",
-                    status: "Done",
-                    isFirst: true,
-                    dotColor: Colors.orange,
-                  ),
-                  _buildTimelineItem(
-                    title: "Rome",
-                    status: "Done",
-                    dotColor: Colors.orange,
-                  ),
-                  _buildTimelineItem(
-                    title: "Venice",
-                    status: "Ongoing",
-                    dotColor: Colors.orange,
-                  ),
-                  _buildTimelineItem(
-                    title: "Melbourne",
-                    status: "Upcoming",
-                    isLast: true,
-                    dotColor: Colors.grey.shade300,
-                  ),
-                ],
-              ),
-            ),
+                        Icon(
+                          Icons.close,
+                          size: 20.sp,
+                          color: AppColors.greyColor.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30.h),
+                    if (routes.isEmpty)
+                      Center(
+                        child: Text(
+                          "No route data available",
+                          style: globalTextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.greyColor,
+                          ),
+                        ),
+                      )
+                    else
+                      ...routes.asMap().entries.map((entry) {
+                        final int index = entry.key;
+                        final TripRoute route =
+                            entry.value; // ✅ Route → TripRoute
+
+                        final bool isFirst = index == 0;
+                        final bool isLast = index == routes.length - 1;
+
+                        return _buildTimelineItem(
+                          title: route.city ?? "-",
+                          status: route.status,
+                          days: route.days,
+                          isFirst: isFirst,
+                          isLast: isLast,
+                        );
+                      }),
+                  ],
+                ),
+              );
+            }),
+
             SizedBox(height: 100.h),
           ],
         ),
@@ -93,10 +119,10 @@ class ParentTripsScreen extends StatelessWidget {
 
   Widget _buildTimelineItem({
     required String title,
-    required String status,
+    required TripStatus status,
+    int? days,
     bool isFirst = false,
     bool isLast = false,
-    required Color dotColor,
   }) {
     return IntrinsicHeight(
       child: Row(
@@ -107,7 +133,7 @@ class ParentTripsScreen extends StatelessWidget {
                 width: 12.w,
                 height: 12.w,
                 decoration: BoxDecoration(
-                  color: dotColor,
+                  color: status.dotColor,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -131,16 +157,24 @@ class ParentTripsScreen extends StatelessWidget {
                   style: globalTextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
-                    color: status == "Upcoming" ? AppColors.greyColor : AppColors.blackColor,
+                    color: status.textColor,
                   ),
                 ),
                 Text(
-                  status,
+                  status.label,
                   style: globalTextStyle(
                     fontSize: 12.sp,
                     color: AppColors.greyColor,
                   ),
                 ),
+                if (days != null)
+                  Text(
+                    "$days days",
+                    style: globalTextStyle(
+                      fontSize: 11.sp,
+                      color: AppColors.greyColor,
+                    ),
+                  ),
               ],
             ),
           ),

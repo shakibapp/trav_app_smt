@@ -904,118 +904,38 @@ class HomeScreen extends GetWidget<HomeController> {
                   ),
                   SizedBox(width: 14.w),
                   Expanded(
-                    child: CustomButtonWidget(
-                      label: 'Yes, interested.',
-                      onPressed: () {
-                        Get.back();
-                        controller.parentEmailController.clear();
-                        Future.microtask(
-                          () => _showInviteParentEmailDialog(controller),
-                        );
-                      },
-                      bgColor: AppColors.authOrange,
-                      fgColor: AppColors.whiteColor,
-                      fullWidth: true,
-                      height: 48.h,
-                      radius: 999.r,
-                      elevation: 3,
-                      textStyle: globaltextInterTight(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.whiteColor,
-                      ),
-                    ),
+                    child: Obx(() {
+                      return CustomButtonWidget(
+                        loading: controller.isInvitingParent.value,
+                        label: 'Yes, interested.',
+                        onPressed: () async {
+                          final tripId =
+                              controller.tripDetail.value.id?.toString() ?? "";
+                          if (tripId.isNotEmpty) {
+                            await controller.inviteParentByEmail(tripId);
+                            Get.back();
+                          } else {
+                            Get.snackbar("Error", "No trip selected to share",
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white);
+                          }
+                        },
+                        bgColor: AppColors.authOrange,
+                        fgColor: AppColors.whiteColor,
+                        fullWidth: true,
+                        height: 48.h,
+                        radius: 999.r,
+                        elevation: 3,
+                        textStyle: globaltextInterTight(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.whiteColor,
+                        ),
+                      );
+                    }),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-      ),
-      barrierDismissible: false,
-    );
-  }
-
-  Future<void> _showInviteParentEmailDialog(HomeController controller) async {
-    await Get.dialog(
-      Dialog(
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.r),
-        ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(18.w, 10.h, 18.w, 18.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'ENTER PARENT EMAIL',
-                      style: globaltextInterTight(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: Get.back,
-                    icon: const Icon(Icons.close),
-                    splashRadius: 18.r,
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 14.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: AppColors.authOrange.withValues(alpha: 0.25),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(14.r),
-                ),
-                child: TextField(
-                  controller: controller.parentEmailController,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: 'parent email',
-                    border: InputBorder.none,
-                    hintStyle: globaltextInterTight(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.blackColor.withAlpha(120),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 14.h),
-              Obx(() {
-                return CustomButtonWidget(
-                  label: 'Invite',
-                  onPressed: () async {
-                    await controller.inviteParentByEmail();
-                  },
-                  bgColor: AppColors.authOrange,
-                  fgColor: AppColors.whiteColor,
-                  loading: controller.isInvitingParent.value,
-                  fullWidth: true,
-                  height: 54.h,
-                  radius: 999.r,
-                  elevation: 2,
-                  textStyle: globaltextInterTight(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.whiteColor,
-                  ),
-                );
-              }),
             ],
           ),
         ),

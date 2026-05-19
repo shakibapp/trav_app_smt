@@ -129,7 +129,7 @@ class ResetPasswordScreen extends StatelessWidget {
           Obx(
             () => CustomButtonWidget(
               label: 'Reset Password',
-              onPressed: controller.onResetPassword,
+              onPressed: ()=>controller.onResetPassword(email),
               loading: controller.isResetLoading.value,
               fullWidth: true,
               height: 54.h,
