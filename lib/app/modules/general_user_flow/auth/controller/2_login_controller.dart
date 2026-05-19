@@ -84,11 +84,13 @@ class LoginController extends GetxController {
             return;
           } else {
             AppToast.showSuccess('Login successful');
+            emailController.clear();
+            passwordController.clear();
 
             await localService.setToken(token);
             await localService.setRole(role);
 
-            Get.to(() =>  NavBarScreen());
+            Get.offAll(() =>  NavBarScreen());
 
             log("Login successful. Token: $token, Role: $role");
           }
@@ -98,6 +100,8 @@ class LoginController extends GetxController {
             return;
           }else if(isProfileComplete == false){
             AppSnackbar.success("Parent Login Success");
+            emailController.clear();
+            passwordController.clear();
             await localService.setToken(token);
             await localService.setRole(role);
             log("Login successful profile incomplete. Token: $token, Role: $role");
@@ -106,6 +110,8 @@ class LoginController extends GetxController {
             AppToast.showSuccess('Login successful');
             await localService.setToken(token);
             await localService.setRole(role);
+            emailController.clear();
+            passwordController.clear();
             Get.offAllNamed(AppRoutes.NAVBAR);
             log("Login successful. Token: $token, Role: $role");
           }
@@ -121,8 +127,10 @@ class LoginController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+ @override
+void onClose() {
+  emailController.dispose();
+  passwordController.dispose();
+  super.onClose();
+}
 }

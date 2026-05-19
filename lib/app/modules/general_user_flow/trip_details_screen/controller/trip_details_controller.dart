@@ -12,6 +12,7 @@ import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 
+
 class TripDetailsController extends GetxController {
   final networkConfig = NetworkConfigV1.instance;
   // Observables
@@ -22,7 +23,7 @@ class TripDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //getSingleTripData("69fc4ba8154098ba82db9081");
+   
   }
 
   //get single trip data
@@ -46,6 +47,29 @@ class TripDetailsController extends GetxController {
       log("get single trip details error ${e.toString()}");
     } finally {
       isTripDetailsLoading.value = false;
+    }
+  }
+
+  //Optimize your route 
+  final RxBool showOptimizeCard = true.obs;
+  void dismissOptimizeCard(){
+    showOptimizeCard.value =false;
+  }
+  final RxBool isOptimizeLoading= false.obs;
+  Future<void>getOptimize(String tripId)async{
+    try{
+      isOptimizeLoading.value =true;
+      final response = await networkConfig.ApiRequestHandler(RequestMethod.GET, "${Urls.baseUrl}/ai/optimize-route/$tripId", {},is_auth: true);
+      if(response != null && response["success"]==true){
+        await getSingleTripData(tripId);
+        log("Optimize route success${response["message"]}");
+      }else{
+        log("Optimize Route failed ${response["message"]}");
+      }
+    }catch(e){
+      log("Optimize Route Error ${e.toString()}");
+    }finally{
+      isOptimizeLoading.value = false;
     }
   }
 
@@ -226,7 +250,9 @@ class TripDetailsController extends GetxController {
     }
   }
 
-  void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
+
+
+void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
     final countryController = TextEditingController(
       text: reminder.passportCountry ?? '',
     );
@@ -812,4 +838,10 @@ class TripDetailsController extends GetxController {
       ),
     );
   }
+
+
+
+
+
+
 }

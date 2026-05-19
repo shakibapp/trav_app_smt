@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,7 +43,9 @@ class TripDetailsScreen extends StatelessWidget {
                   _buildPriorityRemindersSection(controller),
                   _buildItinerarySection(controller),
                   SizedBox(height: 20),
-                  _buildOptimizeRouteSection(controller),
+                  Obx(() => controller.showOptimizeCard.value
+                    ? _buildOptimizeRouteSection(controller)
+                    : const SizedBox()),
                   const SizedBox(height: 30),
                 ],
               );
@@ -591,17 +595,23 @@ class TripDetailsScreen extends StatelessWidget {
                         bgColor: Colors.transparent,
                         borderColor: Colors.grey.shade400,
                         textColor: Colors.black,
-                        onTap: () {},
+                        onTap: () {
+                           controller.dismissOptimizeCard();
+                        },
                         name: "Dismiss",
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: appButton(
+                      child: Obx(()=> appButton(
+                        loading: controller.isOptimizeLoading.value,
                         textColor: Colors.white,
-                        onTap: () {},
+                        onTap: () {
+                          controller.getOptimize(tripId);
+                          log("Assign optimize app ");
+                        },
                         name: "Assign",
-                      ),
+                      ),),
                     ),
                   ],
                 ),

@@ -19,11 +19,16 @@ class BudgetController extends GetxController {
   ];
 
   void selectBudget(int index) {
+   if (selectedIndex.value == index) {
+    selectedIndex.value = -1;
+  } else {
     selectedIndex.value = index;
-    // Card select korle custom field clear hoye jabe
     amountController.clear();
     customAmount.value = "";
   }
+  }
+  bool get isBudgetSelected =>
+    selectedIndex.value != -1 || customAmount.value.trim().isNotEmpty;
 
   void onCustomAmountChange(String value) {
     customAmount.value = value;

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/controller/create_plan_controller.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/create_plan/view/itenerary_screen.dart';
+
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/view/trip_details_screen.dart';
 
 import '../city/controller/city_controller.dart';
 import '../controller/create_plan_calender_controller.dart';
@@ -74,54 +73,7 @@ class StayView extends StatelessWidget {
                 "We'll include this in your itinerary",
                 style: TextStyle(color: Colors.grey),
               ),
-              // if (cityController.selectedCities.isNotEmpty) ...[
-              //   SizedBox(height: 10),
-              //   Text(
-              //     "Selected cities: ${cityController.selectedCities.map((e) => e.name).join(', ')}",
-              //     style: TextStyle(color: Colors.grey.shade700),
-              //   ),
-              //],
-
-              // if (createPlanController.tripResponse.value != null) ...[
-              //   SizedBox(height: 16),
-              //   Container(
-              //     width: double.infinity,
-              //     padding: EdgeInsets.all(16),
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.circular(16),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: Colors.black12,
-              //           blurRadius: 10,
-              //           offset: Offset(0, 4),
-              //         ),
-              //       ],
-              //     ),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text(
-              //           'Trip Response',
-              //           style: TextStyle(
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 16,
-              //           ),
-              //         ),
-              //         SizedBox(height: 8),
-              //         Text(
-              //           'Status: ${createPlanController.tripResponse.value!['status'] ?? 'N/A'}',
-              //           style: TextStyle(fontSize: 14),
-              //         ),
-              //         SizedBox(height: 4),
-              //         Text(
-              //           'Itineraries: ${(createPlanController.tripResponse.value!['itineraries'] as List?)?.length ?? 0}',
-              //           style: TextStyle(fontSize: 14),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ],
+             
 
               SizedBox(height: 20),
 
@@ -360,35 +312,96 @@ class StayView extends StatelessWidget {
         ),
       );
 
+  // Widget _choiceChip(
+  //   String label,
+  //   RxString selectedValue,
+  //   int index,
+  //   bool isAccommodation,
+  // ) {
+  //   return Obx(() {
+  //     bool isSelected = selectedValue.value == label;
+  //     return FilterChip(
+  //       label: Text(
+  //         label,
+  //         style: TextStyle(
+  //           fontSize: 12,
+  //           color: isSelected ? Colors.orange : Colors.black,
+  //         ),
+  //       ),
+  //       selected: isSelected,
+  //       onSelected: (v) => isAccommodation
+  //           ? controller.selectAccommodation(index, label)
+  //           : controller.selectTransport(index, label),
+  //       backgroundColor: Colors.white,
+  //       selectedColor: Colors.orange.withOpacity(0.1),
+  //       shape: StadiumBorder(
+  //         side: BorderSide(
+  //           color: isSelected ? Colors.orange : Colors.grey.shade200,
+  //         ),
+  //       ),
+  //       showCheckmark: false,
+  //     );
+  //   });
+  // }
   Widget _choiceChip(
-    String label,
-    RxString selectedValue,
-    int index,
-    bool isAccommodation,
-  ) {
-    return Obx(() {
-      bool isSelected = selectedValue.value == label;
-      return FilterChip(
-        label: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: isSelected ? Colors.orange : Colors.black,
-          ),
+  String label,
+  RxString selectedValue,
+  int index,
+  bool isAccommodation,
+) {
+  final location = controller.locations[index];
+
+  return Obx(() {
+    final isSelected = selectedValue.value == label;
+    // ✅ Show spinner only on the chip being updated
+    final isThisLoading = location.isUpdating.value &&
+        ((isAccommodation && location.updatingField.value == 'accommodation') ||
+            (!isAccommodation && location.updatingField.value == 'transport')) &&
+        isSelected;
+    // ✅ Disable all chips in this group while updating
+    final isDisabled = location.isUpdating.value;
+
+    return FilterChip(
+      label: isThisLoading
+          ? SizedBox(
+              width: 12,
+              height: 12,
+              child: CircularProgressIndicator(
+                strokeWidth: 1.5,
+                color: Colors.orange,
+              ),
+            )
+          : Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                color: isDisabled
+                    ? Colors.grey.shade400
+                    : isSelected
+                        ? Colors.orange
+                        : Colors.black,
+              ),
+            ),
+      selected: isSelected,
+      onSelected: isDisabled
+          ? null // ✅ Disable tap while loading
+          : (v) => isAccommodation
+              ? controller.selectAccommodation(index, label)
+              : controller.selectTransport(index, label),
+      backgroundColor: Colors.white,
+      selectedColor: Colors.orange.withOpacity(0.1),
+      disabledColor: Colors.grey.shade100,
+      shape: StadiumBorder(
+        side: BorderSide(
+          color: isDisabled
+              ? Colors.grey.shade200
+              : isSelected
+                  ? Colors.orange
+                  : Colors.grey.shade200,
         ),
-        selected: isSelected,
-        onSelected: (v) => isAccommodation
-            ? controller.selectAccommodation(index, label)
-            : controller.selectTransport(index, label),
-        backgroundColor: Colors.white,
-        selectedColor: Colors.orange.withOpacity(0.1),
-        shape: StadiumBorder(
-          side: BorderSide(
-            color: isSelected ? Colors.orange : Colors.grey.shade200,
-          ),
-        ),
-        showCheckmark: false,
-      );
-    });
-  }
+      ),
+      showCheckmark: false,
+    );
+  });
+}
 }

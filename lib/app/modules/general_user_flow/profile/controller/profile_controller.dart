@@ -48,9 +48,13 @@ class ProfileController extends GetxController {
     Get.toNamed(AppRoutes.PROFILE_PARENTS);
   }
 
-  void onPrivacyTap() {}
+  void onPrivacyTap() {
+    AppToast.showSuccess("Upcoming...");
+  }
 
-  void onTermsOfUseTap() {}
+  void onTermsOfUseTap() {
+    AppToast.showSuccess("Upcoming...");
+  }
 
   Future<void> onDeleteAccountTap() async {
     // Show confirmation dialog before deleting account
