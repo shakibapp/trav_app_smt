@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
+import 'package:hamishphipps/app/core/constants/app_icons.dart';
+import 'package:hamishphipps/app/core/constants/url_luncher.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/model/tripltinerary_overview_model.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/booking_with_card.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_transportation_screen/view/add_transportation_screen.dart';
 
 class TravelTabScreen extends StatelessWidget {
@@ -38,11 +40,6 @@ class TravelTabScreen extends StatelessWidget {
           name: "Add Booking Details",
         ),
         const SizedBox(height: 24),
-        const Text(
-          'Book With',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 12),
         ListView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
@@ -54,7 +51,36 @@ class TravelTabScreen extends StatelessWidget {
                 controller.itineraryOverview.value.transportations![index];
             return _buildTransportCard(transport);
           },
-        )
+        ),
+        const Text(
+          'Book With',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        BookingCard(
+          title: "Skyscanner",
+          subtitle: "Millions of cheap flights. One simple search.",
+          logoPath: AppIcons.sky,
+          onTap: () {
+            launchBookingUrl("https://www.hostelworld.com/");
+          },
+        ),
+        BookingCard(
+          title: "Roome2Rio",
+          subtitle: "Discover how to get anywhere",
+          logoPath: AppIcons.romo,
+          onTap: () {
+            launchBookingUrl("https://www.rome2rio.com/");
+          },
+        ),
+        BookingCard(
+          title: "KAYAK",
+          subtitle: "Compare flight deals from 100s of sites",
+          logoPath: AppIcons.kayak,
+          onTap: () {
+            launchBookingUrl("https://www.kayak.co.in/?ispredir=true");
+          },
+        ),
       ],
     );
   }
@@ -140,7 +166,7 @@ class TravelTabScreen extends StatelessWidget {
 
           const Divider(thickness: 0.5),
           Text(
-            "${transport.currency ?? "EUR"} ${((transport.totalCost ?? 0) / 100).toStringAsFixed(2)}",
+            "${transport.currency ?? "EUR"} ${((transport.totalCost ?? 0))}",
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],

@@ -22,7 +22,7 @@ class AddAccommodationView extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(),
+          child: backButton(onTap: () => Get.back()),
         ),
         title: const Text(
           'Add Accommodation',

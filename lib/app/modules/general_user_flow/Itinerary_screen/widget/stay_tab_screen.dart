@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
+import 'package:hamishphipps/app/core/constants/url_luncher.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/view/add_accommodation_screen.dart';
@@ -160,7 +161,7 @@ class StayTabScreen extends StatelessWidget {
           subtitle: "Best for budget-friendly hostels and solo travelers",
           logoPath: AppIcons.hostelWorld,
           onTap: () {
-            log("https://www.hostelworld.com/");
+            launchBookingUrl("https://www.hostelworld.com/");
           },
         );
 
@@ -170,7 +171,7 @@ class StayTabScreen extends StatelessWidget {
           subtitle: "Perfect for unique stays and local experiences",
           logoPath: AppIcons.airb,
           onTap: () {
-            log("https://www.airbnb.com/");
+            launchBookingUrl("https://www.airbnb.com/");
           },
         );
 
@@ -180,7 +181,7 @@ class StayTabScreen extends StatelessWidget {
           subtitle: "Great for hotels, resorts, and flexible options",
           logoPath: AppIcons.booking,
           onTap: () {
-            log("https://www.booking.com/");
+            launchBookingUrl("https://www.booking.com/");
           },
         );
     }

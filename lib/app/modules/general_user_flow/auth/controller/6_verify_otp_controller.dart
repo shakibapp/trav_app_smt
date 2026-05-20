@@ -51,7 +51,7 @@ class VerifyOtpController extends GetxController {
       if (response != null && response['success'] == true) {
         AppToast.showSuccess('OTP verified successfully');
         
-        if (isForPasswordReset) {
+        if (isForPasswordReset==true) {
           Get.to(()=>ResetPasswordScreen(email: email.trim()));
           log("user email to -----$email");
         } else {

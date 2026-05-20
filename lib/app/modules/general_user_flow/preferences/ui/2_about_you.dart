@@ -21,7 +21,7 @@ class PreferencesAboutYouScreen extends GetView<PreferencesController> {
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(),
+          child: backButton(onTap: ()=>Get.back()),
         ),
       ),
       body: SafeArea(

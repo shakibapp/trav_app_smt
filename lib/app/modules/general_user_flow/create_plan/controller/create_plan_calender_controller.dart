@@ -100,6 +100,51 @@ class DatePickerController extends GetxController {
   }
 
   // Select a single date
+  // void selectDate(int day) {
+  //   final date = DateTime(
+  //     currentMonth.value.year,
+  //     currentMonth.value.month,
+  //     day,
+  //   );
+
+  //   if (!isDateSelectable(day)) {
+  //     Get.snackbar(
+  //       'Invalid Date',
+  //       'You cannot select past dates',
+  //       snackPosition: SnackPosition.TOP,
+  //       backgroundColor: Colors.orange,
+  //       colorText: Colors.white,
+  //     );
+  //     return;
+  //   }
+
+  //   if (selectionMode.value == 'range') {
+  //     // Range selection mode
+  //     if (selectedStartDate.value == null) {
+  //       selectedStartDate(date);
+  //       selectedDates.clear();
+  //       selectedDates.add(date);
+  //     } else if (selectedEndDate.value == null) {
+  //       if (date.isBefore(selectedStartDate.value!)) {
+  //         Get.snackbar(
+  //           'Invalid Selection',
+  //           'End date must be after start date',
+  //           snackPosition: SnackPosition.TOP,
+  //           backgroundColor: Colors.orange,
+  //         );
+  //         return;
+  //       }
+  //       selectedEndDate(date);
+  //       _generateDateRange();
+  //     } else {
+  //       // Reset and start new selection
+  //       selectedStartDate(date);
+  //       selectedEndDate(null);
+  //       selectedDates.clear();
+  //       selectedDates.add(date);
+  //     }
+  //   }
+  // }
   void selectDate(int day) {
     final date = DateTime(
       currentMonth.value.year,
@@ -119,42 +164,73 @@ class DatePickerController extends GetxController {
     }
 
     if (selectionMode.value == 'range') {
-      // Range selection mode
+      // কিছুই select নেই → প্রথম date টা start এবং end দুটোই হবে (1 day)
       if (selectedStartDate.value == null) {
         selectedStartDate(date);
+        selectedEndDate(date); // same date → 1 day
         selectedDates.clear();
         selectedDates.add(date);
-      } else if (selectedEndDate.value == null) {
-        if (date.isBefore(selectedStartDate.value!)) {
-          Get.snackbar(
-            'Invalid Selection',
-            'End date must be after start date',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.orange,
-          );
-          return;
-        }
-        selectedEndDate(date);
-        _generateDateRange();
-      } else {
-        // Reset and start new selection
-        selectedStartDate(date);
-        selectedEndDate(null);
-        selectedDates.clear();
-        selectedDates.add(date);
+        return;
       }
+
+      // Start date tap → সব unselect
+      if (_isSameDay(date, selectedStartDate.value!)) {
+        clearSelection();
+        return;
+      }
+
+      // End date tap → সব unselect
+      if (selectedEndDate.value != null &&
+          _isSameDay(date, selectedEndDate.value!)) {
+        clearSelection();
+        return;
+      }
+
+      // অন্য যেকোনো date tap → start fix থাকবে, এই date নতুন end হবে
+      if (date.isBefore(selectedStartDate.value!)) {
+        // Start এর আগের date select করলে → এটা নতুন start হবে, end আগেরটাই থাকবে
+        final oldStart = selectedStartDate.value!;
+        selectedStartDate(date);
+        selectedEndDate(oldStart);
+      } else {
+        // Start এর পরের date → নতুন end
+        selectedEndDate(date);
+      }
+      _generateDateRange();
     }
   }
 
-  // Generate all dates in range
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  // // Generate all dates in range
+  // void _generateDateRange() {
+  //   if (selectedStartDate.value == null || selectedEndDate.value == null) {
+  //     return;
+  //   }
+
+  //   selectedDates.clear();
+  //   final start = selectedStartDate.value!;
+  //   final end = selectedEndDate.value!;
+
+  //   for (int i = 0; i <= end.difference(start).inDays; i++) {
+  //     selectedDates.add(start.add(Duration(days: i)));
+  //   }
+  // }
   void _generateDateRange() {
-    if (selectedStartDate.value == null || selectedEndDate.value == null) {
+    if (selectedStartDate.value == null || selectedEndDate.value == null)
       return;
-    }
 
     selectedDates.clear();
     final start = selectedStartDate.value!;
     final end = selectedEndDate.value!;
+
+    // Same date হলে শুধু একটা date
+    if (_isSameDay(start, end)) {
+      selectedDates.add(start);
+      return;
+    }
 
     for (int i = 0; i <= end.difference(start).inDays; i++) {
       selectedDates.add(start.add(Duration(days: i)));
@@ -207,8 +283,14 @@ class DatePickerController extends GetxController {
   }
 
   // Get total days selected
+  // int getTotalDays() {
+  //   if (selectedDates.isEmpty) return 0;
+  //   return selectedDates.length;
+  // }
   int getTotalDays() {
-    if (selectedDates.isEmpty) return 0;
+    if (selectedStartDate.value == null) return 0;
+    if (selectedEndDate.value == null) return 0;
+    if (_isSameDay(selectedStartDate.value!, selectedEndDate.value!)) return 1;
     return selectedDates.length;
   }
 

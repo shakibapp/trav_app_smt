@@ -56,7 +56,7 @@ class TripITineraryOverviewScreen extends StatelessWidget {
                       bottom: 12.0,
                     ),
                     child: buildQuickInfoItem(
-                      icon: Icons.notifications,
+                      icon: index == 0 ? Icons.flight : Icons.home,
                       title: remainder.title ?? "No Title",
                       date: remainder.description?.toString() ?? "",
                       onTap: () {

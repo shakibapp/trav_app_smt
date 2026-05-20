@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 
-Widget backButton() {
+Widget backButton({required VoidCallback onTap}) {
   return GestureDetector(
-    onTap: () => Get.back(),
+    onTap: onTap,
     child: Container(
       height: 40,
       width: 40,

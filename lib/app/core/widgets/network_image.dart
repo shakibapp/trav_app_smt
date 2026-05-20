@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -23,13 +22,22 @@ class AppNetworkImage extends StatelessWidget {
   });
 
   bool get _isValidImage {
-    return imageUrl != null && imageUrl!.trim().isNotEmpty;
+    if (imageUrl == null) return false;
+    final trimmed = imageUrl!.trim();
+    if (trimmed.isEmpty) return false;
+    // file:/// বা invalid URI হলে false
+    try {
+      final uri = Uri.parse(trimmed);
+      return uri.hasScheme && uri.host.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final child = !_isValidImage
-        ? _defaultErrorWidget()
+        ? (errorWidget ?? _defaultErrorWidget())
         : CachedNetworkImage(
             imageUrl: imageUrl!.trim(),
             width: width,
@@ -52,9 +60,10 @@ class AppNetworkImage extends StatelessWidget {
   }
 
   Widget _defaultPlaceholder() {
-    return SizedBox(
+    return Container(
       width: width,
       height: height,
+      color: Colors.grey.shade200,
       child: const Center(
         child: SizedBox(
           height: 18,

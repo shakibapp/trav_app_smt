@@ -90,9 +90,14 @@ Widget priorityRemindersStatusBanner({required bool completed}) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     decoration: BoxDecoration(
-      color: completed
-          ? AppColors.successColor.withOpacity(0.12)
-          : Colors.grey.shade100,
+      gradient: LinearGradient(colors: [
+        Color(0xFFffe7d9),
+        Color(0xFFfefef8),
+        Color(0xFFf3f5c4),
+      ]),
+      // color: completed
+      //     ? AppColors.successColor.withOpacity(0.12)
+      //     : Colors.grey.shade100,
       borderRadius: BorderRadius.circular(14),
       border: Border.all(
         color: completed
@@ -118,11 +123,11 @@ Widget priorityRemindersStatusBanner({required bool completed}) {
         const SizedBox(width: 12),
         Expanded(
           child: Text(
-            completed ? 'Priority Reminders (Checked)' : 'Priority Reminders',
+            completed
+                ? 'Priority Reminders (Checked)'
+                : 'Priority Reminders(Need Attention)',
             style: TextStyle(
-              color: completed
-                  ? AppColors.successColor.withOpacity(0.95)
-                  : Colors.black87,
+              color: Colors.black87,
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),

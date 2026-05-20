@@ -23,7 +23,7 @@ class AddTransportationView extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(),
+          child: backButton(onTap: ()=>Get.back()),
         ),
         title: const Text(
           'Add Transportation',
@@ -577,7 +577,7 @@ class AddTransportationView extends StatelessWidget {
               value: controller.selectedBookingPlatform.value,
               isExpanded: true,
               underline: const SizedBox(),
-              items: ['Skyscanner', 'Expedia', 'Booking.com', 'Kayak'].map((
+              items: ['Skyscanner','Rome2Rio'].map((
                 platform,
               ) {
                 return DropdownMenuItem(value: platform, child: Text(platform));

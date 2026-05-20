@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
+import 'package:hamishphipps/app/core/widgets/network_image.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/activities_tab_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
@@ -43,23 +44,14 @@ class TripItineraryView extends StatelessWidget {
                       Colors.black.withOpacity(0.4),
                     ],
                   ),
-                  image: DecorationImage(
-                    image: NetworkImage(itinerary.image ?? ""),
-                    fit: BoxFit.cover,
-                  ),
                 ),
-                // child: Container(
-                //   decoration: BoxDecoration(
-                //     gradient: LinearGradient(
-                //       begin: Alignment.topCenter,
-                //       end: Alignment.bottomCenter,
-                //       colors: [
-                //         Colors.black.withOpacity(0.2),
-                //         Colors.black.withOpacity(0.4),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                child: AppNetworkImage(
+                  imageUrl: itinerary.image ??
+                      "https://media.istockphoto.com/id/904172104/photo/weve-made-it-all-this-way-i-am-proud.jpg?b=1&s=612x612&w=0&k=20&c=JRmndTMyz627jxKiUjgXSJXrxwuAiHkHjefiRsyY2jc=",
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  fit: BoxFit.cover,
+                ),
               ),
               // Main content
               SingleChildScrollView(

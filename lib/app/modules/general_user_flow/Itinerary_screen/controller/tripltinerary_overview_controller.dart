@@ -163,4 +163,6 @@ class ItineraryDetailsController extends GetxController {
       isAlCreateActivityLoading.value = false;
     }
   }
+
+  
 }

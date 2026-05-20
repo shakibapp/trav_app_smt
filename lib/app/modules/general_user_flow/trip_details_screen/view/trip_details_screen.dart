@@ -9,6 +9,7 @@ import 'package:hamishphipps/app/core/constants/app_icons.dart';
 import 'package:hamishphipps/app/core/widgets/network_image.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/view/tripItinerary_overview_screen.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/nav_bar/controller/nav_bar_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/controller/trip_details_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +18,9 @@ import '../widget/trip_details_widget.dart';
 
 class TripDetailsScreen extends StatelessWidget {
   final String tripId;
-  TripDetailsScreen({super.key, required this.tripId});
+  final bool isFromCreatePlan;
+  TripDetailsScreen(
+      {super.key, required this.tripId, this.isFromCreatePlan = false});
   final controller = Get.put(TripDetailsController());
 
   @override
@@ -41,11 +44,11 @@ class TripDetailsScreen extends StatelessWidget {
                     height: 15,
                   ),
                   _buildPriorityRemindersSection(controller),
-                  _buildItinerarySection(controller),
                   SizedBox(height: 20),
                   Obx(() => controller.showOptimizeCard.value
-                    ? _buildOptimizeRouteSection(controller)
-                    : const SizedBox()),
+                      ? _buildOptimizeRouteSection(controller)
+                      : const SizedBox()),
+                  _buildItinerarySection(controller),
                   const SizedBox(height: 30),
                 ],
               );
@@ -63,7 +66,15 @@ class TripDetailsScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            backButton(),
+            backButton(onTap: () {
+              if (isFromCreatePlan == true) {
+                final navController = Get.find<NavBarController>();
+                navController.setIndex(0);
+                Get.offAllNamed('/navbar');
+              } else {
+                Get.back();
+              }
+            }),
             const SizedBox(width: 12),
             Text(
               'Your Itinerary',
@@ -84,9 +95,12 @@ class TripDetailsScreen extends StatelessWidget {
             child: Stack(
               children: [
                 AppNetworkImage(
-                    imageUrl: data.images?.isNotEmpty ?? false
-                        ? data.images![0]
-                        : ''),
+                  imageUrl: data.images?.isNotEmpty ?? false
+                      ? data.images![0]
+                      : 'https://media.istockphoto.com/id/904172104/photo/weve-made-it-all-this-way-i-am-proud.jpg?b=1&s=612x612&w=0&k=20&c=JRmndTMyz627jxKiUjgXSJXrxwuAiHkHjefiRsyY2jc=',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -261,96 +275,130 @@ class TripDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildRemindersSection(TripDetailsController controller) {
-    return SizedBox(
-      height: 150,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: controller.singleTripData.value.remainders?.length ?? 0,
-        itemBuilder: (context, index) {
-          final data = controller.singleTripData.value.remainders![index];
-          return Container(
-            width: 300,
-            margin: EdgeInsets.only(right: 10),
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+    final reminders = (controller.singleTripData.value.remainders ?? [])
+        .where((r) => (r.daysLeft ?? 0) > 0)
+        .toList();
+
+    // empty হলে পুরো section hide
+    if (reminders.isEmpty) return const SizedBox.shrink();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Reminders",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: 150,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.singleTripData.value.remainders?.length ?? 0,
+            itemBuilder: (context, index) {
+              // daysLeft == 0 বাদ দিয়ে filter করুন
+              final reminders =
+                  (controller.singleTripData.value.remainders ?? [])
+                      .where((r) => (r.daysLeft ?? 0) > 0)
+                      .toList();
+
+              if (reminders.isEmpty) return SizedBox.shrink();
+              final data = controller.singleTripData.value.remainders![index];
+              return Container(
+                width: 300,
+                margin: EdgeInsets.only(right: 10),
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: AppColors.orangeLight,
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColors.authOrange),
-                      ),
-                      child: Image.asset(
-                        AppIcons.airplaneColor,
-                        height: 20,
-                        width: 20,
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: AppColors.orangeLight,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: AppColors.authOrange),
+                          ),
+                          child: Image.asset(
+                            AppIcons.airplaneColor,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        appButton(
+                          height: 30,
+                          width: 100,
+                          onTap: () {},
+                          name: '${data.daysLeft} day left',
+                          textColor: Colors.white,
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 10),
-                    appButton(
-                      height: 30,
-                      width: 100,
-                      onTap: () {},
-                      name: '${data.daysLeft} day left',
-                      textColor: Colors.white,
+                    SizedBox(height: 10),
+                    Text(
+                      "${data.title}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "${data.description}",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Obx(
+                          () => appButton(
+                            loading: controller.isReminderLoading.value,
+                            height: 30,
+                            onTap: () async {
+                              await controller.reminderStatus(tripId);
+                            },
+                            name: "Dismiss",
+                            bgColor: Color(0xFFf7ebe4),
+                          ),
+                        )),
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: Obx(
+                          () => appButton(
+                            loading: controller.isReminderLoading.value,
+                            height: 30,
+                            onTap: () async {
+                              await controller.reminderStatus(tripId);
+                            },
+                            name: "Done",
+                            bgColor: AppColors.authOrange,
+                            textColor: Colors.white,
+                          ),
+                        )),
+                      ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                Text(
-                  "${data.title}",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "${data.description}",
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: appButton(
-                        height: 30,
-                        onTap: () {},
-                        name: "Dismiss",
-                        bgColor: Color(0xFFf7ebe4),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: appButton(
-                        height: 30,
-                        onTap: () {},
-                        name: "Done",
-                        bgColor: AppColors.authOrange,
-                        textColor: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildPriorityRemindersSection(TripDetailsController controller) {
     final reminders = controller.singleTripData.value.priorityRemainders ?? [];
 
-    // ✅ Use ONE single reminder object for all 3 types
     final reminder = reminders.isNotEmpty ? reminders[0] : PriorityRemainder();
 
-    // ✅ All checks use same reminder object
     final passportChecked = reminder.passportCountry != null &&
         reminder.passportCountry!.isNotEmpty &&
         reminder.passportCountry != 'null' &&
@@ -417,7 +465,7 @@ class TripDetailsScreen extends StatelessWidget {
 
   Widget _buildItinerarySection(TripDetailsController controller) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -552,6 +600,7 @@ class TripDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            width: double.infinity,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -569,51 +618,53 @@ class TripDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.authOrange),
-                    color: AppColors.authOrange.withOpacity(0.3),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(AppIcons.routeIcon, height: 20, width: 20),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.authOrange),
+                        color: AppColors.authOrange.withOpacity(0.3),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(AppIcons.routeIcon,
+                          height: 20, width: 20),
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    const Text(
+                      'Optimize your route',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 6),
                 const Text(
-                  'Optimize your route',
+                  'Consider visiting Berlin, Germany before Amsterdam, Netharlands to reduce travel time between destinations.',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
                   ),
                 ),
                 const SizedBox(height: 15),
-                Row(
-                  children: [
-                    Expanded(
-                      child: appButton(
-                        bgColor: Colors.transparent,
-                        borderColor: Colors.grey.shade400,
-                        textColor: Colors.black,
-                        onTap: () {
-                           controller.dismissOptimizeCard();
-                        },
-                        name: "Dismiss",
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Obx(()=> appButton(
-                        loading: controller.isOptimizeLoading.value,
-                        textColor: Colors.white,
-                        onTap: () {
-                          controller.getOptimize(tripId);
-                          log("Assign optimize app ");
-                        },
-                        name: "Assign",
-                      ),),
-                    ),
-                  ],
+                Obx(
+                  () => appButton(
+                    height: 46,
+                    width: double.infinity,
+                    loading: controller.isOptimizeLoading.value,
+                    textColor: Colors.white,
+                    onTap: () {
+                      controller.getOptimize(tripId);
+                      log("Assign optimize app ");
+                    },
+                    name: "Assign",
+                  ),
                 ),
               ],
             ),

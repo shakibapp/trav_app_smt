@@ -23,7 +23,7 @@ class InterestView extends StatelessWidget {
           children: [
             SizedBox(height: 30.h),
             // Progress Bar & Back Button (Custom)
-            backButton(),
+            backButton(onTap: ()=>Get.back()),
             SizedBox(height: 20),
             Text(
               "Your Interests",

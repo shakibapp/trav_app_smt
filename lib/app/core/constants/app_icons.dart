@@ -73,4 +73,8 @@ class AppIcons {
   static const String booking = "assets/icons/booking.png";
   static const String noData = "assets/icons/nodata.jpg";
   static const String newTravel1 = "assets/icons/new_travel.png";
+  static const String sky = "assets/icons/sky.png";
+  static const String romo = "assets/icons/romo.png";
+  static const String kayak = "assets/icons/kayak.png";
+  static const String expedia = "assets/icons/expedia.jpg";
 }

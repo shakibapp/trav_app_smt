@@ -1,109 +1,4 @@
-// import 'dart:convert';
 
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:hamishphipps/app/core/constants/app_toast.dart';
-// import 'package:hamishphipps/app/core/data/network/endpoints.dart';
-// import 'package:hamishphipps/app/core/data/network/netconfig.dart';
-// import '../../../../routes/app_routes.dart';
-
-// class SignupController extends GetxController {
-//   final networkConfig = NetworkConfigV1.instance;
-//   final fullNameController = TextEditingController();
-//   final emailController = TextEditingController();
-//   final passwordController = TextEditingController();
-//   final phoneController = TextEditingController();
-//   final formKey = GlobalKey<FormState>();
-
-//   final isPasswordVisible = false.obs;
-//   final isTermsAgreed = false.obs;
-
-//   void togglePasswordVisibility() {
-//     isPasswordVisible.value = !isPasswordVisible.value;
-//   }
-
-//   void toggleTermsAgreement() {
-//     isTermsAgreed.value = !isTermsAgreed.value;
-//   }
-
-//   String? validateFullName(String? value) {
-//     if (value == null || value.isEmpty) {
-//       return 'Full name is required';
-//     }
-//     if (value.length < 3) {
-//       return 'Full name must be at least 3 characters';
-//     }
-//     return null;
-//   }
-
-//   String? validateEmail(String? value) {
-//     if (value == null || value.isEmpty) {
-//       return 'Email is required';
-//     }
-//     final emailRegex = RegExp(
-//       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-//     );
-//     if (!emailRegex.hasMatch(value)) {
-//       return 'Enter a valid email';
-//     }
-//     return null;
-//   }
-
-//   String? validatePassword(String? value) {
-//     if (value == null || value.isEmpty) {
-//       return 'Password is required';
-//     }
-//     if (value.length < 8) {
-//       return 'Password must be at least 8 characters';
-//     }
-//     return null;
-//   }
-
-// final RxBool isSignupLoading = false.obs;
-//   Future<void> onSignupPressed()async {
-//     try {
-//       isSignupLoading.value = true;
-//       if (!formKey.currentState!.validate()) {
-//         return;
-//       }
-//       if (!isTermsAgreed.value) {
-//         AppToast.showError('You must agree to the terms and conditions');
-//         return;
-//       }
-//       final Map<String, dynamic> jsonBody = {
-//         "fullName": fullNameController.text.trim(),
-//         "email": emailController.text.trim(),
-//         "phoneNumber":phoneController.text.trim()??"01233211234",
-//         "password": passwordController.text.trim(),
-//       };
-//       final response = await networkConfig.ApiRequestHandler(
-//         RequestMethod.POST,
-//         Urls.register,
-//         jsonEncode(jsonBody),
-//       );
-//       if (response != null && response['success'] == true) {
-//        AppToast.showSuccess(response['message'] ?? 'Signup successful');
-//        Get.offAllNamed(AppRoutes.LOGIN);
-//       } else {
-//        AppToast.showError(response['message'] ?? 'Signup failed');
-//       }
-//     } catch (e) {
-//      AppToast.showError('An error occurred. Please try again.');
-//     }finally{
-//       isSignupLoading.value = false;
-//     }
-    
-//   }
-
-//   @override
-//   void onClose() {
-//     fullNameController.dispose();
-//     emailController.dispose();
-//     passwordController.dispose();
-//     phoneController.dispose();
-//     super.onClose();
-//   }
-// }
 
 import 'dart:convert';
 
@@ -184,22 +79,10 @@ class SignupController extends GetxController {
     if (value.length < 8) {
       return 'Password must be at least 8 characters';
     }
-    // Optional: Add stronger password validation
-    // if (!_isStrongPassword(value)) {
-    //   return 'Password must contain letters, numbers, and special characters';
-    // }
+
     return null;
   }
 
-  // bool _isStrongPassword(String password) {
-  //   // At least one uppercase, one lowercase, one number, and one special character
-  //   final hasUppercase = RegExp(r'[A-Z]').hasMatch(password);
-  //   final hasLowercase = RegExp(r'[a-z]').hasMatch(password);
-  //   final hasNumbers = RegExp(r'[0-9]').hasMatch(password);
-  //   // final hasSpecialChar = RegExp(r'[!@#$%^&*()_+\-=\[\]{};:\'",.<>?/\\|`~]').hasMatch(password);
-
-  //   return (hasUppercase && hasLowercase && hasNumbers);
-  // }
 
   Future<void> onSignupPressed() async {
     try {
@@ -225,11 +108,7 @@ class SignupController extends GetxController {
         "password": passwordController.text.trim(),
       };
 
-      // Add phone number only if provided
-      final phoneNumber = phoneController.text.trim();
-      if (phoneNumber.isNotEmpty) {
-        jsonBody["phoneNumber"] = phoneNumber;
-      }
+      
 
       // Make API request
       final response = await networkConfig.ApiRequestHandler(

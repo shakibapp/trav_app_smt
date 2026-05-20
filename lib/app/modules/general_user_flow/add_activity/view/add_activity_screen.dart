@@ -34,7 +34,7 @@ class AddActivityView extends StatelessWidget {
         ),
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(),
+          child: backButton(onTap: ()=>Get.back()),
         ),
         elevation: 0,
         backgroundColor: AppColors.bgColor,

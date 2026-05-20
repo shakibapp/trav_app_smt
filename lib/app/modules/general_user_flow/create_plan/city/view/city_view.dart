@@ -29,7 +29,7 @@ class CityViewScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  backButton(),
+                  backButton(onTap: () => Get.back()),
 
                   const SizedBox(height: 16),
 

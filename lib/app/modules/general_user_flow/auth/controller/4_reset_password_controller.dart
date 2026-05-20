@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_toast.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/routes/app_routes.dart';
-
 
 class ResetPasswordController extends GetxController {
   final networkConfig = NetworkConfigV1.instance;
@@ -44,15 +45,15 @@ class ResetPasswordController extends GetxController {
     return null;
   }
 
-final RxBool isResetLoading = false.obs;
-   Future<void> onResetPassword(String email) async {
+  final RxBool isResetLoading = false.obs;
+  Future<void> onResetPassword(String email) async {
     if (!formKey.currentState!.validate()) {
       return;
     }
     try {
       isResetLoading.value = true;
-     
-    final response =await networkConfig.ApiRequestHandler(
+
+      final response = await networkConfig.ApiRequestHandler(
         RequestMethod.POST,
         Urls.resetPassword,
         {
@@ -61,20 +62,24 @@ final RxBool isResetLoading = false.obs;
         },
       );
       if (response != null && response['success'] == true) {
-       Get.offAllNamed(AppRoutes.LOGIN);
-        AppToast.showSuccess(response['message'] ?? 'Password reset successfully');
+        email.isEmpty;
+        confirmPasswordController.clear();
+
+        AppToast.showSuccess(
+            response['message'] ?? 'Password reset successfully');
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.offAllNamed(AppRoutes.LOGIN);
+        });
       } else {
         AppToast.showError(response['message'] ?? 'Failed to reset password');
         return;
       }
-    
     } catch (e) {
-      // Handle error (e.g., show error message)
+      log("Reset Password error ${e.toString()}");
     } finally {
       isResetLoading.value = false;
     }
   }
- 
 
   @override
   void onClose() {

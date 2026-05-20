@@ -12,7 +12,6 @@ import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 
-
 class TripDetailsController extends GetxController {
   final networkConfig = NetworkConfigV1.instance;
   // Observables
@@ -23,7 +22,6 @@ class TripDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-   
   }
 
   //get single trip data
@@ -50,25 +48,28 @@ class TripDetailsController extends GetxController {
     }
   }
 
-  //Optimize your route 
+  //Optimize your route
   final RxBool showOptimizeCard = true.obs;
-  void dismissOptimizeCard(){
-    showOptimizeCard.value =false;
+  void dismissOptimizeCard() {
+    showOptimizeCard.value = false;
   }
-  final RxBool isOptimizeLoading= false.obs;
-  Future<void>getOptimize(String tripId)async{
-    try{
-      isOptimizeLoading.value =true;
-      final response = await networkConfig.ApiRequestHandler(RequestMethod.GET, "${Urls.baseUrl}/ai/optimize-route/$tripId", {},is_auth: true);
-      if(response != null && response["success"]==true){
+
+  final RxBool isOptimizeLoading = false.obs;
+  Future<void> getOptimize(String tripId) async {
+    try {
+      isOptimizeLoading.value = true;
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.GET, "${Urls.baseUrl}/ai/optimize-route/$tripId", {},
+          is_auth: true);
+      if (response != null && response["success"] == true) {
         await getSingleTripData(tripId);
         log("Optimize route success${response["message"]}");
-      }else{
+      } else {
         log("Optimize Route failed ${response["message"]}");
       }
-    }catch(e){
+    } catch (e) {
       log("Optimize Route Error ${e.toString()}");
-    }finally{
+    } finally {
       isOptimizeLoading.value = false;
     }
   }
@@ -194,6 +195,29 @@ class TripDetailsController extends GetxController {
     }
   }
 
+  //Reminders ---
+  final RxBool isReminderLoading = false.obs;
+  Future<void> reminderStatus(String tripId) async {
+    try {
+      isReminderLoading.value = true;
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.PUT,
+          "${Urls.baseUrl}/trips/remainder/$tripId/status",
+          jsonEncode({"status": "Checked"}),
+          is_auth: true);
+      if (response != null && response["success"] == true) {
+        AppSnackbar.success("${response["message"]}");
+      } else {
+        log("Reminder Status failed --${response["message"]}");
+        AppSnackbar.failed("${response["message"]}");
+      }
+    } catch (e) {
+      log("reminder status error --${e.toString()}");
+    } finally {
+      isReminderLoading.value = false;
+    }
+  }
+
   /// Main method — merges existing reminder data with new values before sending
   Future<void> changePriority(
     String reminderId, {
@@ -250,9 +274,7 @@ class TripDetailsController extends GetxController {
     }
   }
 
-
-
-void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
+  void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
     final countryController = TextEditingController(
       text: reminder.passportCountry ?? '',
     );
@@ -838,10 +860,4 @@ void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
       ),
     );
   }
-
-
-
-
-
-
 }

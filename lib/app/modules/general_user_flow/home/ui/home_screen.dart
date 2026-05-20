@@ -389,18 +389,19 @@ class HomeScreen extends GetWidget<HomeController> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        width: 100,
+                                        width: 120,
                                         height: 100,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         child: AppNetworkImage(
+                                          fit: BoxFit.cover,
                                           height: 100,
-                                          width: 100,
+                                          width: 120,
                                           imageUrl:
                                               itinerary.image?.isNotEmpty ??
                                                       false
@@ -617,7 +618,7 @@ class HomeScreen extends GetWidget<HomeController> {
                           height: 40,
                           width: 40,
                           borderRadius: BorderRadius.circular(100),
-                          imageUrl: user!.profileImage.toString(),
+                          imageUrl: user!.profileImage ?? "",
                         ),
                       ),
                     ),

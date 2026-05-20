@@ -8,7 +8,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/style/global_text_style.dart';
 import '../../../../core/widgets/custom_button_widget.dart';
 import '../controller/1_preferences_controller.dart';
-import '4_your_interests.dart';
+
 
 class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
   const PreferencesTravelDetailsScreen({super.key});
@@ -22,7 +22,7 @@ class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(),
+          child: backButton(onTap: ()=>Get.back()),
         ),
       ),
       body: SafeArea(

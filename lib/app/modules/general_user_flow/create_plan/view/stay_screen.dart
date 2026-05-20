@@ -62,7 +62,11 @@ class StayView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Back Button
-              backButton(),
+              backButton(onTap: (){
+                
+                  Get.back();
+                
+              }),
               SizedBox(height: 10),
 
               Text(

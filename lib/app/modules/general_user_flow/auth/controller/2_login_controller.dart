@@ -8,6 +8,8 @@ import 'package:hamishphipps/app/core/constants/app_toast.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/core/services/local_data.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/auth/ui/6_verify_otp.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/preferences/ui/1_search_place.dart';
 import 'package:hamishphipps/app/routes/app_routes.dart';
 
 import '../../../parent_flow/nav_bar/ui/nav_bar_screen.dart';
@@ -61,17 +63,16 @@ class LoginController extends GetxController {
         "email": emailController.text.trim(),
         "password": passwordController.text.trim(),
       };
-      final response =
-          await networkConfig.ApiRequestHandler(
-            RequestMethod.POST,
-            Urls.login,
-            jsonEncode(jsonBody),
-            is_auth: false,
-          ).timeout(
-            const Duration(seconds: 30),
-            onTimeout: () =>
-                throw TimeoutException('Request timed out. Please try again.'),
-          );
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.POST,
+        Urls.login,
+        jsonEncode(jsonBody),
+        is_auth: false,
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () =>
+            throw TimeoutException('Request timed out. Please try again.'),
+      );
       if (response != null && response["success"] == true) {
         final token = response["data"]["token"];
         final role = response["data"]["role"];
@@ -80,6 +81,10 @@ class LoginController extends GetxController {
 
         if (role == "PARENT") {
           if (isEmailVerify == false) {
+            Get.offAll(() => VerifyOtpScreen(
+                  email: emailController.text.trim(),
+                  isForPasswordReset: false,
+                ));
             AppToast.showError('Please verify your email before logging in.');
             return;
           } else {
@@ -90,22 +95,26 @@ class LoginController extends GetxController {
             await localService.setToken(token);
             await localService.setRole(role);
 
-            Get.offAll(() =>  NavBarScreen());
+            Get.offAll(() => NavBarScreen());
 
             log("Login successful. Token: $token, Role: $role");
           }
         } else if (role == "USER") {
           if (isEmailVerify == false) {
             AppToast.showError('Please verify your email before logging in.');
+            Get.offAll(() => VerifyOtpScreen(
+                  email: emailController.text.trim(),
+                  isForPasswordReset: false,
+                ));
             return;
-          }else if(isProfileComplete == false){
+          } else if (isProfileComplete == false) {
             AppSnackbar.success("Parent Login Success");
             emailController.clear();
             passwordController.clear();
             await localService.setToken(token);
             await localService.setRole(role);
+            Get.offAll(() => PreferencesSearchPlaceScreen());
             log("Login successful profile incomplete. Token: $token, Role: $role");
-
           } else {
             AppToast.showSuccess('Login successful');
             await localService.setToken(token);
@@ -116,9 +125,6 @@ class LoginController extends GetxController {
             log("Login successful. Token: $token, Role: $role");
           }
         }
-      } else {
-        log(" Login failed: ${response["message"]}");
-        // AppToast.showError(response["message"]);
       }
     } catch (w) {
       log(" Login error: $w");
@@ -127,10 +133,8 @@ class LoginController extends GetxController {
     }
   }
 
- @override
-void onClose() {
-  emailController.dispose();
-  passwordController.dispose();
-  super.onClose();
-}
+  @override
+  void onClose() {
+    super.onClose();
+  }
 }
