@@ -26,6 +26,7 @@ class TripDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.getSingleTripData(tripId);
+    controller.getVisaSummery(tripId);
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SafeArea(

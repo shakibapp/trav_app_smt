@@ -916,7 +916,7 @@ class HomeScreen extends GetWidget<HomeController> {
                             await controller.inviteParentByEmail(tripId);
                             Get.back();
                           } else {
-                            Get.snackbar("Error", "No trip selected to share",
+                            Get.snackbar("Failed", "No trip selected to share",
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                           }

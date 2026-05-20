@@ -52,35 +52,12 @@ class TravelTabScreen extends StatelessWidget {
             return _buildTransportCard(transport);
           },
         ),
-        const Text(
+         Text(
           'Book With',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-        BookingCard(
-          title: "Skyscanner",
-          subtitle: "Millions of cheap flights. One simple search.",
-          logoPath: AppIcons.sky,
-          onTap: () {
-            launchBookingUrl("https://www.hostelworld.com/");
-          },
-        ),
-        BookingCard(
-          title: "Roome2Rio",
-          subtitle: "Discover how to get anywhere",
-          logoPath: AppIcons.romo,
-          onTap: () {
-            launchBookingUrl("https://www.rome2rio.com/");
-          },
-        ),
-        BookingCard(
-          title: "KAYAK",
-          subtitle: "Compare flight deals from 100s of sites",
-          logoPath: AppIcons.kayak,
-          onTap: () {
-            launchBookingUrl("https://www.kayak.co.in/?ispredir=true");
-          },
-        ),
+       buildBookingPlatform(controller.itineraryOverview.value.transportation),
       ],
     );
   }
@@ -274,4 +251,94 @@ class TravelTabScreen extends StatelessWidget {
         ? location.substring(0, 3).toUpperCase()
         : location.toUpperCase();
   }
+
+
+  IconData getAccommodationIcon(String? type) {
+    switch (type) {
+      case "Hotel":
+        return Icons.hotel;
+
+      case "Hostel":
+        return Icons.bed;
+
+      case "Airbnb":
+        return Icons.airplane_ticket_outlined;
+
+      case "Guesthouse":
+        return Icons.house;
+
+      case "Resort":
+        return Icons.beach_access;
+
+      case "Camping":
+        return Icons.forest;
+
+      case "Other":
+        return Icons.apartment;
+
+      case "Not_Sure_Yet":
+        return Icons.help_outline;
+
+      default:
+        return Icons.location_city;
+    }
+  }
+
+ Widget buildBookingPlatform(String? type) {
+  switch (type) {
+    case "Train":
+    case "Bus":
+    case "Car Rental":
+      return  BookingCard(
+          title: "Rome2Rio",
+          subtitle: "Discover how to get anywhere",
+          logoPath: AppIcons.romo,
+          onTap: () {
+            launchBookingUrl("https://www.rome2rio.com/");
+          },
+        );
+
+    case "Flight":
+      return BookingCard(
+          title: "Skyscanner",
+          subtitle: "Millions of cheap flights. One simple search.",
+          logoPath: AppIcons.sky,
+          onTap: () {
+            launchBookingUrl("https://www.hostelworld.com/");
+          },
+        );
+
+    
+    case "Not_Sure_Yet":
+      return Column(
+        children: [
+          BookingCard(
+          title: "Skyscanner",
+          subtitle: "Millions of cheap flights. One simple search.",
+          logoPath: AppIcons.sky,
+          onTap: () {
+            launchBookingUrl("https://www.hostelworld.com/");
+          },
+        ),
+        BookingCard(
+          title: "Roome2Rio",
+          subtitle: "Discover how to get anywhere",
+          logoPath: AppIcons.romo,
+          onTap: () {
+            launchBookingUrl("https://www.rome2rio.com/");
+          },
+        ),
+        
+        ],
+      );
+
+    default:
+      return BookingCard(
+        title: "Booking.com",
+        subtitle: "Great for hotels, resorts, and flexible options",
+        logoPath: AppIcons.booking,
+        onTap: () => launchBookingUrl("https://www.booking.com/"),
+      );
+  }
+}
 }

@@ -53,22 +53,18 @@ class StayTabScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final accommodation =
                   controller.itineraryOverview.value.accommodations![index];
-              return Obx(
-                () => Padding(
+              return Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: GestureDetector(
                     onTap: () {
-                      controller.selectedAccommodationIndex.value = index;
+                     
                     },
                     child: Container(
                       padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(
-                          color: controller.selectedAccommodationIndex.value ==
-                                  index
-                              ? AppColors.authOrange
-                              : Colors.transparent,
+                          color:  Colors.transparent,
                           width: 2,
                         ),
                       ),
@@ -85,38 +81,23 @@ class StayTabScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              );
+                );
             }),
-        Obx(() {
-          final accommodations =
-              controller.itineraryOverview.value.accommodations;
-          if (accommodations == null || accommodations.isEmpty) {
-            return const SizedBox.shrink();
-          }
-
-          final index = controller.selectedAccommodationIndex.value;
-          if (index < 0 || index >= accommodations.length) {
-            return const SizedBox.shrink();
-          }
-
-          final selectedAccommodation = accommodations[index];
-
-          return Column(
+             Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+               Text(
                 'Book With',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-                child: buildBookingPlatform(selectedAccommodation.type),
+                child: buildBookingPlatform(controller.itineraryOverview.value.accommodation),
               ),
             ],
-          );
-        }),
+          ),
+       
       ],
     );
   }
@@ -152,38 +133,66 @@ class StayTabScreen extends StatelessWidget {
     }
   }
 
-  Widget buildBookingPlatform(String? type) {
-    switch (type) {
-      case "Hotel":
-      case "Hostel":
-        return BookingCard(
-          title: "Hostelworld",
-          subtitle: "Best for budget-friendly hostels and solo travelers",
-          logoPath: AppIcons.hostelWorld,
-          onTap: () {
-            launchBookingUrl("https://www.hostelworld.com/");
-          },
-        );
+ Widget buildBookingPlatform(String? type) {
+  switch (type) {
+    case "Hotel":
+    case "Resort":
+      return BookingCard(
+        title: "Booking.com",
+        subtitle: "Great for hotels, resorts, and flexible options",
+        logoPath: AppIcons.booking,
+        onTap: () => launchBookingUrl("https://www.booking.com/"),
+      );
 
-      case "Airbnb":
-        return BookingCard(
-          title: "Airbnb",
-          subtitle: "Perfect for unique stays and local experiences",
-          logoPath: AppIcons.airb,
-          onTap: () {
-            launchBookingUrl("https://www.airbnb.com/");
-          },
-        );
+    case "Airbnb":
+      return BookingCard(
+        title: "Airbnb",
+        subtitle: "Perfect for unique stays and local experiences",
+        logoPath: AppIcons.airb,
+        onTap: () => launchBookingUrl("https://www.airbnb.com/"),
+      );
 
-      default:
-        return BookingCard(
-          title: "Booking.com",
-          subtitle: "Great for hotels, resorts, and flexible options",
-          logoPath: AppIcons.booking,
-          onTap: () {
-            launchBookingUrl("https://www.booking.com/");
-          },
-        );
-    }
+    case "Hostel":
+      return BookingCard(
+        title: "Hostelworld",
+        subtitle: "Best for budget-friendly hostels and solo travelers",
+        logoPath: AppIcons.hostelWorld,
+        onTap: () => launchBookingUrl("https://www.hostelworld.com/"),
+      );
+
+    case "Not_Sure_Yet":
+      return Column(
+        children: [
+          BookingCard(
+            title: "Booking.com",
+            subtitle: "Great for hotels, resorts, and flexible options",
+            logoPath: AppIcons.booking,
+            onTap: () => launchBookingUrl("https://www.booking.com/"),
+          ),
+          const SizedBox(height: 12),
+          BookingCard(
+            title: "Airbnb",
+            subtitle: "Perfect for unique stays and local experiences",
+            logoPath: AppIcons.airb,
+            onTap: () => launchBookingUrl("https://www.airbnb.com/"),
+          ),
+          const SizedBox(height: 12),
+          BookingCard(
+            title: "Hostelworld",
+            subtitle: "Best for budget-friendly hostels and solo travelers",
+            logoPath: AppIcons.hostelWorld,
+            onTap: () => launchBookingUrl("https://www.hostelworld.com/"),
+          ),
+        ],
+      );
+
+    default:
+      return BookingCard(
+        title: "Booking.com",
+        subtitle: "Great for hotels, resorts, and flexible options",
+        logoPath: AppIcons.booking,
+        onTap: () => launchBookingUrl("https://www.booking.com/"),
+      );
   }
+}
 }

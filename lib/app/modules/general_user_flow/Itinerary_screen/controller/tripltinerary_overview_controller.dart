@@ -134,7 +134,7 @@ class ItineraryDetailsController extends GetxController {
   }
 
   //stay ---
-  RxInt selectedAccommodationIndex = 0.obs;
+
 
   //create activity with Ai
   final RxBool isAlCreateActivityLoading = false.obs;

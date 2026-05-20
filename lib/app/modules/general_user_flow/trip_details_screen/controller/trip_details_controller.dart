@@ -6,23 +6,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
-
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/visa_ai_model.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/widget/passport_bottom_sheet.dart';
 
-class TripDetailsController extends GetxController {
+class TripDetailsController extends GetxController implements PriorityReminderHandler{
   final networkConfig = NetworkConfigV1.instance;
   // Observables
   final isLoading = false.obs;
   final selectedTabIndex = 0.obs;
   final expandedStopIndex = (-1).obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+
 
   //get single trip data
   final Rx<SingleTripDetailsModel> singleTripData =
@@ -72,6 +71,29 @@ class TripDetailsController extends GetxController {
     } finally {
       isOptimizeLoading.value = false;
     }
+  }
+
+  //visa summery with AI
+  final Rx<VisaAiModel> visaAiSummerData = VisaAiModel().obs;
+
+  final RxBool isVisaSummeryLoading = false.obs;
+  Future<void> getVisaSummery(String tripId)async{
+    try{
+      isVisaSummeryLoading.value = true;
+      final response = await networkConfig.ApiRequestHandler(RequestMethod.GET, "${Urls.baseUrl}/ai/visa-summary/$tripId", {},is_auth: true);
+      if(response != null && response["success"]==true){
+        visaAiSummerData.value = VisaAiModel.fromJson(response["data"]);
+        log("get Visa Ai Summery data success--${response["message"]}");
+
+      }else{
+        log("get Visa Ai summery failed ---${response["message"]}");
+      }
+    }catch(e){
+      log("Get visa Ai error --${e.toString()}");
+    }finally{
+      isVisaSummeryLoading.value = false;
+    }
+  
   }
 
   void toggleStop(int index) {
@@ -260,604 +282,23 @@ class TripDetailsController extends GetxController {
   }
 
   // Bottom Sheet Methods
-  void showPriorityReminderBottomSheet(
-      PriorityRemainder reminder, String type) {
-    final state = getReminderState(reminder);
-    startEditingReminder(reminder.id ?? '');
-
-    if (type == 'Visa') {
-      _showVisaBottomSheet(reminder, state);
-    } else if (type == 'Travel Insurance') {
-      _showTravelInsuranceBottomSheet(reminder, state);
-    } else {
-      _showPassportBottomSheet(reminder, state);
-    }
+  // trip_details_controller.dart এ এই 3টা method replace করো
+void showPriorityReminderBottomSheet(PriorityRemainder reminder, String type) {
+  final state = getReminderState(reminder);
+  Widget sheet;
+  if (type == 'Visa') {
+    sheet = VisaBottomSheet(
+      reminder: reminder,
+      controller: this,
+      showAiCard: true, // HomeController এ explicitly false
+    );
+  } else if (type == 'Travel Insurance') {
+    sheet = TravelInsuranceBottomSheet(reminder: reminder, controller: this);
+  } else {
+    sheet = PassportBottomSheet(reminder: reminder, state: state, controller: this);
   }
+  Get.bottomSheet(sheet, isScrollControlled: true);
+}
 
-  void _showPassportBottomSheet(PriorityRemainder reminder, String state) {
-    final countryController = TextEditingController(
-      text: reminder.passportCountry ?? '',
-    );
-    final expiryController = TextEditingController(
-      text: reminder.passportExpiry != null &&
-              reminder.passportExpiry!.year > 1900
-          ? reminder.passportExpiry!.toIso8601String().split('T')[0]
-          : '',
-    );
 
-    Get.bottomSheet(
-      Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFffe7d9),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.document_scanner,
-                            color: AppColors.authOrange,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Passport',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            Text(
-                              state == 'add'
-                                  ? 'Add your passport details'
-                                  : state == 'update'
-                                      ? 'Update passport details'
-                                      : 'Passport verified',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: const Icon(Icons.close, size: 24),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              // Content
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Issuing Country',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      controller: countryController,
-                      onChanged: (value) =>
-                          updateReminderField('passportCountry', value),
-                      decoration: InputDecoration(
-                        hintText: 'e.g. Bangladesh',
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Passport Expiry Date',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      controller: expiryController,
-                      readOnly: true,
-                      onTap: () async {
-                        final selectedDate = await showDatePicker(
-                          context: Get.context!,
-                          initialDate: reminder.passportExpiry != null &&
-                                  reminder.passportExpiry!.year > 1900
-                              ? reminder.passportExpiry!
-                              : DateTime.now().add(const Duration(days: 1)),
-                          firstDate: DateTime.now(),
-                          lastDate:
-                              DateTime.now().add(const Duration(days: 3650)),
-                        );
-                        if (selectedDate != null) {
-                          expiryController.text =
-                              selectedDate.toIso8601String().split('T')[0];
-                        }
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Select expiry date',
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: const Icon(Icons.calendar_today),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    // Buttons
-                    Row(
-                      children: [
-                        Expanded(
-                          child: appButton(
-                            borderColor: AppColors.authOrange,
-                            bgColor: Colors.transparent,
-                            onTap: () => Get.back(),
-                            name: "Cancel",
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Obx(
-                            () => appButton(
-                              textColor: Colors.white,
-                              onTap: () {
-                                if (isPriorityLoading.value) return;
-                                if (countryController.text.isEmpty ||
-                                    expiryController.text.isEmpty) {
-                                  AppSnackbar.failed('Please fill all fields');
-                                  return;
-                                }
-                                changePriority(
-                                  reminder.id ?? '',
-                                  passportCountry: countryController.text,
-                                  passportExpiry: expiryController.text,
-                                  previewOnly: false,
-                                );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => Get.back(),
-                                );
-                              },
-                              name: isPriorityLoading.value
-                                  ? "Saving..."
-                                  : "Save",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      isScrollControlled: true,
-    );
-  }
-
-  void _showVisaBottomSheet(PriorityRemainder reminder, String state) {
-    final isVisaConfirmed = (reminder.isVisaConfirmed ?? false).obs;
-    final noVisaRequired = (reminder.noVisaRequired ?? false).obs;
-    final needsAttention = (reminder.needsAttention ?? false).obs;
-    final notesController =
-        TextEditingController(text: reminder.visaNotes ?? '');
-
-    Get.bottomSheet(
-      Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFffe7d9),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.badge,
-                            color: AppColors.authOrange,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        const Text(
-                          'Visa',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: const Icon(Icons.close, size: 24),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              // Content
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Have you checked visa requirements?',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'Visa Confirmed/ Obtained',
-                        subtitle:
-                            'I have the necessary visa(s) or have confirmed i dont need one',
-                        isSelected: isVisaConfirmed.value,
-                        onTap: () => isVisaConfirmed.toggle(),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'No Visa Required',
-                        subtitle:
-                            'My passport allows visa-free entry to all destinations',
-                        isSelected: noVisaRequired.value,
-                        onTap: () => noVisaRequired.toggle(),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'Needs Attention',
-                        subtitle:
-                            'I still need to apply for or check visa requirements',
-                        isSelected: needsAttention.value,
-                        onTap: () => needsAttention.toggle(),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Notes',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      controller: notesController,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'describe',
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: appButton(
-                            borderColor: AppColors.authOrange,
-                            bgColor: Colors.transparent,
-                            onTap: () => Get.back(),
-                            name: "Cancel",
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Obx(
-                            () => appButton(
-                              textColor: Colors.white,
-                              onTap: () {
-                                if (isPriorityLoading.value) return;
-                                changePriority(
-                                  reminder.id ?? '',
-                                  isVisaConfirmed: isVisaConfirmed.value,
-                                  noVisaRequired: noVisaRequired.value,
-                                  needsAttention: needsAttention.value,
-                                  visaNotes: notesController.text,
-                                  previewOnly: false,
-                                );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => Get.back(),
-                                );
-                              },
-                              name: isPriorityLoading.value
-                                  ? "Saving..."
-                                  : "Mark as Reviewed",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      isScrollControlled: true,
-    );
-  }
-
-  void _showTravelInsuranceBottomSheet(
-      PriorityRemainder reminder, String state) {
-    final hasInsurance = (reminder.haveInsurance ?? false).obs;
-
-    Get.bottomSheet(
-      Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFffe7d9),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.shield,
-                            color: AppColors.authOrange,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        const Text(
-                          'Travel Insurance',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: const Icon(Icons.close, size: 24),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              // Content
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Do you have a travel insurance?',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'Yes, I have insurance',
-                        subtitle:
-                            'I have travel insurance coverage for this trip',
-                        isSelected: hasInsurance.value,
-                        onTap: () => hasInsurance.value = true,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => _buildToggleOption(
-                        title: 'Not yet/ Need to get',
-                        subtitle: 'I still need to purchase travel insurance',
-                        isSelected: !hasInsurance.value,
-                        onTap: () => hasInsurance.value = false,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: appButton(
-                            borderColor: AppColors.authOrange,
-                            bgColor: Colors.transparent,
-                            onTap: () => Get.back(),
-                            name: "Cancel",
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Obx(
-                            () => appButton(
-                              textColor: Colors.white,
-                              onTap: () {
-                                if (isPriorityLoading.value) return;
-                                changePriority(
-                                  reminder.id ?? '',
-                                  haveInsurance: hasInsurance.value,
-                                  previewOnly: false,
-                                );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => Get.back(),
-                                );
-                              },
-                              name: isPriorityLoading.value
-                                  ? "Saving..."
-                                  : "Save",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      isScrollControlled: true,
-    );
-  }
-
-  Widget _buildToggleOption({
-    required String title,
-    required String subtitle,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? AppColors.authOrange : Colors.transparent,
-            width: 2,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                SizedBox(
-                  width: 250.w,
-                  child: Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isSelected ? AppColors.authOrange : Colors.grey,
-                  width: 2,
-                ),
-                color: isSelected ? AppColors.authOrange : Colors.transparent,
-              ),
-              child: isSelected
-                  ? const Icon(Icons.check, size: 16, color: Colors.white)
-                  : null,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
