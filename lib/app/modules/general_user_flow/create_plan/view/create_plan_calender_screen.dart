@@ -139,15 +139,18 @@ class DatePickerView extends StatelessWidget {
           Row(
             children: [
               // Previous month button (disabled)
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey.shade100,
+              GestureDetector(
+                onTap: controller.previousMonth,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey.shade100,
+                  ),
+                  child: const Icon(Icons.chevron_left, color: Colors.grey),
                 ),
-                child: const Icon(Icons.chevron_left, color: Colors.grey),
               ),
               const SizedBox(width: 8),
 

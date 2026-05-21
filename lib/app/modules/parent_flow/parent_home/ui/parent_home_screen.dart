@@ -117,6 +117,7 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
             // Quick Actions
             Obx(() {
               final data = controller.parentHomeModel.value;
+
               return controller.isParentHomeLoading.value
                   ? _buildCardShimmer()
                   : Row(
@@ -125,17 +126,17 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
                         _buildActionCard(
                           icon: AppIcons.routeIcon,
                           title: "Location",
-                          subtitle: "${data.currentCity ?? ""}",
+                          subtitle: data.currentCity ?? "",
                         ),
                         _buildActionCard(
                           icon: AppIcons.airplane,
                           title: "Flight",
-                          subtitle: "${data.nextTransport!.label ?? ""}",
+                          subtitle: data.nextTransport?.label ?? "No Flight",
                         ),
                         _buildActionCard(
                           icon: AppIcons.hotel,
                           title: "Checked In",
-                          subtitle: "${data.nextTransport!.type ?? ""}",
+                          subtitle: data.nextTransport?.type ?? "Not Available",
                         ),
                       ],
                     );
@@ -325,6 +326,7 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
               icon,
               width: 24.w,
               height: 24.w,
+              color: Colors.black,
               errorBuilder: (c, e, s) => Icon(
                 Icons.location_on,
                 size: 24.sp,

@@ -14,6 +14,7 @@ import 'package:hamishphipps/app/modules/general_user_flow/home/ui/widgets/trip_
 import 'package:intl/intl.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/style/global_text_style.dart';
+import '../../../../routes/app_routes.dart';
 import '../../Itinerary_screen/view/tripItinerary_overview_screen.dart';
 import '../../create_plan/city/view/city_view.dart';
 import '../controller/home_controller.dart';
@@ -605,7 +606,7 @@ class HomeScreen extends GetWidget<HomeController> {
               Row(
                 children: [
                   GestureDetector(
-                    onTap: () => Get.to(CityViewScreen()),
+                    onTap: () => Get.toNamed(AppRoutes.PROFILE_ACCOUNT),
                     child: Container(
                       width: 44.w,
                       height: 44.w,

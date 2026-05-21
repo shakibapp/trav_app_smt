@@ -32,7 +32,7 @@ class AccommodationController extends GetxController {
   final selectedBookingPlatform = Rxn<String>();
   final selectedCurrency = Rxn<String>();
   final selectedPaymentStatus = Rxn<String>();
-  final numberOfGuests = RxInt(1);
+  final numberOfGuests = RxInt(0);
   final isFormValid = false.obs;
 
   // Form Key
@@ -128,7 +128,7 @@ class AccommodationController extends GetxController {
 
   // Set number of guests
   void setNumberOfGuests(int number) {
-    if (number > 0) {
+    if (number > 1) {
       numberOfGuests.value = number;
       numberOfGuestsController.text = number.toString();
       update();
@@ -173,6 +173,7 @@ class AccommodationController extends GetxController {
     }
     return null;
   }
+  
 
   // Validate total cost
   String? validateTotalCost(String? value) {
@@ -228,7 +229,7 @@ class AccommodationController extends GetxController {
         "currency": selectedCurrency.value,
         "totalCost": double.parse(totalCostController.text),
         "paymentStatus": selectedPaymentStatus.value,
-        "amountOwing": int.parse(amountOwingController.text),
+        "amountOwing": int.parse(amountOwingController.text)??0,
         "notes": notesController.text,
       };
       log("create accommodation input Data --${data}");
@@ -265,7 +266,7 @@ class AccommodationController extends GetxController {
     selectedBookingPlatform.value = 'HOSTELWORLD';
     selectedCurrency.value = 'EUR';
     selectedPaymentStatus.value = 'Still Owe';
-    numberOfGuests.value = 1;
+    numberOfGuests.value = 0;
     numberOfGuestsController.text = '1';
     isFormValid.value = false;
     formKey.currentState?.reset();

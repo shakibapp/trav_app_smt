@@ -26,7 +26,7 @@ class TripDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.getSingleTripData(tripId);
-    controller.getVisaSummery(tripId);
+
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SafeArea(
@@ -363,7 +363,7 @@ class TripDetailsScreen extends StatelessWidget {
                             loading: controller.isReminderLoading.value,
                             height: 30,
                             onTap: () async {
-                              await controller.reminderStatus(tripId);
+                              await controller.reminderStatus(data.id.toString());
                             },
                             name: "Dismiss",
                             bgColor: Color(0xFFf7ebe4),
@@ -376,7 +376,7 @@ class TripDetailsScreen extends StatelessWidget {
                             loading: controller.isReminderLoading.value,
                             height: 30,
                             onTap: () async {
-                              await controller.reminderStatus(tripId);
+                              await controller.reminderStatus(data.id.toString());
                             },
                             name: "Done",
                             bgColor: AppColors.authOrange,

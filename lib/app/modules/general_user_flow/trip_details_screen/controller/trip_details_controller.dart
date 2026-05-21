@@ -1,12 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hamishphipps/app/core/constants/app_button.dart';
-import 'package:hamishphipps/app/core/constants/app_colors.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
@@ -228,6 +223,7 @@ class TripDetailsController extends GetxController implements PriorityReminderHa
           jsonEncode({"status": "Checked"}),
           is_auth: true);
       if (response != null && response["success"] == true) {
+        singleTripData.value;
         AppSnackbar.success("${response["message"]}");
       } else {
         log("Reminder Status failed --${response["message"]}");

@@ -88,6 +88,15 @@ class CityController extends GetxController {
   }
 
   // ---------------- CITY MULTI SELECT ----------------
+  // void toggleCity(LocationModel city) {
+  //   final exists = selectedCities.any((e) => e.id == city.id);
+  //
+  //   if (exists) {
+  //     selectedCities.removeWhere((e) => e.id == city.id);
+  //   } else {
+  //     selectedCities.add(city);
+  //   }
+  // }
   void toggleCity(LocationModel city) {
     final exists = selectedCities.any((e) => e.id == city.id);
 
@@ -95,6 +104,21 @@ class CityController extends GetxController {
       selectedCities.removeWhere((e) => e.id == city.id);
     } else {
       selectedCities.add(city);
+
+      // ✅ AUTO SELECT REGION
+      final regionAlreadySelected = selectedRegions.any(
+            (r) => r.id == city.regionId,
+      );
+
+      if (!regionAlreadySelected) {
+        final region = allLocations.firstWhereOrNull(
+              (e) => e.id == city.regionId,
+        );
+
+        if (region != null) {
+          selectedRegions.add(region);
+        }
+      }
     }
   }
 

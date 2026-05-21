@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/routes/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_images.dart';
 import '../../../../core/style/global_text_style.dart';
@@ -152,7 +153,7 @@ class SignupScreen extends GetWidget<SignupController> {
                           child: GestureDetector(
                             onTap: () {
                               // Navigate to Terms of Service
-                              // Get.toNamed(AppRoutes.TERMS_OF_SERVICE);
+                               //Get.toNamed(AppRoutes.TERMS_OF_SERVICE);
                             },
                             child: Text(
                               'Terms of Service',

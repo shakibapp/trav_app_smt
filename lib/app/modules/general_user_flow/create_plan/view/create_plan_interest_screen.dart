@@ -23,7 +23,7 @@ class InterestView extends StatelessWidget {
           children: [
             SizedBox(height: 30.h),
             // Progress Bar & Back Button (Custom)
-            backButton(onTap: ()=>Get.back()),
+            backButton(onTap: () => Get.back()),
             SizedBox(height: 20),
             Text(
               "Your Interests",
@@ -57,6 +57,7 @@ class InterestView extends StatelessWidget {
             SizedBox(height: 20),
 
             // Grid of Interests
+
             Expanded(
               child: Obx(() {
                 return GridView.builder(

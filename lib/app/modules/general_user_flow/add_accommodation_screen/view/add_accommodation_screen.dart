@@ -5,6 +5,7 @@ import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/widgets/app_input_textfield.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/controller/add_accommodation_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
+import 'package:intl/intl.dart';
 
 class AddAccommodationView extends StatelessWidget {
   final String id;
@@ -76,10 +77,10 @@ class AddAccommodationView extends StatelessWidget {
               // Payment Status
               _buildPaymentStatusSection(),
               const SizedBox(height: 24),
-
-              // Amount Owing
               _buildAmountOwingSection(),
               const SizedBox(height: 24),
+
+
 
               // Notes
               _buildNotesSection(),
@@ -551,7 +552,7 @@ class AddAccommodationView extends StatelessWidget {
         const SizedBox(height: 8),
         AppInputTextField(
           controller: controller.amountOwingController,
-          hintText: '0.000',
+          hintText: '0.0',
           keyboardType: TextInputType.number,
           validator: controller.validateAmountOwing,
         ),
@@ -612,17 +613,45 @@ class AddAccommodationView extends StatelessWidget {
     );
   }
 
-  void _selectDate(BuildContext context, TextEditingController controller) {
-    showDatePicker(
+  void _selectDate(
+    BuildContext context,
+    TextEditingController textController,
+  ) async {
+    DateTime now = DateTime.now();
+
+    DateTime firstDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    );
+
+    DateTime initialDate = firstDate;
+
+    // Check-out date হলে check-in এর পরে start করবে
+    if (textController == controller.checkOutDateController &&
+        controller.checkInDateController.text.isNotEmpty) {
+      final checkInDate = DateFormat(
+        'dd/MM/yy',
+      ).parse(controller.checkInDateController.text);
+
+      firstDate = checkInDate.add(
+        const Duration(days: 1),
+      );
+
+      initialDate = firstDate;
+    }
+
+    final selectedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
+      initialDate: initialDate,
+      firstDate: firstDate,
       lastDate: DateTime(2030),
-    ).then((selectedDate) {
-      if (selectedDate != null) {
-        controller.text =
-            '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year.toString().substring(2)}';
-      }
-    });
+    );
+
+    if (selectedDate != null) {
+      textController.text = '${selectedDate.day.toString().padLeft(2, '0')}/'
+          '${selectedDate.month.toString().padLeft(2, '0')}/'
+          '${selectedDate.year.toString().substring(2)}';
+    }
   }
 }
