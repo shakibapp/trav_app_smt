@@ -1,3 +1,4 @@
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -73,7 +74,33 @@ class LoginController extends GetxController {
         onTimeout: () =>
             throw TimeoutException('Request timed out. Please try again.'),
       );
-      if (response != null && response["success"] == true) {
+
+      if (response == null) {
+        AppToast.showError('Something went wrong. Please try again.');
+        return;
+      }
+
+      if (response["success"] == false) {
+        final message =
+            response["message"] ?? 'Something went wrong. Please try again.';
+        final isEmailNotVerified = message
+            .toString()
+            .toLowerCase()
+            .contains("email not verified");
+
+        if (isEmailNotVerified) {
+          AppToast.showError(message);
+          Get.to(() => VerifyOtpScreen(
+                email: emailController.text.trim(),
+                isForPasswordReset: false,
+              ));
+        } else {
+          AppToast.showError(message);
+        }
+        return;
+      }
+
+      if (response["success"] == true) {
         final token = response["data"]["token"];
         final role = response["data"]["role"];
         bool isEmailVerify = response["data"]["emailVerified"] ?? false;
@@ -81,7 +108,8 @@ class LoginController extends GetxController {
 
         if (role == "PARENT") {
           if (isEmailVerify == false) {
-            Get.offAll(() => VerifyOtpScreen(
+            log("parent email --------otp");
+            Get.to(() => VerifyOtpScreen(
                   email: emailController.text.trim(),
                   isForPasswordReset: false,
                 ));
@@ -101,14 +129,15 @@ class LoginController extends GetxController {
           }
         } else if (role == "USER") {
           if (isEmailVerify == false) {
+            log("user email --------otp");
             AppToast.showError('Please verify your email before logging in.');
-            Get.offAll(() => VerifyOtpScreen(
+            Get.to(() => VerifyOtpScreen(
                   email: emailController.text.trim(),
                   isForPasswordReset: false,
                 ));
             return;
           } else if (isProfileComplete == false) {
-            AppSnackbar.success("Parent Login Success");
+            AppSnackbar.success("Login Success");
             emailController.clear();
             passwordController.clear();
             await localService.setToken(token);
@@ -126,15 +155,16 @@ class LoginController extends GetxController {
           }
         }
       }
+    } on TimeoutException catch (e) {
+      log("Login timeout: $e");
+      AppToast.showError('Request timed out. Please try again.');
     } catch (w) {
-      log(" Login error: $w");
+      log("Login error: $w");
+      AppToast.showError('An unexpected error occurred. Please try again.');
     } finally {
       isLoginLoading.value = false;
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+ 
 }

@@ -221,10 +221,7 @@ class _PassportBottomSheetState extends State<PassportBottomSheet> {
                         passportCountry: countryController.text,
                         passportExpiry: expiryController.text,
                       );
-                      Future.delayed(
-                        const Duration(milliseconds: 500),
-                        () => Get.back(),
-                      );
+                      
                     },
                     name: widget.controller.isPriorityLoading.value
                         ? "Saving..."
@@ -409,7 +406,7 @@ class _VisaBottomSheetState extends State<VisaBottomSheet> {
                     controller: notesController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'describe',
+                      hintText: 'Note..',
                       filled: true,
                       fillColor: Colors.grey.shade100,
                       border: OutlineInputBorder(
@@ -448,10 +445,7 @@ class _VisaBottomSheetState extends State<VisaBottomSheet> {
                                 needsAttention: selectedOption == 'attention',
                                 visaNotes: notesController.text,
                               );
-                              Future.delayed(
-                                const Duration(milliseconds: 500),
-                                () => Get.back(),
-                              );
+                              
                             },
                             name: widget.controller.isPriorityLoading.value
                                 ? "Saving..."
@@ -592,14 +586,14 @@ class _VisaAiSummaryCardState extends State<_VisaAiSummaryCard> {
             }
 
             // Loading state
-            if (widget.controller.isVisaSummeryLoading.value) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
+            // if (widget.controller.isVisaSummeryLoading.value) {
+            //   return const Center(
+            //     child: Padding(
+            //       padding: EdgeInsets.all(8.0),
+            //       child: CircularProgressIndicator(),
+            //     ),
+            //   );
+            // }
 
             final destinations =
                 widget.controller.visaAiSummerData.value.destinations ?? [];
@@ -774,10 +768,7 @@ class _TravelInsuranceBottomSheetState
                                 widget.reminder.id ?? '',
                                 haveInsurance: hasInsurance,
                               );
-                              Future.delayed(
-                                const Duration(milliseconds: 500),
-                                () => Get.back(),
-                              );
+                             
                             },
                             name: widget.controller.isPriorityLoading.value
                                 ? "Saving..."

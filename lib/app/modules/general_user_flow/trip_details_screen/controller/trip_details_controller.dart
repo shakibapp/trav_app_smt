@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/home/controller/home_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/visa_ai_model.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/widget/passport_bottom_sheet.dart';
 
-class TripDetailsController extends GetxController implements PriorityReminderHandler{
+class TripDetailsController extends GetxController
+    implements PriorityReminderHandler {
   final networkConfig = NetworkConfigV1.instance;
   // Observables
   final isLoading = false.obs;
   final selectedTabIndex = 0.obs;
   final expandedStopIndex = (-1).obs;
-
-
 
   //get single trip data
   final Rx<SingleTripDetailsModel> singleTripData =
@@ -72,23 +72,23 @@ class TripDetailsController extends GetxController implements PriorityReminderHa
   final Rx<VisaAiModel> visaAiSummerData = VisaAiModel().obs;
 
   final RxBool isVisaSummeryLoading = false.obs;
-  Future<void> getVisaSummery(String tripId)async{
-    try{
+  Future<void> getVisaSummery(String tripId) async {
+    try {
       isVisaSummeryLoading.value = true;
-      final response = await networkConfig.ApiRequestHandler(RequestMethod.GET, "${Urls.baseUrl}/ai/visa-summary/$tripId", {},is_auth: true);
-      if(response != null && response["success"]==true){
+      final response = await networkConfig.ApiRequestHandler(
+          RequestMethod.GET, "${Urls.baseUrl}/ai/visa-summary/$tripId", {},
+          is_auth: true);
+      if (response != null && response["success"] == true) {
         visaAiSummerData.value = VisaAiModel.fromJson(response["data"]);
         log("get Visa Ai Summery data success--${response["message"]}");
-
-      }else{
+      } else {
         log("get Visa Ai summery failed ---${response["message"]}");
       }
-    }catch(e){
+    } catch (e) {
       log("Get visa Ai error --${e.toString()}");
-    }finally{
+    } finally {
       isVisaSummeryLoading.value = false;
     }
-  
   }
 
   void toggleStop(int index) {
@@ -181,7 +181,7 @@ class TripDetailsController extends GetxController implements PriorityReminderHa
   }
 
   /// Send priority reminder update to the API
-  Future<void> _sendPriorityReminderUpdate(
+  Future<void> sendPriorityReminderUpdate(
     String reminderId,
     Map<String, dynamic> data,
   ) async {
@@ -197,6 +197,8 @@ class TripDetailsController extends GetxController implements PriorityReminderHa
 
       if (response != null && response["success"] == true) {
         AppSnackbar.success("${response["message"]}");
+        Navigator.pop(Get.context!);
+        
         log("Priority reminder updated successfully");
         updatedReminderFields.clear();
         await getSingleTripData(singleTripData.value.id ?? "");
@@ -274,27 +276,27 @@ class TripDetailsController extends GetxController implements PriorityReminderHa
       return;
     }
 
-    await _sendPriorityReminderUpdate(reminderId, payload);
+    await sendPriorityReminderUpdate(reminderId, payload);
   }
 
   // Bottom Sheet Methods
   // trip_details_controller.dart এ এই 3টা method replace করো
-void showPriorityReminderBottomSheet(PriorityRemainder reminder, String type) {
-  final state = getReminderState(reminder);
-  Widget sheet;
-  if (type == 'Visa') {
-    sheet = VisaBottomSheet(
-      reminder: reminder,
-      controller: this,
-      showAiCard: true, // HomeController এ explicitly false
-    );
-  } else if (type == 'Travel Insurance') {
-    sheet = TravelInsuranceBottomSheet(reminder: reminder, controller: this);
-  } else {
-    sheet = PassportBottomSheet(reminder: reminder, state: state, controller: this);
+  void showPriorityReminderBottomSheet(
+      PriorityRemainder reminder, String type) {
+    final state = getReminderState(reminder);
+    Widget sheet;
+    if (type == 'Visa') {
+      sheet = VisaBottomSheet(
+        reminder: reminder,
+        controller: this,
+        showAiCard: true, // HomeController এ explicitly false
+      );
+    } else if (type == 'Travel Insurance') {
+      sheet = TravelInsuranceBottomSheet(reminder: reminder, controller: this);
+    } else {
+      sheet = PassportBottomSheet(
+          reminder: reminder, state: state, controller: this);
+    }
+    Get.bottomSheet(sheet, isScrollControlled: true);
   }
-  Get.bottomSheet(sheet, isScrollControlled: true);
-}
-
-
 }

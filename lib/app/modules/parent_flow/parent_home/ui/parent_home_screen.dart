@@ -77,7 +77,7 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
                 children: [
                   Obx(() {
                     return Text(
-                      "Currently in ${controller.isParentHomeLoading.value ? "" : controller.parentHomeModel.value.currentCity ?? "N/A"}",
+                      "Currently in ${controller.isParentHomeLoading.value ? "" : controller.parentHomeModel.value.currentCity ?? "Awaiting check in"}",
                       style: globalTextStyle(
                         fontSize: 22.sp,
                         fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
                   }),
                   SizedBox(height: 4.h),
                   Obx(() {
-                    String formattedTime = "N/A";
+                    String formattedTime = "Awaiting check in";
 
                     if (!controller.isParentHomeLoading.value &&
                         controller.parentHomeModel.value.checkedInAt != null) {
@@ -98,7 +98,7 @@ class ParentHomeScreen extends GetView<ParentHomeController> {
 
                         formattedTime = DateFormat('h:mm a').format(date);
                       } catch (e) {
-                        formattedTime = "N/A";
+                        formattedTime = "Awaiting check in";
                       }
                     }
 

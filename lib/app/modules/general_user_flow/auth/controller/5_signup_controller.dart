@@ -120,7 +120,7 @@ class SignupController extends GetxController {
       if (response != null && response['success'] == true) {
         AppToast.showSuccess(response['message'] ?? 'Signup successful');
         // Navigate to OTP verification screen
-        Get.offAll(()=>VerifyOtpScreen(email: emailController.text.trim(),isForPasswordReset: false,));
+        Get.to(()=>VerifyOtpScreen(email: emailController.text.trim(),isForPasswordReset: false,));
       } else {
         AppToast.showError(response['message'] ?? 'Signup failed');
       }

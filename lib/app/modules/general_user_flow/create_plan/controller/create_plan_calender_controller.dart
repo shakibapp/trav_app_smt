@@ -22,9 +22,10 @@ class DatePickerController extends GetxController {
   // Selection mode: 'range' or 'multiple'
   final selectionMode = 'range'.obs;
 
-  // Get days in current month
-  late int daysInMonth;
-  late int firstWeekdayOfMonth;
+  // Track last tap time to prevent double-tap issues
+  DateTime? _lastTapTime;
+
+
 
   @override
   void onInit() {
@@ -41,10 +42,21 @@ class DatePickerController extends GetxController {
   }
 
   // Update calendar when month changes
+  // void updateCalendar() {
+  //   final month = currentMonth.value;
+  //   daysInMonth = DateTime(month.year, month.month + 1, 0).day;
+  //   firstWeekdayOfMonth = DateTime(month.year, month.month, 1).weekday % 7;
+  // }
+  final daysInMonth = 0.obs;
+  final firstWeekdayOfMonth = 0.obs;
   void updateCalendar() {
     final month = currentMonth.value;
-    daysInMonth = DateTime(month.year, month.month + 1, 0).day;
-    firstWeekdayOfMonth = DateTime(month.year, month.month, 1).weekday % 7;
+
+    daysInMonth.value =
+        DateTime(month.year, month.month + 1, 0).day;
+
+    firstWeekdayOfMonth.value =
+        DateTime(month.year, month.month, 1).weekday % 7;
   }
 
   // Get next month
@@ -146,6 +158,14 @@ class DatePickerController extends GetxController {
   //   }
   // }
   void selectDate(int day) {
+    final now = DateTime.now();
+    if (_lastTapTime != null &&
+        now.difference(_lastTapTime!).inMilliseconds < 300) {
+      // Ignore rapid double tap to prevent selection/unselection glitch
+      return;
+    }
+    _lastTapTime = now;
+
     final date = DateTime(
       currentMonth.value.year,
       currentMonth.value.month,
@@ -164,39 +184,43 @@ class DatePickerController extends GetxController {
     }
 
     if (selectionMode.value == 'range') {
-      // কিছুই select নেই → প্রথম date টা start এবং end দুটোই হবে (1 day)
+      // 1. Nothing is selected -> select as a 1-day range
       if (selectedStartDate.value == null) {
         selectedStartDate(date);
-        selectedEndDate(date); // same date → 1 day
+        selectedEndDate(date);
         selectedDates.clear();
         selectedDates.add(date);
         return;
       }
 
-      // Start date tap → সব unselect
-      if (_isSameDay(date, selectedStartDate.value!)) {
+      // 2. Tap on start date or end date -> clear selection completely
+      if (_isSameDay(date, selectedStartDate.value!) ||
+          (selectedEndDate.value != null && _isSameDay(date, selectedEndDate.value!))) {
         clearSelection();
         return;
       }
 
-      // End date tap → সব unselect
-      if (selectedEndDate.value != null &&
-          _isSameDay(date, selectedEndDate.value!)) {
-        clearSelection();
-        return;
-      }
-
-      // অন্য যেকোনো date tap → start fix থাকবে, এই date নতুন end হবে
+      // 3. Tapping a date before the start date -> reset selection to this new date
       if (date.isBefore(selectedStartDate.value!)) {
-        // Start এর আগের date select করলে → এটা নতুন start হবে, end আগেরটাই থাকবে
-        final oldStart = selectedStartDate.value!;
         selectedStartDate(date);
-        selectedEndDate(oldStart);
-      } else {
-        // Start এর পরের date → নতুন end
         selectedEndDate(date);
+        selectedDates.clear();
+        selectedDates.add(date);
+        return;
       }
-      _generateDateRange();
+
+      // 4. Tapping a date after the start date
+      if (_isSameDay(selectedStartDate.value!, selectedEndDate.value!)) {
+        // If it was a 1-day selection, set it as the new end date (generate range)
+        selectedEndDate(date);
+        _generateDateRange();
+      } else {
+        // If a range was already selected, reset selection to this new date
+        selectedStartDate(date);
+        selectedEndDate(date);
+        selectedDates.clear();
+        selectedDates.add(date);
+      }
     }
   }
 
@@ -430,5 +454,30 @@ class DatePickerController extends GetxController {
       'December',
     ];
     return months[month - 1];
+  }
+
+
+  void refreshCalendar() {
+    // reset all selected values
+    selectedStartDate.value = null;
+    selectedEndDate.value = null;
+
+    selectedDates.clear();
+
+    // current month এ ফিরিয়ে আনা
+    final now = DateTime.now();
+    currentMonth.value = DateTime(
+      now.year,
+      now.month,
+      1,
+    );
+
+    updateCalendar();
+
+    // force rebuild
+    selectedStartDate.refresh();
+    selectedEndDate.refresh();
+    selectedDates.refresh();
+    currentMonth.refresh();
   }
 }

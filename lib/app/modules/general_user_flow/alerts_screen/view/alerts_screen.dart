@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/alerts_screen/widget/alert_shimmer.dart';
 
 import '../controller/alert_controller.dart';
 import '../model/alerts_model.dart';
@@ -31,9 +32,8 @@ class AlertsView extends StatelessWidget {
         centerTitle: false,
         actions: [
           Obx(() {
-            final unreadCount = controller.alerts
-                .where((alert) => alert.read == false)
-                .length;
+            final unreadCount =
+                controller.alerts.where((alert) => alert.read == false).length;
             return IconButton(
               icon: controller.isNotificationReadLoading.value
                   ? const SizedBox(
@@ -44,8 +44,8 @@ class AlertsView extends StatelessWidget {
                   : const Icon(Icons.mark_email_read_outlined),
               onPressed:
                   unreadCount > 0 && !controller.isNotificationReadLoading.value
-                  ? controller.readNotification
-                  : null,
+                      ? controller.readNotification
+                      : null,
               tooltip: 'Mark all as read',
             );
           }),
@@ -54,7 +54,13 @@ class AlertsView extends StatelessWidget {
       body: Obx(() {
         if (controller.isNotificationLoading.value &&
             controller.alerts.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return AlertShimmerItem();
+            },
+          );
         }
 
         if (controller.alerts.isEmpty) {

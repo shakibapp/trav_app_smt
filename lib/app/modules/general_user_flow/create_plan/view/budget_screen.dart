@@ -39,15 +39,13 @@ Widget build(BuildContext context) {
                     "Per day estimate, we'll keep you on track",
                     style: TextStyle(color: Colors.grey, fontSize: 15),
                   ),
-                  SizedBox(height: 30),
-
-                  // ✅ Fix: shrinkWrap + NeverScrollableScrollPhysics
+                  const SizedBox(height: 25),
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1.10,
+                      childAspectRatio: .95,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15,
                     ),
@@ -59,50 +57,72 @@ Widget build(BuildContext context) {
                         return GestureDetector(
                           onTap: () => controller.selectBudget(index),
                           child: Container(
-                            padding: EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: isSelected ? Colors.white : Colors.grey.shade50,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: isSelected ? Colors.orange : Colors.grey.shade200,
+                                color: isSelected ? AppColors.authOrange : Colors.grey.shade200,
                                 width: 2,
                               ),
+                              boxShadow: isSelected
+                                  ? [
+                                      BoxShadow(
+                                        color: AppColors.authOrange.withOpacity(0.1),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      )
+                                    ]
+                                  : null,
                             ),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(4),
+                                  padding: const EdgeInsets.all(6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Color(0xFFfcdcc9)),
-                                    color: Color(0xFFfdf3ec),
+                                    border: Border.all(color: const Color(0xFFfcdcc9)),
+                                    color: const Color(0xFFfdf3ec),
                                   ),
-                                  child: Image.asset(item.icon, height: 40, width: 40),
+                                  child: Image.asset(item.icon, height: 35, width: 35),
                                 ),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(item.title,
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(color: Colors.grey.shade200),
-                                      ),
-                                      child: Text("${item.amount}",
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                const SizedBox(height: 8),
+                                Text(
+                                  item.title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: Colors.grey.shade200),
+                                  ),
+                                  child: Text(
+                                    "\$${item.amount}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11,
                                     ),
-                                  ],
+                                  ),
                                 ),
-                                Text(item.description,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey.shade600)),
+                                const SizedBox(height: 4),
+                                Text(
+                                  item.description,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -110,38 +130,73 @@ Widget build(BuildContext context) {
                       });
                     },
                   ),
-
-                  SizedBox(height: 30),
-                  Text("Add Custom budget",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 15),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: TextField(
-                      controller: controller.amountController,
-                      keyboardType: TextInputType.number,
-                      onChanged: controller.onCustomAmountChange,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: "Enter Amount",
-                        labelStyle: TextStyle(color: Colors.grey),
-                        suffixIcon: Icon(Icons.unfold_more, color: Colors.blueGrey),
-                        hintText: "00",
-                        hintStyle: TextStyle(color: Colors.orange),
-                      ),
+                  const SizedBox(height: 30),
+                  Text(
+                    "Or customize your budget",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade800,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.authFieldFill,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: AppColors.authFieldBorder,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.orangeLight,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.attach_money,
+                            color: AppColors.authOrange,
+                            size: 26,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextField(
+                            controller: controller.amountController,
+                            keyboardType: TextInputType.number,
+                            onChanged: controller.onCustomAmountChange,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: "Enter Daily Budget",
+                              labelStyle: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              hintText: "0.00",
+                              hintStyle: TextStyle(color: Colors.grey.shade400),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
 
-          // ✅ Fix: Expanded সরিয়ে Padding দাও
+          
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Obx(

@@ -63,17 +63,39 @@ class DatePickerView extends StatelessWidget {
   }
 
   Widget _buildTitleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        const Text(
-          'Pick your start date',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Pick your start date',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              "We'll highlight the rest of your trip.",
+              style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+            ),
+          ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          "We'll highlight the rest of your trip.",
-          style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+        Spacer(),
+        GestureDetector(
+          onTap: controller.refreshCalendar,
+          child: Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppColors.authOrange,
+              ),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: const Icon(
+              Icons.refresh,
+              color: AppColors.authOrange,
+            ),
+          ),
         ),
       ],
     );
@@ -204,7 +226,7 @@ class DatePickerView extends StatelessWidget {
       final days = <Widget>[];
 
       // Empty cells for days before month starts
-      for (int i = 0; i < controller.firstWeekdayOfMonth; i++) {
+      for (int i = 0; i < controller.firstWeekdayOfMonth.value; i++){
         days.add(
           SizedBox(
             width: 40,
@@ -220,7 +242,7 @@ class DatePickerView extends StatelessWidget {
       }
 
       // Days of month
-      for (int day = 1; day <= controller.daysInMonth; day++) {
+      for (int day = 1; day <= controller.daysInMonth.value; day++){
         final isSelectable = controller.isDateSelectable(day);
         final isSelected = controller.isDateSelected(day);
         final isStart = controller.isStartDate(day);
@@ -260,6 +282,7 @@ class DatePickerView extends StatelessWidget {
     }
 
     return GestureDetector(
+      key: ValueKey('day_$day'),
       onTap: isSelectable ? () => controller.selectDate(day) : null,
       child: Container(
         decoration: BoxDecoration(
@@ -397,27 +420,34 @@ class DatePickerView extends StatelessWidget {
   }
 
   Widget _buildNextButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: () => Get.to(()=>InterestView()),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.authOrange,
-          disabledBackgroundColor: Colors.grey.shade300,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+    return Obx(() {
+      final isDatesSelected = controller.selectedStartDate.value != null &&
+          controller.selectedEndDate.value != null;
+
+      return SizedBox(
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          onPressed: isDatesSelected
+              ? () => Get.to(() => InterestView())
+              : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.authOrange,
+            disabledBackgroundColor: Colors.grey.shade300,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: const Text(
+            'Next',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
-        child: const Text(
-          'Next',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
+      );
+    });
   }
 }

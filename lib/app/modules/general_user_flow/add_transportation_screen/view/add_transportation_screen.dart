@@ -829,7 +829,7 @@ class AddTransportationView extends StatelessWidget {
         const SizedBox(height: 8),
         AppInputTextField(
           controller: controller.notesController,
-          hintText: 'describe',
+          hintText: 'Note..',
           maxLines: 3,
           minLines: 3,
         ),

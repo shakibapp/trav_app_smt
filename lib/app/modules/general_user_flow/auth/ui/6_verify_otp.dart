@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -30,7 +29,7 @@ class VerifyOtpScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () =>Get.back(),
           child: Container(
             margin: EdgeInsets.all(6.w),
             decoration: BoxDecoration(

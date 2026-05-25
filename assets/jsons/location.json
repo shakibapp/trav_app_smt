@@ -95,6 +95,72 @@
     "regionId": "region_europe"
   },
   {
+    "id": "country_austria",
+    "name": "Austria",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_hungary",
+    "name": "Hungary",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_belgium",
+    "name": "Belgium",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_denmark",
+    "name": "Denmark",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_sweden",
+    "name": "Sweden",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_norway",
+    "name": "Norway",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_finland",
+    "name": "Finland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_poland",
+    "name": "Poland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_ireland",
+    "name": "Ireland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_croatia",
+    "name": "Croatia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_iceland",
+    "name": "Iceland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
     "id": "city_paris",
     "name": "Paris",
     "type": "city",
@@ -182,7 +248,7 @@
     "regionId": "region_europe",
     "countryId": "country_spain",
     "isPopular": false,
-    "image": "https://images.unsplash.com/photo-1529921879218-f99546ddc3b1?w=800&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=800&auto=format&fit=crop"
   },
   {
     "id": "city_berlin",
@@ -300,6 +366,150 @@
     "countryId": "country_czechia",
     "isPopular": true,
     "image": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vienna",
+    "name": "Vienna",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_salzburg",
+    "name": "Salzburg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1573555801434-25d7a7e1f9a3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_budapest",
+    "name": "Budapest",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_hungary",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549451371-64aa98a6f660?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_brussels",
+    "name": "Brussels",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_belgium",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559113513-d5b9de3b0bba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bruges",
+    "name": "Bruges",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_belgium",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_copenhagen",
+    "name": "Copenhagen",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_denmark",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_stockholm",
+    "name": "Stockholm",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_sweden",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_oslo",
+    "name": "Oslo",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bergen",
+    "name": "Bergen",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1600811156044-b6c5c74e7b18?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_helsinki",
+    "name": "Helsinki",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_finland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559060680-a4c7d13f4f52?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_warsaw",
+    "name": "Warsaw",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1607427293702-036933bbf746?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_krakow",
+    "name": "Kraków",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1584611880564-a07162a4b5c4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dublin",
+    "name": "Dublin",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549918864-48ac978761a4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dubrovnik",
+    "name": "Dubrovnik",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1555990793-da11153b2473?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_split",
+    "name": "Split",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_reykjavik",
+    "name": "Reykjavik",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_iceland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1529963183134-61a90db47eaf?w=800&auto=format&fit=crop"
   },
   {
     "id": "country_japan",

@@ -157,7 +157,7 @@ class CreatePlanController extends GetxController {
       "endDate": _formatDate(endDate),
       "totalDays": totalDays,
       "interests": selectedInterests,
-      "budget": _resolveBudget(),
+      "budget": int.parse(budgetController.customAmount.value.trim()),
     };
 
     // =========================
@@ -176,7 +176,7 @@ class CreatePlanController extends GetxController {
   bool _validateCommon() {
     if (selectedCities.isEmpty || selectedRegions.isEmpty) {
       Get.snackbar(
-        'Error',
+        'Failed',
         'Please select region and city',
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -186,7 +186,7 @@ class CreatePlanController extends GetxController {
 
     if (selectedInterests.isEmpty) {
       Get.snackbar(
-        'Error',
+        'Failed',
         'Please select interests',
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -196,7 +196,7 @@ class CreatePlanController extends GetxController {
 
     if (startDate == null || endDate == null || totalDays <= 0) {
       Get.snackbar(
-        'Error',
+        'Failed',
         'Please select valid dates',
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -204,33 +204,20 @@ class CreatePlanController extends GetxController {
       return false;
     }
 
-    if (_resolveBudget() <= 0) {
-      Get.snackbar(
-        'Error',
-        'Please select budget',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return false;
-    }
+    // if (_resolveBudget() == "") {
+    //   Get.snackbar(
+    //     'Failed',
+    //     'Please select budget',
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //   );
+    //   return false;
+    // }
 
     return true;
   }
 
-  // =========================
-  // BUDGET
-  // =========================
-  int _resolveBudget() {
-    if (budgetController.selectedIndex.value >= 0 &&
-        budgetController.selectedIndex.value <
-            budgetController.options.length) {
-      return budgetController
-          .options[budgetController.selectedIndex.value].amount;
-    }
-
-    return int.tryParse(budgetController.customAmount.value.trim()) ?? 0;
-  }
-
+ 
   // =========================
   // DATE FORMAT
   // =========================

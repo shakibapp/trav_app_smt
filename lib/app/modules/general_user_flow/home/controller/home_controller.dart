@@ -10,6 +10,7 @@ import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
 import 'package:hamishphipps/app/core/data/network/netconfig.dart';
 import 'package:hamishphipps/app/core/services/local_data.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/controller/trip_details_controller.dart';
 
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/visa_ai_model.dart';
@@ -172,7 +173,7 @@ class HomeController extends GetxController implements PriorityReminderHandler {
     log('Priority reminder payload:\n$pretty');
   }
 
-  Future<void> _sendPriorityReminderUpdate(
+  Future<void> sendPriorityReminderUpdate(
     String reminderId,
     Map<String, dynamic> data,
   ) async {
@@ -186,9 +187,11 @@ class HomeController extends GetxController implements PriorityReminderHandler {
       );
       if (response != null && response["success"] == true) {
         AppSnackbar.success("${response["message"]}");
+       
         log("Priority reminder updated successfully");
         // Refresh trip detail to reflect updated values
         await getTripDetailById(selectedTripId.value);
+         Navigator.pop(Get.context!);
       } else {
         AppSnackbar.failed("${response["message"]}");
         log("Priority reminder update failed ${response["message"]}");
@@ -260,7 +263,7 @@ class HomeController extends GetxController implements PriorityReminderHandler {
       return;
     }
 
-    await _sendPriorityReminderUpdate(reminderId, payload);
+    await sendPriorityReminderUpdate(reminderId, payload);
   }
 
   void showPriorityReminderBottomSheet(
@@ -456,10 +459,7 @@ class HomeController extends GetxController implements PriorityReminderHandler {
                                   passportExpiry: expiryController.text,
                                   previewOnly: false,
                                 );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => Get.back(),
-                                );
+                               
                               },
                               name: isPriorityLoading.value
                                   ? "Saving..."
@@ -731,7 +731,7 @@ final hasFetchedSummary = (visaAiSummerData.value.destinations?.isNotEmpty == tr
                       controller: notesController,
                       maxLines: 3,
                       decoration: InputDecoration(
-                        hintText: 'describe',
+                        hintText: 'Note..',
                         filled: true,
                         fillColor: Colors.grey.shade100,
                         border: OutlineInputBorder(
@@ -773,10 +773,7 @@ final hasFetchedSummary = (visaAiSummerData.value.destinations?.isNotEmpty == tr
                                   visaNotes: notesController.text,
                                   previewOnly: false,
                                 );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => Get.back(),
-                                );
+                                
                               },
                               name: isPriorityLoading.value
                                   ? "Saving..."
@@ -906,10 +903,7 @@ final hasFetchedSummary = (visaAiSummerData.value.destinations?.isNotEmpty == tr
                                   haveInsurance: hasInsurance.value,
                                   previewOnly: false,
                                 );
-                                Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                  () => Get.back(),
-                                );
+                                
                               },
                               name: isPriorityLoading.value
                                   ? "Saving..."
