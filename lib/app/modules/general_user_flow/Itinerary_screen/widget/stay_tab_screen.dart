@@ -8,6 +8,7 @@ import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
 import 'package:hamishphipps/app/core/constants/url_luncher.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/accommodaton_booking_card.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/view/add_accommodation_screen.dart';
 import 'package:intl/intl.dart';
@@ -54,50 +55,46 @@ class StayTabScreen extends StatelessWidget {
               final accommodation =
                   controller.itineraryOverview.value.accommodations![index];
               return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                     
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color:  Colors.transparent,
-                          width: 2,
-                        ),
-                      ),
-                      child: buildBookingOption(
-                        icon: getAccommodationIcon(accommodation.type),
-                        title: accommodation.name ?? "No Name",
-                        description: accommodation.checkInDate != null
-                            ? "Arriving ${DateFormat('dd MMM, yyyy').format(
-                                DateTime.parse(
-                                    accommodation.checkInDate.toString()),
-                              )}"
-                            : "Check-in date not set",
-                        onExplore: () {},
+                padding: const EdgeInsets.only(bottom: 10),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.transparent,
+                        width: 2,
                       ),
                     ),
+                    child: AccommodationCard(
+                      accommodation: accommodation,
+                      onTap: () {
+                        // navigate to detail
+                      },
+                      onEdit: () {
+                        // open edit sheet
+                      },
+                    ),
                   ),
-                );
+                ),
+              );
             }),
-             Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               Text(
-                'Book With',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: buildBookingPlatform(controller.itineraryOverview.value.accommodation),
-              ),
-            ],
-          ),
-       
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Book With',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: buildBookingPlatform(
+                  controller.itineraryOverview.value.accommodation),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -133,66 +130,66 @@ class StayTabScreen extends StatelessWidget {
     }
   }
 
- Widget buildBookingPlatform(String? type) {
-  switch (type) {
-    case "Hotel":
-    case "Resort":
-      return BookingCard(
-        title: "Booking.com",
-        subtitle: "Great for hotels, resorts, and flexible options",
-        logoPath: AppIcons.booking,
-        onTap: () => launchBookingUrl("https://www.booking.com/"),
-      );
+  Widget buildBookingPlatform(String? type) {
+    switch (type) {
+      case "Hotel":
+      case "Resort":
+        return BookingCard(
+          title: "Booking.com",
+          subtitle: "Great for hotels, resorts, and flexible options",
+          logoPath: AppIcons.booking,
+          onTap: () => launchBookingUrl("https://www.booking.com/"),
+        );
 
-    case "Airbnb":
-      return BookingCard(
-        title: "Airbnb",
-        subtitle: "Perfect for unique stays and local experiences",
-        logoPath: AppIcons.airb,
-        onTap: () => launchBookingUrl("https://www.airbnb.com/"),
-      );
+      case "Airbnb":
+        return BookingCard(
+          title: "Airbnb",
+          subtitle: "Perfect for unique stays and local experiences",
+          logoPath: AppIcons.airb,
+          onTap: () => launchBookingUrl("https://www.airbnb.com/"),
+        );
 
-    case "Hostel":
-      return BookingCard(
-        title: "Hostelworld",
-        subtitle: "Best for budget-friendly hostels and solo travelers",
-        logoPath: AppIcons.hostelWorld,
-        onTap: () => launchBookingUrl("https://www.hostelworld.com/"),
-      );
+      case "Hostel":
+        return BookingCard(
+          title: "Hostelworld",
+          subtitle: "Best for budget-friendly hostels and solo travelers",
+          logoPath: AppIcons.hostelWorld,
+          onTap: () => launchBookingUrl("https://www.hostelworld.com/"),
+        );
 
-    case "Not_Sure_Yet":
-      return Column(
-        children: [
-          BookingCard(
-            title: "Booking.com",
-            subtitle: "Great for hotels, resorts, and flexible options",
-            logoPath: AppIcons.booking,
-            onTap: () => launchBookingUrl("https://www.booking.com/"),
-          ),
-          const SizedBox(height: 12),
-          BookingCard(
-            title: "Airbnb",
-            subtitle: "Perfect for unique stays and local experiences",
-            logoPath: AppIcons.airb,
-            onTap: () => launchBookingUrl("https://www.airbnb.com/"),
-          ),
-          const SizedBox(height: 12),
-          BookingCard(
-            title: "Hostelworld",
-            subtitle: "Best for budget-friendly hostels and solo travelers",
-            logoPath: AppIcons.hostelWorld,
-            onTap: () => launchBookingUrl("https://www.hostelworld.com/"),
-          ),
-        ],
-      );
+      case "Not_Sure_Yet":
+        return Column(
+          children: [
+            BookingCard(
+              title: "Booking.com",
+              subtitle: "Great for hotels, resorts, and flexible options",
+              logoPath: AppIcons.booking,
+              onTap: () => launchBookingUrl("https://www.booking.com/"),
+            ),
+            const SizedBox(height: 12),
+            BookingCard(
+              title: "Airbnb",
+              subtitle: "Perfect for unique stays and local experiences",
+              logoPath: AppIcons.airb,
+              onTap: () => launchBookingUrl("https://www.airbnb.com/"),
+            ),
+            const SizedBox(height: 12),
+            BookingCard(
+              title: "Hostelworld",
+              subtitle: "Best for budget-friendly hostels and solo travelers",
+              logoPath: AppIcons.hostelWorld,
+              onTap: () => launchBookingUrl("https://www.hostelworld.com/"),
+            ),
+          ],
+        );
 
-    default:
-      return BookingCard(
-        title: "Booking.com",
-        subtitle: "Great for hotels, resorts, and flexible options",
-        logoPath: AppIcons.booking,
-        onTap: () => launchBookingUrl("https://www.booking.com/"),
-      );
+      default:
+        return BookingCard(
+          title: "Booking.com",
+          subtitle: "Great for hotels, resorts, and flexible options",
+          logoPath: AppIcons.booking,
+          onTap: () => launchBookingUrl("https://www.booking.com/"),
+        );
+    }
   }
-}
 }

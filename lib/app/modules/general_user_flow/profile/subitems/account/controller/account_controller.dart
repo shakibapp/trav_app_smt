@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_toast.dart';
 import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/profile/controller/profile_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/profile/model/user_profile_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:hamishphipps/app/core/constants/common_file_picket.dart';
@@ -22,7 +23,7 @@ class AccountController extends GetxController {
   final RxString email = "".obs;
 
   final location = "".obs;
-  final ImagePicker _imagePicker = ImagePicker();
+  final ImagePicker _imagePicker = ImagePicker(); 
   //Rx is used to handel non null values
   final RxBool isUpdateLoading = false.obs;
   //Rxn is used to handle null values
@@ -180,6 +181,7 @@ class AccountController extends GetxController {
       log("Profile update response: $decodeResponse");
       log("Status code: ${response.statusCode}");
       if (response.statusCode == 200 || response.statusCode == 201) {
+        await Get.put(ProfileController()).getUserProfile();
         Get.back();
         AppToast.showSuccess("Profile updated successfully!");
         isUpdateLoading.value = false;
