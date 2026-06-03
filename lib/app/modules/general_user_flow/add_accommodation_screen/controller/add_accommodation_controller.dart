@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/model/signle_accommodation_model.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -173,7 +174,6 @@ class AccommodationController extends GetxController {
     }
     return null;
   }
-  
 
   // Validate total cost
   String? validateTotalCost(String? value) {
@@ -191,6 +191,9 @@ class AccommodationController extends GetxController {
 
   // Validate amount owing
   String? validateAmountOwing(String? value) {
+    // ✅ Paid হলে validate করার দরকার নেই
+    if (selectedPaymentStatus.value == 'Paid') return null;
+
     if (value == null || value.isEmpty) {
       return 'Amount is required';
     }
@@ -229,7 +232,9 @@ class AccommodationController extends GetxController {
         "currency": selectedCurrency.value,
         "totalCost": double.parse(totalCostController.text),
         "paymentStatus": selectedPaymentStatus.value,
-        "amountOwing": int.parse(amountOwingController.text)??0,
+        "amountOwing": selectedPaymentStatus.value == 'Paid'
+            ? 0
+            : int.tryParse(amountOwingController.text) ?? 0,
         "notes": notesController.text,
       };
       log("create accommodation input Data --${data}");
@@ -251,7 +256,116 @@ class AccommodationController extends GetxController {
       isAddAccommodationLoading.value = false;
     }
   }
+  //get single accommodation details
+  final RxBool isSingleAccommodationLoading = false.obs;
+  final Rx<SingleAccommodationModel> singleAccommodationDetails =SingleAccommodationModel().obs;
+  Future<void> getSingleAccommodationDetails(String accommodationId) async {
+    try {
+      isSingleAccommodationLoading.value = true;
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.GET,
+        "${Urls.baseUrl}/accommodations/single/$accommodationId",
+        null,
+        is_auth: true,
+      );
+      if (response != null && response["success"] == true) {
+        singleAccommodationDetails.value = SingleAccommodationModel.fromJson(response["data"]);
+        log("get single accommodation details success ${response["message"]}");
+      } else {
+        AppSnackbar.failed("Failed to get accommodation details");
+        log("get single accommodation details failed ${response["message"]}");
+      }
+    } catch (e) {
+      log('get single accommodation details error ${e.toString()}');
+    } finally {
+      isSingleAccommodationLoading.value = false;
+    }
+  }
+// ✅ Prefill form with existing data
+void prefillForm() {
+  final data = singleAccommodationDetails.value;
+  if (data.id == null) return;
 
+  accommodationNameController.text = data.name ?? '';
+  selectedAccommodationType.value = data.type;
+  addressController.text = data.address ?? '';
+  selectedBookingPlatform.value = data.bookingPlatform ?? 'HOSTELWORLD';
+  bookingReferenceController.text = data.bookingReference ?? '';
+
+  numberOfGuests.value = data.numberOfGuests ?? 1;
+  numberOfGuestsController.text = (data.numberOfGuests ?? 1).toString();
+
+  // Date format: DD/MM/YY
+  if (data.checkInDate != null) {
+    checkInDateController.text =
+        '${data.checkInDate!.day.toString().padLeft(2, '0')}/'
+        '${data.checkInDate!.month.toString().padLeft(2, '0')}/'
+        '${data.checkInDate!.year.toString().substring(2)}';
+  }
+  if (data.checkOutDate != null) {
+    checkOutDateController.text =
+        '${data.checkOutDate!.day.toString().padLeft(2, '0')}/'
+        '${data.checkOutDate!.month.toString().padLeft(2, '0')}/'
+        '${data.checkOutDate!.year.toString().substring(2)}';
+  }
+
+  selectedCurrency.value = data.currency ?? 'EUR';
+  totalCostController.text = data.totalCost?.toString() ?? '';
+  selectedPaymentStatus.value = data.paymentStatus ?? 'Still Owe';
+  amountOwingController.text = data.amountOwing?.toString() ?? '';
+  notesController.text = data.notes ?? '';
+
+  update();
+}
+
+// ✅ Update accommodation (PUT)
+Future<void> updateAccommodation(String accommodationId, String itineraryId) async {
+  if (!validateForm()) return;
+
+  try {
+    isAddAccommodationLoading.value = true;
+    final Map<String, dynamic> data = {
+      "name": accommodationNameController.text.trim(),
+      "type": selectedAccommodationType.value,
+      "address": addressController.text,
+      "bookingPlatform": selectedBookingPlatform.value,
+      "bookingReference": bookingReferenceController.text,
+      "numberOfGuests": int.parse(numberOfGuestsController.text),
+      "checkInDate": toIsoDate(checkInDateController.text),
+      "checkOutDate": toIsoDate(checkOutDateController.text),
+      "currency": selectedCurrency.value,
+      "totalCost": double.parse(totalCostController.text),
+      "paymentStatus": selectedPaymentStatus.value,
+      "amountOwing": selectedPaymentStatus.value == 'Paid'
+          ? 0
+          : int.tryParse(amountOwingController.text) ?? 0,
+      "notes": notesController.text,
+    };
+
+    log("update accommodation payload: $data");
+
+    final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.PUT,
+        "${Urls.baseUrl}/accommodations/$accommodationId", // ✅ PUT endpoint
+        jsonEncode(data),
+        is_auth: true);
+
+    if (response != null && response["success"] == true) {
+      await Get.put(ItineraryDetailsController()).getItineraryOverview(itineraryId);
+      Get.back();
+      AppSnackbar.success("${response["message"]}");
+      log("update accommodation success ${response["message"]}");
+    } else {
+      AppSnackbar.failed("${response["message"] ?? 'Failed to update accommodation'}");
+      log("update accommodation failed ${response["message"]}");
+    }
+  } catch (e) {
+    log('update accommodation error ${e.toString()}');
+    AppSnackbar.failed("An error occurred");
+  } finally {
+    isAddAccommodationLoading.value = false;
+  }
+}
   // Clear all fields
   void clearForm() {
     accommodationNameController.clear();

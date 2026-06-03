@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
@@ -7,6 +9,7 @@ import 'package:hamishphipps/app/core/constants/url_luncher.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/model/tripltinerary_overview_model.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/booking_with_card.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/add_transportation_screen/controller/add_transportation_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_transportation_screen/view/add_transportation_screen.dart';
 
 class TravelTabScreen extends StatelessWidget {
@@ -34,9 +37,17 @@ class TravelTabScreen extends StatelessWidget {
           bgColor: Colors.transparent,
           textColor: AppColors.blackColor,
           borderColor: Colors.grey.shade300,
-          onTap: () => Get.to(() => AddTransportationView(
-                id: controller.itineraryOverview.value.id?.toString() ?? "",
-              )),
+          onTap: () {
+            Get.to(() => AddTransportationView(
+                  id: controller.itineraryOverview.value.id?.toString() ?? "",
+                  tripStartDate:
+                      controller.itineraryOverview.value.summary!.startDate!,
+                  tripEndDate:
+                      controller.itineraryOverview.value.summary!.endDate!,
+                ));
+            log("${controller.itineraryOverview.value.summary!.startDate}");
+            log("${controller.itineraryOverview.value.summary!.endDate}");
+          },
           name: "Add Booking Details",
         ),
         const SizedBox(height: 24),
@@ -52,12 +63,12 @@ class TravelTabScreen extends StatelessWidget {
             return _buildTransportCard(transport);
           },
         ),
-         Text(
+        Text(
           'Book With',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-       buildBookingPlatform(controller.itineraryOverview.value.transportation),
+        buildBookingPlatform(controller.itineraryOverview.value.transportation),
       ],
     );
   }
@@ -90,7 +101,33 @@ class TravelTabScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Icon(Icons.edit_outlined, size: 18, color: Colors.grey.shade500),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => AddTransportationView(
+                            id: controller.itineraryOverview.value.id
+                                    ?.toString() ??
+                                "",
+                            tripStartDate: controller
+                                .itineraryOverview.value.summary!.startDate!,
+                            tripEndDate: controller
+                                .itineraryOverview.value.summary!.endDate!,
+                            isEdit: true,
+                            transportationId: transport.id,
+                          ));
+                    },
+                    child: Icon(Icons.edit_outlined,
+                        size: 18, color: Colors.grey.shade500),
+                  ),
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () => _showDeleteDialog(transport.id ?? ""),
+                    child: Icon(Icons.delete_outline,
+                        size: 18, color: Colors.red.shade300),
+                  ),
+                ],
+              ),
             ],
           ),
           const SizedBox(height: 14),
@@ -252,7 +289,6 @@ class TravelTabScreen extends StatelessWidget {
         : location.toUpperCase();
   }
 
-
   IconData getAccommodationIcon(String? type) {
     switch (type) {
       case "Hotel":
@@ -284,12 +320,12 @@ class TravelTabScreen extends StatelessWidget {
     }
   }
 
- Widget buildBookingPlatform(String? type) {
-  switch (type) {
-    case "Train":
-    case "Bus":
-    case "Car Rental":
-      return  BookingCard(
+  Widget buildBookingPlatform(String? type) {
+    switch (type) {
+      case "Train":
+      case "Bus":
+      case "Car Rental":
+        return BookingCard(
           title: "Rome2Rio",
           subtitle: "Discover how to get anywhere",
           logoPath: AppIcons.romo,
@@ -298,8 +334,8 @@ class TravelTabScreen extends StatelessWidget {
           },
         );
 
-    case "Flight":
-      return BookingCard(
+      case "Flight":
+        return BookingCard(
           title: "Skyscanner",
           subtitle: "Millions of cheap flights. One simple search.",
           logoPath: AppIcons.sky,
@@ -308,37 +344,81 @@ class TravelTabScreen extends StatelessWidget {
           },
         );
 
-    
-    case "Not_Sure_Yet":
-      return Column(
-        children: [
-          BookingCard(
-          title: "Skyscanner",
-          subtitle: "Millions of cheap flights. One simple search.",
-          logoPath: AppIcons.sky,
-          onTap: () {
-            launchBookingUrl("https://www.hostelworld.com/");
-          },
-        ),
-        BookingCard(
-          title: "Roome2Rio",
-          subtitle: "Discover how to get anywhere",
-          logoPath: AppIcons.romo,
-          onTap: () {
-            launchBookingUrl("https://www.rome2rio.com/");
-          },
-        ),
-        
-        ],
-      );
+      case "Not_Sure_Yet":
+        return Column(
+          children: [
+            BookingCard(
+              title: "Skyscanner",
+              subtitle: "Millions of cheap flights. One simple search.",
+              logoPath: AppIcons.sky,
+              onTap: () {
+                launchBookingUrl("https://www.hostelworld.com/");
+              },
+            ),
+            BookingCard(
+              title: "Roome2Rio",
+              subtitle: "Discover how to get anywhere",
+              logoPath: AppIcons.romo,
+              onTap: () {
+                launchBookingUrl("https://www.rome2rio.com/");
+              },
+            ),
+          ],
+        );
 
-    default:
-      return BookingCard(
-        title: "Booking.com",
-        subtitle: "Great for hotels, resorts, and flexible options",
-        logoPath: AppIcons.booking,
-        onTap: () => launchBookingUrl("https://www.booking.com/"),
-      );
+      default:
+        return BookingCard(
+          title: "Booking.com",
+          subtitle: "Great for hotels, resorts, and flexible options",
+          logoPath: AppIcons.booking,
+          onTap: () => launchBookingUrl("https://www.booking.com/"),
+        );
+    }
   }
-}
+
+  void _showDeleteDialog(String transportId) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: const Text(
+          'Delete Transportation',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        content: const Text(
+          'Are you sure you want to delete this transportation?',
+          style: TextStyle(fontSize: 14, color: Colors.grey),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child:
+                Text('Cancel', style: TextStyle(color: Colors.grey.shade600)),
+          ),
+          Obx(() {
+            final transportController = Get.put(TransportationController());
+            return TextButton(
+              onPressed: transportController.isTransportationLoading.value
+                  ? null
+                  : () async {
+                      await transportController.deleteTransportation(
+                        transportId,
+                        controller.itineraryOverview.value.id?.toString() ?? "",
+                      );
+                    },
+              child: transportController.isTransportationLoading.value
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.red,
+                      ),
+                    )
+                  : const Text('Delete', style: TextStyle(color: Colors.red)),
+            );
+          }),
+        ],
+      ),
+    );
+  }
 }

@@ -9,12 +9,28 @@ import 'package:intl/intl.dart';
 
 class AddAccommodationView extends StatelessWidget {
   final String id;
-  AddAccommodationView({super.key, required this.id});
+  final DateTime tripStartDate; 
+  final DateTime tripEndDate;
+  final bool isEdit;              
+  final String? accommodationId;  
+  AddAccommodationView(
+      {super.key,
+      required this.id,
+      required this.tripStartDate,
+      required this.tripEndDate,
+      this.isEdit = false,          
+    this.accommodationId});
 
   final AccommodationController controller = Get.put(AccommodationController());
 
   @override
   Widget build(BuildContext context) {
+     if (isEdit && accommodationId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await controller.getSingleAccommodationDetails(accommodationId!);
+        controller.prefillForm();
+      });
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,8 +41,8 @@ class AddAccommodationView extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: backButton(onTap: () => Get.back()),
         ),
-        title: const Text(
-          'Add Accommodation',
+        title:  Text(
+          isEdit ? 'Edit Accommodation' : 'Add Accommodation',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -75,12 +91,17 @@ class AddAccommodationView extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Payment Status
+            
               _buildPaymentStatusSection(),
               const SizedBox(height: 24),
-              _buildAmountOwingSection(),
-              const SizedBox(height: 24),
-
-
+              Obx(() => controller.selectedPaymentStatus.value == 'Paid'
+                  ? const SizedBox.shrink()
+                  : Column(
+                      children: [
+                        _buildAmountOwingSection(),
+                        const SizedBox(height: 24),
+                      ],
+                    )),
 
               // Notes
               _buildNotesSection(),
@@ -603,9 +624,13 @@ class AddAccommodationView extends StatelessWidget {
               loading: controller.isAddAccommodationLoading.value,
               textColor: Colors.white,
               onTap: () async {
+                if (isEdit && accommodationId != null) {
+                await controller.updateAccommodation(accommodationId!, id); // ✅
+              } else {
                 await controller.createNewAccommodation(id);
+              }
               },
-              name: "Save",
+              name: isEdit ? "Update" : "Save", 
             );
           }),
         ),
@@ -613,31 +638,72 @@ class AddAccommodationView extends StatelessWidget {
     );
   }
 
+  // void _selectDate(
+  //   BuildContext context,
+  //   TextEditingController textController,
+  // ) async {
+  //   DateTime now = DateTime.now();
+
+  //   DateTime firstDate = DateTime(
+  //     now.year,
+  //     now.month,
+  //     now.day,
+  //   );
+
+  //   DateTime initialDate = firstDate;
+
+  //   // Check-out date হলে check-in এর পরে start করবে
+  //   if (textController == controller.checkOutDateController &&
+  //       controller.checkInDateController.text.isNotEmpty) {
+  //     final checkInDate = DateFormat(
+  //       'dd/MM/yy',
+  //     ).parse(controller.checkInDateController.text);
+
+  //     firstDate = checkInDate.add(
+  //       const Duration(days: 1),
+  //     );
+
+  //     initialDate = firstDate;
+  //   }
+
+  //   final selectedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: initialDate,
+  //     firstDate: firstDate,
+  //     lastDate: DateTime(2030),
+  //   );
+
+  //   if (selectedDate != null) {
+  //     textController.text = '${selectedDate.day.toString().padLeft(2, '0')}/'
+  //         '${selectedDate.month.toString().padLeft(2, '0')}/'
+  //         '${selectedDate.year.toString().substring(2)}';
+  //   }
+  // }
   void _selectDate(
     BuildContext context,
     TextEditingController textController,
   ) async {
-    DateTime now = DateTime.now();
-
+    // ✅ Trip range অনুযায়ী firstDate এবং lastDate
     DateTime firstDate = DateTime(
-      now.year,
-      now.month,
-      now.day,
+      tripStartDate.year,
+      tripStartDate.month,
+      tripStartDate.day,
+    );
+    DateTime lastDate = DateTime(
+      tripEndDate.year,
+      tripEndDate.month,
+      tripEndDate.day,
     );
 
     DateTime initialDate = firstDate;
 
-    // Check-out date হলে check-in এর পরে start করবে
+    // ✅ Check-out date হলে check-in এর পরের দিন থেকে শুরু
     if (textController == controller.checkOutDateController &&
         controller.checkInDateController.text.isNotEmpty) {
-      final checkInDate = DateFormat(
-        'dd/MM/yy',
-      ).parse(controller.checkInDateController.text);
-
-      firstDate = checkInDate.add(
-        const Duration(days: 1),
-      );
-
+      final checkInDate =
+          DateFormat('dd/MM/yy').parse(controller.checkInDateController.text);
+      final nextDay = checkInDate.add(const Duration(days: 1));
+      firstDate = nextDay.isAfter(lastDate) ? lastDate : nextDay;
       initialDate = firstDate;
     }
 
@@ -645,13 +711,25 @@ class AddAccommodationView extends StatelessWidget {
       context: context,
       initialDate: initialDate,
       firstDate: firstDate,
-      lastDate: DateTime(2030),
+      lastDate: lastDate, // ✅ trip end date এর পরে যাবে না
     );
 
     if (selectedDate != null) {
       textController.text = '${selectedDate.day.toString().padLeft(2, '0')}/'
           '${selectedDate.month.toString().padLeft(2, '0')}/'
           '${selectedDate.year.toString().substring(2)}';
+
+      // ✅ Check-in পরিবর্তন হলে checkout clear
+      if (textController == controller.checkInDateController &&
+          controller.checkOutDateController.text.isNotEmpty) {
+        try {
+          final checkOut = DateFormat('dd/MM/yy')
+              .parse(controller.checkOutDateController.text);
+          if (selectedDate.isAfter(checkOut)) {
+            controller.checkOutDateController.clear();
+          }
+        } catch (_) {}
+      }
     }
   }
 }

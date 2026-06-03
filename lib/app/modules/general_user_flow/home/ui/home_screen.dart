@@ -513,16 +513,15 @@ class HomeScreen extends GetWidget<HomeController> {
   }
 
   // ✅ Priority Reminders Section — same logic as trip_details_screen
+
   Widget _buildPriorityRemindersSection(
       BuildContext context, HomeController controller) {
     final reminders = controller.tripDetail.value.priorityRemainders ?? [];
 
     if (reminders.isEmpty) return SizedBox.shrink();
 
-    // ✅ Single reminder object — passport, visa, insurance all in one doc
     final reminder = reminders[0];
 
-    // ✅ Checked states
     final passportChecked = reminder.passportCountry != null &&
         reminder.passportCountry!.isNotEmpty &&
         reminder.passportCountry != 'null' &&
@@ -535,7 +534,9 @@ class HomeScreen extends GetWidget<HomeController> {
 
     final insuranceChecked = reminder.haveInsurance == true;
 
-    // ✅ Button label helper
+    // ✅ allChecked — তিনটাই checked কিনা
+    final allChecked = passportChecked && visaChecked && insuranceChecked;
+
     String buttonLabel(String type) {
       if (type == 'Passport') return passportChecked ? 'Checked' : 'Add';
       if (type == 'Visa') return visaChecked ? 'Checked' : 'Add';
@@ -556,6 +557,11 @@ class HomeScreen extends GetWidget<HomeController> {
           ),
         ),
         SizedBox(height: 10.h),
+
+        // ✅ এইটাই নতুন — trip details screen এর মতো same banner
+        priorityRemindersStatusBanner(completed: allChecked),
+        const SizedBox(height: 15),
+
         tripPriority(
           name: 'Passport',
           image: AppIcons.passport,

@@ -1,21 +1,22 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/model/tripltinerary_overview_model.dart';
 import 'package:intl/intl.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 
-
 class AccommodationCard extends StatelessWidget {
   final Accommodation accommodation;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
+  final DateTime? tripStartDate;
+  final DateTime? tripEndDate;
 
   const AccommodationCard({
     super.key,
     required this.accommodation,
     this.onTap,
     this.onEdit,
+    this.tripStartDate,
+    this.tripEndDate,
   });
 
   @override
@@ -31,6 +32,15 @@ class AccommodationCard extends StatelessWidget {
     final type = accommodation.type ?? '';
 
     final stillOwes = amountOwing > 0;
+    // for color change the accommodation covers all nights of the trip or not
+    bool coversAllNights = false;
+    if (tripStartDate != null &&
+        tripEndDate != null &&
+        checkIn != null &&
+        checkOut != null) {
+      coversAllNights =
+          !checkIn.isAfter(tripStartDate!) && !checkOut.isBefore(tripEndDate!);
+    }
 
     return GestureDetector(
       onTap: onTap,
@@ -60,7 +70,7 @@ class AccommodationCard extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.authOrange,
+                    color: nights > 0 ? Colors.green : AppColors.authOrange,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
@@ -202,8 +212,8 @@ class AccommodationCard extends StatelessWidget {
                 const SizedBox(width: 10),
                 if (stillOwes)
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.authOrange,
                       borderRadius: BorderRadius.circular(20),
@@ -219,8 +229,8 @@ class AccommodationCard extends StatelessWidget {
                   )
                 else if (paymentStatus.toLowerCase() == 'paid')
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.green.shade500,
                       borderRadius: BorderRadius.circular(20),
@@ -257,9 +267,7 @@ class AccommodationCard extends StatelessWidget {
         ),
         const SizedBox(height: 3),
         Text(
-          date != null
-              ? DateFormat('yyyy-MM-dd').format(date)
-              : 'Not set',
+          date != null ? DateFormat('yyyy-MM-dd').format(date) : 'Not set',
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w700,

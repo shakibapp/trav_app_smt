@@ -7,7 +7,17 @@ import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/ba
 
 class AddTransportationView extends StatelessWidget {
   final String id;
-  AddTransportationView({super.key, required this.id});
+  final DateTime tripStartDate; 
+  final DateTime tripEndDate;
+  final bool isEdit;                       
+  final String? transportationId; 
+  AddTransportationView(
+      {super.key,
+      required this.id,
+      required this.tripStartDate,
+      required this.tripEndDate,
+       this.isEdit = false,                   
+    this.transportationId,});
 
   final TransportationController controller = Get.put(
     TransportationController(),
@@ -15,6 +25,12 @@ class AddTransportationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       if (isEdit && transportationId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await controller.getSingleTransportation(transportationId!);
+        controller.prefillForm();
+      });
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -23,10 +39,10 @@ class AddTransportationView extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(onTap: ()=>Get.back()),
+          child: backButton(onTap: () => Get.back()),
         ),
-        title: const Text(
-          'Add Transportation',
+        title:  Text(
+          isEdit ? 'Edit Transportation' : 'Add Transportation',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -577,7 +593,7 @@ class AddTransportationView extends StatelessWidget {
               value: controller.selectedBookingPlatform.value,
               isExpanded: true,
               underline: const SizedBox(),
-              items: ['Skyscanner','Rome2Rio'].map((
+              items: ['Skyscanner', 'Rome2Rio'].map((
                 platform,
               ) {
                 return DropdownMenuItem(value: platform, child: Text(platform));
@@ -761,7 +777,7 @@ class AddTransportationView extends StatelessWidget {
                     value: controller.selectedCurrency.value,
                     isExpanded: true,
                     underline: const SizedBox(),
-                    items: ['EUR', 'USD', 'GBP', 'INR', 'BDT'].map((currency) {
+                    items:  ['AUD', 'USD', 'EUR', 'GBP', 'INR', 'BDT'].map((currency) {
                       return DropdownMenuItem(
                         value: currency,
                         child: Text(currency),
@@ -857,9 +873,15 @@ class AddTransportationView extends StatelessWidget {
               textColor: Colors.white,
               loading: controller.isTransportationLoading.value,
               onTap: () async {
-                await controller.createTransportation(id.toString());
+                if (isEdit && transportationId != null) {
+                  // ✅ Edit mode
+                  await controller.updateTransportation(transportationId!);
+                } else {
+                  // ✅ Add mode
+                  await controller.createTransportation(id.toString());
+                }
               },
-              name: "Save",
+              name: isEdit ? "Update" : "Save",
             );
           }),
         ),
@@ -867,19 +889,59 @@ class AddTransportationView extends StatelessWidget {
     );
   }
 
-  void _selectDate(BuildContext context, TextEditingController controller) {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    ).then((selectedDate) {
-      if (selectedDate != null) {
-        controller.text =
-            '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}';
-      }
-    });
+void _selectDate(BuildContext context, TextEditingController ctrl) {
+  final now = DateTime.now();
+  final initial = now.isAfter(tripStartDate) && now.isBefore(tripEndDate)
+      ? now
+      : tripStartDate;
+
+  // ✅ Arrival date হলে departure date-এর আগে select করা যাবে না
+  DateTime firstAllowed = tripStartDate;
+  if (ctrl == controller.arrivalDateController &&
+      controller.departureDateController.text.isNotEmpty) {
+    try {
+      final parts = controller.departureDateController.text.split('/');
+      final departureDate = DateTime(
+        int.parse(parts[2]),
+        int.parse(parts[1]),
+        int.parse(parts[0]),
+      );
+      firstAllowed = departureDate; // ✅ departure date থেকে শুরু
+    } catch (_) {}
   }
+
+  final safeInitial = initial.isBefore(firstAllowed) ? firstAllowed : initial;
+
+  showDatePicker(
+    context: context,
+    initialDate: safeInitial,
+    firstDate: firstAllowed,  // ✅ dynamic first date
+    lastDate: tripEndDate,
+  ).then((selectedDate) {
+    if (selectedDate != null) {
+      ctrl.text =
+          '${selectedDate.day.toString().padLeft(2, '0')}/'
+          '${selectedDate.month.toString().padLeft(2, '0')}/'
+          '${selectedDate.year}';
+
+      // ✅ Departure date change হলে arrival date clear করো যদি আগের date হয়
+      if (ctrl == controller.departureDateController &&
+          controller.arrivalDateController.text.isNotEmpty) {
+        try {
+          final parts = controller.arrivalDateController.text.split('/');
+          final arrivalDate = DateTime(
+            int.parse(parts[2]),
+            int.parse(parts[1]),
+            int.parse(parts[0]),
+          );
+          if (selectedDate.isAfter(arrivalDate)) {
+            controller.arrivalDateController.clear();
+          }
+        } catch (_) {}
+      }
+    }
+  });
+}
 
   void _selectTime(BuildContext context, TextEditingController controller) {
     showTimePicker(context: context, initialTime: TimeOfDay.now()).then((

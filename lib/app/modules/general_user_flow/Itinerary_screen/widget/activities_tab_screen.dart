@@ -310,7 +310,7 @@ class ActivitiesTabScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          '${activity.expense}',
+                          '\$${activity.expense}',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

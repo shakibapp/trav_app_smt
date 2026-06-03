@@ -1,17 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
 import 'package:hamishphipps/app/core/constants/url_luncher.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/controller/tripltinerary_overview_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/accommodaton_booking_card.dart';
-import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/widget/build_card_widget.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/add_accommodation_screen/view/add_accommodation_screen.dart';
-import 'package:intl/intl.dart';
 
 import '../../add_accommodation_screen/booking_with_card.dart';
 
@@ -41,7 +36,11 @@ class StayTabScreen extends StatelessWidget {
           textColor: AppColors.blackColor,
           borderColor: Colors.grey.shade300,
           onTap: () => Get.to(() => AddAccommodationView(
-              id: controller.itineraryOverview.value.id?.toString() ?? "")),
+              id: controller.itineraryOverview.value.id?.toString() ?? "",
+              tripStartDate:
+                  controller.itineraryOverview.value.summary!.startDate!,
+              tripEndDate:
+                  controller.itineraryOverview.value.summary!.endDate!)),
           name: "Add Booking Details",
         ),
         const SizedBox(height: 14),
@@ -69,11 +68,25 @@ class StayTabScreen extends StatelessWidget {
                     ),
                     child: AccommodationCard(
                       accommodation: accommodation,
+                      tripStartDate:
+                          controller.itineraryOverview.value.summary!.startDate,
+                      tripEndDate:
+                          controller.itineraryOverview.value.summary!.endDate,
                       onTap: () {
                         // navigate to detail
                       },
                       onEdit: () {
-                        // open edit sheet
+                        Get.to(() => AddAccommodationView(
+                              id: controller.itineraryOverview.value.id
+                                      ?.toString() ??
+                                  "",
+                              tripStartDate: controller
+                                  .itineraryOverview.value.summary!.startDate!,
+                              tripEndDate: controller
+                                  .itineraryOverview.value.summary!.endDate!,
+                              isEdit: true, // ✅
+                              accommodationId: accommodation.id, // ✅
+                            ));
                       },
                     ),
                   ),
