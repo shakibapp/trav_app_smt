@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
@@ -27,7 +26,7 @@ class ItineraryView extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: backButton(onTap: ()=>Get.back()),
+          child: backButton(onTap: () => Get.back()),
         ),
         title: Text(
           "Your Itinerary",
@@ -93,7 +92,7 @@ class ItineraryView extends StatelessWidget {
         color: Colors.grey.shade300,
         image: imageUrl != null && imageUrl.isNotEmpty
             ? DecorationImage(
-                image: NetworkImage(imageUrl),
+                image: _getImageProvider(imageUrl),
                 fit: BoxFit.cover,
               )
             : const DecorationImage(
@@ -648,5 +647,15 @@ class ItineraryView extends StatelessWidget {
       'Dec'
     ];
     return "${date.day} ${months[date.month - 1]}";
+  }
+
+  // ── Image Provider (handles both network and local assets) ──────────────────
+  ImageProvider _getImageProvider(String imageUrl) {
+    // ✅ যদি HTTP/HTTPS URL হয়, NetworkImage return করো
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return NetworkImage(imageUrl);
+    }
+    // ✅ যদি local asset path হয়, AssetImage return করো
+    return AssetImage(imageUrl);
   }
 }

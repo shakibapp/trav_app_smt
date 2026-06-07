@@ -40,6 +40,13 @@ class LocationModel {
   static String? _normalizeImagePath(String? image) {
     if (image == null || image.trim().isEmpty) return null;
     final normalized = image.trim();
+
+    // ✅ যদি remote URL হয় (http বা https), তাহলে directly return করো
+    if (normalized.startsWith('http://') || normalized.startsWith('https://')) {
+      return normalized;
+    }
+
+    // Local asset path normalize করো
     var path = normalized;
 
     if (path.startsWith('assets/')) {

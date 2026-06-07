@@ -74,8 +74,7 @@ class CreatePlanController extends GetxController {
           colorText: Colors.white,
         );
         return true;
-      }else{
-
+      } else {
         Get.snackbar(
           'Trip Created',
           'AI trip created Failed',
@@ -84,7 +83,6 @@ class CreatePlanController extends GetxController {
         );
         return false;
       }
-
     } finally {
       isSubmitting(false);
     }
@@ -152,7 +150,7 @@ class CreatePlanController extends GetxController {
 
     final base = {
       "region": selectedRegions,
-      "city": selectedCities,
+      "city": cityList,
       "startDate": _formatDate(startDate),
       "endDate": _formatDate(endDate),
       "totalDays": totalDays,
@@ -217,7 +215,6 @@ class CreatePlanController extends GetxController {
     return true;
   }
 
- 
   // =========================
   // DATE FORMAT
   // =========================

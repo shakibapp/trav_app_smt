@@ -38,7 +38,7 @@ class CityController extends GetxController {
     try {
       isLoading(true);
 
-      final data = await rootBundle.loadString('assets/jsons/location.json');
+      final data = await rootBundle.loadString('assets/jsons/locations.json');
       final List decoded = jsonDecode(data);
 
       allLocations.assignAll(
@@ -107,12 +107,12 @@ class CityController extends GetxController {
 
       // ✅ AUTO SELECT REGION
       final regionAlreadySelected = selectedRegions.any(
-            (r) => r.id == city.regionId,
+        (r) => r.id == city.regionId,
       );
 
       if (!regionAlreadySelected) {
         final region = allLocations.firstWhereOrNull(
-              (e) => e.id == city.regionId,
+          (e) => e.id == city.regionId,
         );
 
         if (region != null) {
