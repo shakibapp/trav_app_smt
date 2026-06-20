@@ -108,23 +108,26 @@ class InterestView extends StatelessWidget {
             ),
 
             // Next Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () => Get.to(BudgetView()),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.authOrange,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+            Obx(() {
+              if (controller.selectedCount == 0) return const SizedBox.shrink();
+              return SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () => Get.to(BudgetView()),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.authOrange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text(
+                    "Next",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
-                child: Text(
-                  "Next",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),

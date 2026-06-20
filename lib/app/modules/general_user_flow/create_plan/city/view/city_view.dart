@@ -15,6 +15,7 @@ class CityViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
+      bottomNavigationBar: _nextButton(),
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
@@ -91,8 +92,6 @@ class CityViewScreen extends StatelessWidget {
                   // _selectedCities(),
 
                   // const SizedBox(height: 30),
-
-                  _nextButton(),
                 ],
               ),
             ),
@@ -316,18 +315,27 @@ class CityViewScreen extends StatelessWidget {
   // ---------------- NEXT ----------------
   Widget _nextButton() {
     return Obx(() {
-      return SizedBox(
-        width: double.infinity,
-        height: 52,
-        child: ElevatedButton(
-          onPressed: controller.canProceed ? controller.proceedNext : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.authOrange,
-            disabledBackgroundColor: Colors.grey,
-          ),
-          child: const Text(
-            "Next",
-            style: TextStyle(color: Colors.white),
+      if (!controller.canProceed) return const SizedBox.shrink();
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: ElevatedButton(
+              onPressed: controller.proceedNext,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.authOrange,
+              ),
+              child: const Text(
+                "Next",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ),
       );

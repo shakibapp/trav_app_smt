@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,6 +27,12 @@ class MainApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: AppRoutes.SPLASH,
           getPages: AppPages.pages,
+          builder: (context, widget) {
+            return UpgradeAlert(
+              navigatorKey: Get.key,
+              child: widget ?? const SizedBox(),
+            );
+          },
         );
       },
     );
