@@ -27,10 +27,10 @@ class TripCard extends StatelessWidget {
       'MMM dd yyyy',
     ).format(DateTime.parse(trip.endDate.toString()));
 
-  
     return GestureDetector(
-      
-      onTap: () => Get.to(TripDetailsScreen(tripId: trip.id.toString(),)),
+      onTap: () => Get.to(TripDetailsScreen(
+        tripId: trip.id.toString(),
+      )),
       child: Container(
         height: 220.h,
         decoration: BoxDecoration(
@@ -53,24 +53,24 @@ class TripCard extends StatelessWidget {
                 height: 220.h,
                 child: trip.images != null && trip.images!.isNotEmpty
                     ? PageView.builder(
-                  itemCount: trip.images!.length,
-                  itemBuilder: (_, imgIndex) {
-                    return AppNetworkImage(
-                      imageUrl: trip.images![imgIndex] ??
-                          "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
-                      width: double.infinity,
-                      height: 220.h,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                )
+                        itemCount: trip.images!.length,
+                        itemBuilder: (_, imgIndex) {
+                          return AppNetworkImage(
+                            imageUrl: trip.images![imgIndex] ??
+                                "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                            width: double.infinity,
+                            height: 220.h,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      )
                     : AppNetworkImage(
-                  imageUrl:
-                  "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
-                  width: double.infinity,
-                  height: 220.h,
-                  fit: BoxFit.cover,
-                ),
+                        imageUrl:
+                            "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                        width: double.infinity,
+                        height: 220.h,
+                        fit: BoxFit.cover,
+                      ),
               ),
 
               // Shadow only at bottom
@@ -108,8 +108,8 @@ class TripCard extends StatelessWidget {
                       Text(
                         trip.city!.join(', '),
                         style: globaltextInterTight(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w800,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
                           color: AppColors.whiteColor,
                           lineHeight: 1.2,
                         ),

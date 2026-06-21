@@ -204,14 +204,26 @@ class CityViewScreen extends StatelessWidget {
         children: regions.map((region) {
           final selected = controller.isRegionSelected(region);
 
-          return ElevatedButton(
-            onPressed: () => controller.toggleRegion(region),
-            style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  selected ? AppColors.authOrange : Colors.grey.shade200,
-              foregroundColor: selected ? Colors.white : Colors.black,
+          return FilterChip(
+            label: Text(region.name),
+            selected: selected,
+            showCheckmark: false,
+            backgroundColor: Colors.grey.shade50,
+            selectedColor: AppColors.authOrange,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                color: selected
+                    ? AppColors.authOrange
+                    : AppColors.authOrange.withOpacity(0.3),
+                width: 1,
+              ),
             ),
-            child: Text(region.name),
+            labelStyle: TextStyle(
+              color: selected ? Colors.white : Colors.black,
+              fontSize: 14,
+            ),
+            onSelected: (_) => controller.toggleRegion(region),
           );
         }).toList(),
       );
@@ -237,10 +249,21 @@ class CityViewScreen extends StatelessWidget {
           return FilterChip(
             label: Text(city.name),
             selected: selected,
-            selectedColor: AppColors.authOrange,
-            checkmarkColor: Colors.white,
-            labelStyle: TextStyle(
-              color: selected ? Colors.white : Colors.black,
+            showCheckmark: false,
+            backgroundColor: Colors.grey.shade100,
+            selectedColor: Colors.grey.shade50,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                color: selected
+                    ? AppColors.authOrange.withOpacity(0.5)
+                    : Colors.transparent,
+                width: 1,
+              ),
+            ),
+            labelStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
             ),
             onSelected: (_) => controller.toggleCity(city),
           );

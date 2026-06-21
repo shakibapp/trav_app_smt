@@ -84,7 +84,7 @@ class TripItineraryView extends StatelessWidget {
                               ),
                               const SizedBox(width: 16),
                               Text(
-                                'Itinerary details',
+                                'Itinerary Details',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
