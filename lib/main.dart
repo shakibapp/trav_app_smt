@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:get/get.dart';
 import 'app/core/services/local_data.dart';
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
@@ -26,6 +26,12 @@ class MainApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: AppRoutes.SPLASH,
           getPages: AppPages.pages,
+          builder: (context, widget) {
+            return UpgradeAlert(
+              navigatorKey: Get.key,
+              child: widget ?? const SizedBox(),
+            );
+          },
         );
       },
     );

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:hamishphipps/app/routes/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_images.dart';
 import '../../../../core/style/global_text_style.dart';
 import '../../../../core/widgets/custom_button_widget.dart';
 import '../../../../core/widgets/custom_textfield_widget.dart';
-import '../../../../routes/app_routes.dart';
 import '../controller/5_signup_controller.dart';
 
 class SignupScreen extends GetWidget<SignupController> {
@@ -77,15 +76,18 @@ class SignupScreen extends GetWidget<SignupController> {
       key: controller.formKey,
       child: Column(
         children: [
+          // Full Name Field
           CustomTextFormWidget(
             sectionTitle: 'FULL NAME',
             textEditingController: controller.fullNameController,
-            hintText: 'Enter your full Name',
+            hintText: 'Enter your full name',
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.next,
             validator: controller.validateFullName,
           ),
           SizedBox(height: 16.h),
+
+          // Email Field
           CustomTextFormWidget(
             sectionTitle: 'EMAIL',
             textEditingController: controller.emailController,
@@ -95,6 +97,19 @@ class SignupScreen extends GetWidget<SignupController> {
             validator: controller.validateEmail,
           ),
           SizedBox(height: 16.h),
+
+          // // Phone Number Field (Optional)
+          // CustomTextFormWidget(
+          //   sectionTitle: 'PHONE NUMBER (OPTIONAL)',
+          //   textEditingController: controller.phoneController,
+          //   hintText: '+1 (555) 123-4567',
+          //   keyboardType: TextInputType.phone,
+          //   textInputAction: TextInputAction.next,
+          //   validator: controller.validatePhoneNumber,
+          // ),
+          // SizedBox(height: 16.h),
+
+          // Password Field
           Obx(
             () => CustomTextFormWidget(
               sectionTitle: 'PASSWORD',
@@ -108,8 +123,12 @@ class SignupScreen extends GetWidget<SignupController> {
             ),
           ),
           SizedBox(height: 16.h),
+
+          // Terms & Conditions Checkbox
           Obx(
             () => Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Checkbox(
                   value: controller.isTermsAgreed.value,
@@ -127,16 +146,24 @@ class SignupScreen extends GetWidget<SignupController> {
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: AppColors.greyColor,
-                            lineHeight: 1.2,
+                            lineHeight: 1.4,
                           ),
                         ),
-                        TextSpan(
-                          text: 'Terms of Service',
-                          style: globaltextInterTight(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.authOrange,
-                            lineHeight: 1.2,
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigate to Terms of Service
+                               //Get.toNamed(AppRoutes.TERMS_OF_SERVICE);
+                            },
+                            child: Text(
+                              'Terms of Service',
+                              style: globaltextInterTight(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.authOrange,
+                                lineHeight: 1.4,
+                              ),
+                            ),
                           ),
                         ),
                         TextSpan(
@@ -145,16 +172,24 @@ class SignupScreen extends GetWidget<SignupController> {
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: AppColors.greyColor,
-                            lineHeight: 1.2,
+                            lineHeight: 1.4,
                           ),
                         ),
-                        TextSpan(
-                          text: 'Privacy Policy',
-                          style: globaltextInterTight(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.authOrange,
-                            lineHeight: 1.2,
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigate to Privacy Policy
+                              // Get.toNamed(AppRoutes.PRIVACY_POLICY);
+                            },
+                            child: Text(
+                              'Privacy Policy',
+                              style: globaltextInterTight(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.authOrange,
+                                lineHeight: 1.4,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -165,22 +200,29 @@ class SignupScreen extends GetWidget<SignupController> {
             ),
           ),
           SizedBox(height: 20.h),
-          CustomButtonWidget(
-            label: 'Sign Up',
-            onPressed: controller.onSignupPressed,
-            fullWidth: true,
-            height: 54.h,
-            radius: 30.r,
-            bgColor: AppColors.authOrange,
-            fgColor: AppColors.whiteColor,
-            textStyle: globaltextInterTight(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w700,
-              color: AppColors.whiteColor,
-              lineHeight: 1.1,
+
+          // Sign Up Button
+          Obx(
+            () => CustomButtonWidget(
+              label: 'Sign Up',
+              onPressed: controller.onSignupPressed,
+              loading: controller.isSignupLoading.value,
+              fullWidth: true,
+              height: 54.h,
+              radius: 30.r,
+              bgColor: AppColors.authOrange,
+              fgColor: AppColors.whiteColor,
+              textStyle: globaltextInterTight(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.whiteColor,
+                lineHeight: 1.1,
+              ),
             ),
           ),
           SizedBox(height: 18.h),
+
+          // Sign In Link
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -194,7 +236,7 @@ class SignupScreen extends GetWidget<SignupController> {
                 ),
               ),
               GestureDetector(
-                onTap: () => Get.offNamed(AppRoutes.LOGIN),
+                onTap: () => Get.back(),
                 child: Text(
                   'Log In',
                   style: globaltextInterTight(

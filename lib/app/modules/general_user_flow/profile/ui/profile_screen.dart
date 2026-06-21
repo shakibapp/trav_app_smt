@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _menu(),
             SizedBox(height: 30.h),
             _logout(),
-            SizedBox(height: 18.h),
+            SizedBox(height: 58.h),
           ],
         ),
       ),
@@ -60,70 +60,138 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _header() {
     return Obx(() {
-      final name = controller.fullName.value;
-      final email = controller.email.value;
-      final img = controller.imageUrl.value;
-
-      return Center(
-        child: Column(
-          children: [
-            Container(
-              width: 62.w,
-              height: 62.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFFE9E9EF),
-                image: img.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(img),
-                        fit: BoxFit.cover,
+      if (controller.isUserProfileLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (controller.userProfile.value == null) {
+        final name = controller.fullName.value;
+        final email = controller.email.value;
+        final img = controller.imageUrl.value;
+        return Center(
+          child: Column(
+            children: [
+              Container(
+                width: 62.w,
+                height: 62.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFE9E9EF),
+                  image: img.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(img),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: img.isEmpty
+                    ? Icon(
+                        Icons.person,
+                        size: 26.sp,
+                        color: AppColors.secondaryColor,
                       )
                     : null,
               ),
-              child: img.isEmpty
-                  ? Icon(
-                      Icons.person,
-                      size: 26.sp,
-                      color: AppColors.secondaryColor,
-                    )
-                  : null,
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              name,
-              style: globaltextInterTight(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w800,
-                color: AppColors.blackColor,
+              SizedBox(height: 10.h),
+              Text(
+                name,
+                style: globaltextInterTight(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.blackColor,
+                ),
               ),
-            ),
-            SizedBox(height: 4.h),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  AppIcons.profileEmail,
-                  width: 14.sp,
-                  height: 14.sp,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.secondaryColor,
-                    BlendMode.srcIn,
+              SizedBox(height: 4.h),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    AppIcons.profileEmail,
+                    width: 14.sp,
+                    height: 14.sp,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.secondaryColor,
+                      BlendMode.srcIn,
+                    ),
                   ),
-                ),
-                SizedBox(width: 6.w),
-                Text(
-                  email,
-                  style: globaltextInterTight(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.secondaryColor,
+                  SizedBox(width: 6.w),
+                  Text(
+                    email,
+                    style: globaltextInterTight(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.secondaryColor,
+                    ),
                   ),
+                ],
+              ),
+            ],
+          ),
+        );
+      } else {
+        final name = controller.userProfile.value!.fullName ?? "No Name";
+        final email = controller.userProfile.value!.email ?? "No Email";
+        final img = controller.userProfile.value!.profileImage ?? "";
+
+        return Center(
+          child: Column(
+            children: [
+              Container(
+                width: 62.w,
+                height: 62.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFE9E9EF),
+                  image: img.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(img),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
-              ],
-            ),
-          ],
-        ),
-      );
+                child: img.isEmpty
+                    ? Icon(
+                        Icons.person,
+                        size: 26.sp,
+                        color: AppColors.secondaryColor,
+                      )
+                    : null,
+              ),
+              SizedBox(height: 10.h),
+              Text(
+                name,
+                style: globaltextInterTight(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    AppIcons.profileEmail,
+                    width: 14.sp,
+                    height: 14.sp,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.secondaryColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  SizedBox(width: 6.w),
+                  Text(
+                    email,
+                    style: globaltextInterTight(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.secondaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      }
     });
   }
 

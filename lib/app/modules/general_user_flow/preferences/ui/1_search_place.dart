@@ -8,14 +8,15 @@ import '../../../../core/widgets/custom_button_widget.dart';
 import '../controller/1_preferences_controller.dart';
 import '2_about_you.dart';
 
-class PreferencesSearchPlaceScreen extends GetView<PreferencesController> {
-  const PreferencesSearchPlaceScreen({super.key});
+class PreferencesSearchPlaceScreen extends StatelessWidget {
+   PreferencesSearchPlaceScreen({super.key});
+  final controller = Get.put(PreferencesController());
 
   @override
   Widget build(BuildContext context) {
     final features = const [
       (
-        title: 'Organize Destinations',
+        title: 'Organise Destinations',
         subtitle: 'Keep all your stops in a place',
         icon: Icons.map_outlined,
       ),
@@ -61,7 +62,7 @@ class PreferencesSearchPlaceScreen extends GetView<PreferencesController> {
               ),
               SizedBox(height: 8.h),
               Text(
-                'Keep your travel plans organized, from first idea\nto final boarding pass.',
+                'Keep your travel plans organise, from first idea\nto final boarding pass.',
                 style: globaltextInterTight(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -94,7 +95,7 @@ class PreferencesSearchPlaceScreen extends GetView<PreferencesController> {
                 return CustomButtonWidget(
                   label: 'Get Started',
                   onPressed: enabled
-                      ? () => Get.to(() => const PreferencesAboutYouScreen())
+                      ? () => Get.to(() =>  PreferencesAboutYouScreen())
                       : null,
                   fullWidth: true,
                   height: 54.h,

@@ -32,4 +32,49 @@ class AppIcons {
   static const String travTrips = travTripsOutline;
   static const String travAlerts = travAlertsOutline;
   static const String travProfile = travProfileOutline;
+
+  // home screen icons
+  static const String agreement = 'assets/icons/agreement.svg';
+  static const String airplane = 'assets/icons/airplane.svg';
+  static const String passport = 'assets/icons/passport.svg';
+  static const String visa = 'assets/icons/visa.svg';
+
+  static const String maps = "assets/icons/maps.png";
+  static const String robot = "assets/icons/robot.png";
+  static const String adventure = "assets/icons/adventure.png";
+  static const String cameraIcon = "assets/icons/camera.png";
+  static const String colosseum = "assets/icons/colosseum.png";
+  static const String drink = "assets/icons/drink.png";
+  static const String natural = "assets/icons/natural.png";
+  static const String paint = "assets/icons/paint.png";
+  static const String relieved = "assets/icons/relieved.png";
+  static const String serving = "assets/icons/serving.png";
+  static const String shopping = "assets/icons/shopping.png";
+  static const String budget = "assets/icons/budget.png";
+  static const String comfort = "assets/icons/comfort.png";
+  static const String premium = "assets/icons/premium.png";
+  static const String luxury = "assets/icons/luxury.png";
+  static const String airplaneColor = "assets/icons/airplaneColor.png";
+  static const String bus = "assets/icons/bus.png";
+  static const String carIcon = "assets/icons/carIcon.png";
+  static const String hotel = "assets/icons/hotel.png";
+  static const String hotelBell = "assets/icons/hotelBell.png";
+  static const String hotelColor = "assets/icons/hotelColor.png";
+  static const String restaurant = "assets/icons/restaurant.png";
+  static const String routeIcon = "assets/icons/route.png";
+  static const String moon = "assets/icons/moon.png";
+  static const String appointment = "assets/icons/appointment.png";
+  static const String activity = "assets/icons/activity.png";
+  static const String editButton = "assets/icons/editButton.png";
+  static const String deleteButton = "assets/icons/deleteButton.png";
+  static const String alertCircle = "assets/icons/alert-circle.png";
+  static const String airb = "assets/icons/airb.png";
+  static const String hostelWorld = "assets/icons/hostelworld.png";
+  static const String booking = "assets/icons/booking.png";
+  static const String noData = "assets/icons/nodata.jpg";
+  static const String newTravel1 = "assets/icons/new_travel.png";
+  static const String sky = "assets/icons/sky.png";
+  static const String romo = "assets/icons/romo.png";
+  static const String kayak = "assets/icons/kayak.png";
+  static const String expedia = "assets/icons/expedia.jpg";
 }

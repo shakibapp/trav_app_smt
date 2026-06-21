@@ -9,8 +9,17 @@ import '../../../../core/style/global_text_style.dart';
 import '../../../../core/widgets/custom_button_widget.dart';
 import '../controller/6_verify_otp_controller.dart';
 
-class VerifyOtpScreen extends GetWidget<VerifyOtpController> {
-  const VerifyOtpScreen({super.key});
+class VerifyOtpScreen extends StatelessWidget {
+  final String email;
+  final bool isForPasswordReset;
+
+  VerifyOtpScreen({
+    super.key,
+    required this.email,
+    required this.isForPasswordReset,
+  });
+
+  final controller = Get.put(VerifyOtpController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +29,12 @@ class VerifyOtpScreen extends GetWidget<VerifyOtpController> {
         backgroundColor: AppColors.whiteColor,
         elevation: 0,
         leading: GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () =>Get.back(),
           child: Container(
-            margin: EdgeInsets.all(12.w),
+            margin: EdgeInsets.all(6.w),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.authFieldBorder, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(100.r),
             ),
             child: Icon(
               Icons.arrow_back_ios_new,
@@ -52,8 +61,6 @@ class VerifyOtpScreen extends GetWidget<VerifyOtpController> {
   }
 
   Widget _header() {
-    final args = (Get.arguments as Map?) ?? const {};
-    final email = (args['email'] as String?)?.trim();
     return Column(
       children: [
         SizedBox(height: 20.h),
@@ -91,9 +98,7 @@ class VerifyOtpScreen extends GetWidget<VerifyOtpController> {
                   ),
                 ),
                 TextSpan(
-                  text: (email != null && email.isNotEmpty)
-                      ? email
-                      : 'hello@traveller.com',
+                  text: (email.isNotEmpty) ? email : 'hello@traveller.com',
                   style: globaltextInterTight(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w600,
@@ -132,61 +137,98 @@ class VerifyOtpScreen extends GetWidget<VerifyOtpController> {
       borderRadius: BorderRadius.circular(14.r),
     );
 
-    return Column(
-      children: [
-        Pinput(
-          controller: controller.otpController,
-          defaultPinTheme: defaultPinTheme,
-          focusedPinTheme: focusedPinTheme,
-          length: 4,
-          pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-          showCursor: true,
-          onCompleted: (pin) {},
-        ),
-        SizedBox(height: 28.h),
-        CustomButtonWidget(
-          label: 'Verify Code',
-          onPressed: controller.onVerifyPressed,
-          fullWidth: true,
-          height: 54.h,
-          radius: 30.r,
-          bgColor: AppColors.authOrange,
-          fgColor: AppColors.whiteColor,
-          textStyle: globaltextInterTight(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w700,
-            color: AppColors.whiteColor,
-            lineHeight: 1.1,
+    final errorPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: Colors.red, width: 1.5),
+      borderRadius: BorderRadius.circular(14.r),
+    );
+
+    return Form(
+      key: controller.formKey,
+      child: Column(
+        children: [
+          Pinput(
+            controller: controller.otpController,
+            defaultPinTheme: defaultPinTheme,
+            focusedPinTheme: focusedPinTheme,
+            errorPinTheme: errorPinTheme,
+            length: 4,
+            pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+            showCursor: true,
+            keyboardType: TextInputType.number,
+            onCompleted: (pin) {
+              // Optional: Auto-submit when all 4 digits are entered
+              // controller.onVerifyOtpPressed(email, isForPasswordReset);
+            },
+            validator: (pin) {
+              if (pin == null || pin.isEmpty) {
+                return 'OTP is required';
+              }
+              if (pin.length != 4) {
+                return 'OTP must be 4 digits';
+              }
+              if (!RegExp(r'^[0-9]{4}$').hasMatch(pin)) {
+                return 'OTP must contain only numbers';
+              }
+              return null;
+            },
           ),
-        ),
-        SizedBox(height: 18.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Didn't receive the code? ",
-              style: globaltextInterTight(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.greyColor,
-                lineHeight: 1.2,
+          SizedBox(height: 28.h),
+          Obx(
+            () => CustomButtonWidget(
+              label: 'Verify Code',
+              onPressed: () =>
+                  controller.onVerifyOtpPressed(email, isForPasswordReset),
+              loading: controller.isVerifyingOTP.value,
+              fullWidth: true,
+              height: 54.h,
+              radius: 30.r,
+              bgColor: AppColors.authOrange,
+              fgColor: AppColors.whiteColor,
+              textStyle: globaltextInterTight(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.whiteColor,
+                lineHeight: 1.1,
               ),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: Text(
-                'Resend',
-                style: globaltextInterTight(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.authOrange,
-                  lineHeight: 1.2,
+          ),
+          SizedBox(height: 18.h),
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Didn't receive the code? ",
+                  style: globaltextInterTight(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.greyColor,
+                    lineHeight: 1.2,
+                  ),
                 ),
-              ),
+                GestureDetector(
+                  onTap: controller.canResendOTP.value
+                      ? () => controller.onResendOtpPressed(email)
+                      : null,
+                  child: Text(
+                    controller.canResendOTP.value
+                        ? 'Resend'
+                        : 'Resend in ${controller.resendCountdown.value}s',
+                    style: globaltextInterTight(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                      color: controller.canResendOTP.value
+                          ? AppColors.authOrange
+                          : AppColors.greyColor,
+                      lineHeight: 1.2,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

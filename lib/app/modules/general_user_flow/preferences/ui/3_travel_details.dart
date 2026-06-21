@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/widgets/app_input_textfield.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/style/global_text_style.dart';
 import '../../../../core/widgets/custom_button_widget.dart';
 import '../controller/1_preferences_controller.dart';
-import '4_your_interests.dart';
+
 
 class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
   const PreferencesTravelDetailsScreen({super.key});
@@ -18,20 +20,9 @@ class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () => Get.back(),
-          child: Container(
-            margin: EdgeInsets.all(12.w),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.authFieldBorder, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              size: 18.sp,
-              color: AppColors.authOrange,
-            ),
-          ),
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: backButton(onTap: ()=>Get.back()),
         ),
       ),
       body: SafeArea(
@@ -120,6 +111,23 @@ class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
               }),
               SizedBox(height: 10.h),
               Text(
+                'PASSPORT EXPIRY',
+                style: globaltextInterTight(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.secondaryColor,
+                  lineHeight: 1.2,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              AppInputTextField(
+                readOnly: true,
+                hintText: "Expiry Date",
+                controller: controller.passportExpiryTEC,
+                onTap: () => controller.pickPassportExpiryDate(context), // এটা যোগ করো
+                suffixIcon: Icon(Icons.calendar_month, color: Colors.grey),
+              ),
+              Text(
                 'Visa requirements are based on your passport',
                 style: globaltextInterTight(
                   fontSize: 12.sp,
@@ -133,10 +141,8 @@ class PreferencesTravelDetailsScreen extends GetView<PreferencesController> {
                 final enabled = controller.canContinueStep3;
                 return CustomButtonWidget(
                   label: 'Next',
-                  onPressed: enabled
-                      ? () =>
-                            Get.to(() => const PreferencesYourInterestsScreen())
-                      : null,
+                  onPressed: enabled ? () => controller.updateProfile() : null,
+                 loading: controller.isUpdateLoading.value,
                   fullWidth: true,
                   height: 54.h,
                   radius: 30.r,

@@ -12,8 +12,10 @@ class AppRoutes {
   static const PASSWORD_CHANGED_SUCCESS = '/password-changed-success';
   static const PREFERENCES = '/preferences';
   static const NAVBAR = '/navbar';
+  static const PARENT_NAVBAR = '/parent-navbar';
   static const PROFILE_ACCOUNT = '/profile-account';
   static const PROFILE_NOTIFICATION = '/profile-notification';
+  static const PROFILE_PARENTS = '/profile-parents';
   static const HOME = '/home';
   static const CALENDAR = '/calendar';
   static const DAILYEVENTS = '/daily-events';
@@ -26,4 +28,5 @@ class AppRoutes {
   static const SUBSCRIPTION = '/subscription';
   static const SUPPORT = '/support';
   static const ADD_NEW_ACTIVITY = '/add-new-activity';
+  static const addActivity = '/add-activity';
 }

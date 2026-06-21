@@ -1,11 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../../core/services/local_data.dart';
-import '../../../../core/widgets/app_snackbar.dart';
-import '../../../../routes/app_routes.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
+import 'package:hamishphipps/app/core/constants/app_toast.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/core/services/local_data.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/auth/ui/6_verify_otp.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/preferences/ui/1_search_place.dart';
+import 'package:hamishphipps/app/routes/app_routes.dart';
+
+import '../../../parent_flow/nav_bar/ui/nav_bar_screen.dart';
 
 class LoginController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
+  final localService = LocalService.localService;
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -33,33 +46,125 @@ class LoginController extends GetxController {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
     }
     return null;
   }
 
-  void onLoginPressed() {
-    FocusManager.instance.primaryFocus?.unfocus();
+  //login
+  final RxBool isLoginLoading = false.obs;
+  Future<void> login() async {
+    try {
+      if (!formKey.currentState!.validate()) {
+        return;
+      }
+      isLoginLoading.value = true;
+      final Map<String, dynamic> jsonBody = {
+        "email": emailController.text.trim(),
+        "password": passwordController.text.trim(),
+      };
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.POST,
+        Urls.login,
+        jsonEncode(jsonBody),
+        is_auth: false,
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () =>
+            throw TimeoutException('Request timed out. Please try again.'),
+      );
 
-    final isValid = formKey.currentState?.validate() ?? false;
-    if (!isValid) return;
+      if (response == null) {
+        AppToast.showError('Something went wrong. Please try again.');
+        return;
+      }
 
-    // Temporary local login (no API yet): persist a token so splash routes to NAVBAR.
-    final email = emailController.text.trim();
-    LocalService.localService.setEmail(email);
-    LocalService.localService.setToken('logged_in');
+      if (response["success"] == false) {
+        final message =
+            response["message"] ?? 'Something went wrong. Please try again.';
+        final isEmailNotVerified = message
+            .toString()
+            .toLowerCase()
+            .contains("email not verified");
 
-    AppSnackBar.success('Login successful', title: 'Success');
-    Future.delayed(const Duration(milliseconds: 500), () {
-      Get.offAllNamed(AppRoutes.NAVBAR);
-    });
+        if (isEmailNotVerified) {
+          AppToast.showError(message);
+          Get.to(() => VerifyOtpScreen(
+                email: emailController.text.trim(),
+                isForPasswordReset: false,
+              ));
+        } else {
+          AppToast.showError(message);
+        }
+        return;
+      }
+
+      if (response["success"] == true) {
+        final token = response["data"]["token"];
+        final role = response["data"]["role"];
+        bool isEmailVerify = response["data"]["emailVerified"] ?? false;
+        bool isProfileComplete = response["data"]["isProfileComplete"] ?? false;
+
+        if (role == "PARENT") {
+          if (isEmailVerify == false) {
+            log("parent email --------otp");
+            Get.to(() => VerifyOtpScreen(
+                  email: emailController.text.trim(),
+                  isForPasswordReset: false,
+                ));
+            AppToast.showError('Please verify your email before logging in.');
+            return;
+          } else {
+            AppToast.showSuccess('Login successful');
+            emailController.clear();
+            passwordController.clear();
+
+            await localService.setToken(token);
+            await localService.setRole(role);
+
+            Get.offAll(() => NavBarScreen());
+
+            log("Login successful. Token: $token, Role: $role");
+          }
+        } else if (role == "USER") {
+          if (isEmailVerify == false) {
+            log("user email --------otp");
+            AppToast.showError('Please verify your email before logging in.');
+            Get.to(() => VerifyOtpScreen(
+                  email: emailController.text.trim(),
+                  isForPasswordReset: false,
+                ));
+            return;
+          } else if (isProfileComplete == false) {
+            AppSnackbar.success("Login Success");
+            emailController.clear();
+            passwordController.clear();
+            await localService.setToken(token);
+            await localService.setRole(role);
+            Get.offAll(() => PreferencesSearchPlaceScreen());
+            log("Login successful profile incomplete. Token: $token, Role: $role");
+          } else {
+            AppToast.showSuccess('Login successful');
+            await localService.setToken(token);
+            await localService.setRole(role);
+            emailController.clear();
+            passwordController.clear();
+            Get.offAllNamed(AppRoutes.NAVBAR);
+            log("Login successful. Token: $token, Role: $role");
+          }
+        }
+      }
+    } on TimeoutException catch (e) {
+      log("Login timeout: $e");
+      AppToast.showError('Request timed out. Please try again.');
+    } catch (w) {
+      log("Login error: $w");
+      AppToast.showError('An unexpected error occurred. Please try again.');
+    } finally {
+      isLoginLoading.value = false;
+    }
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
+ 
 }

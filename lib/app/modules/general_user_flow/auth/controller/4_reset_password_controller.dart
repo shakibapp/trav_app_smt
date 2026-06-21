@@ -1,9 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../routes/app_routes.dart';
+import 'package:hamishphipps/app/core/constants/app_toast.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/routes/app_routes.dart';
 
 class ResetPasswordController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
+
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -23,8 +29,8 @@ class ResetPasswordController extends GetxController {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
     }
     return null;
   }
@@ -39,19 +45,44 @@ class ResetPasswordController extends GetxController {
     return null;
   }
 
-  void onResetPasswordPressed() {
-    if (formKey.currentState!.validate()) {
-      // AppSnackBar.success('Password reset successfully', title: 'Success');
-      Future.delayed(const Duration(seconds: 1), () {
-        Get.offNamed(AppRoutes.PASSWORD_CHANGED_SUCCESS);
-      });
+  final RxBool isResetLoading = false.obs;
+  Future<void> onResetPassword(String email) async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    try {
+      isResetLoading.value = true;
+
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.POST,
+        Urls.resetPassword,
+        {
+          "email": email.trim(),
+          "password": confirmPasswordController.text.trim(),
+        },
+      );
+      if (response != null && response['success'] == true) {
+        email.isEmpty;
+        confirmPasswordController.clear();
+
+        AppToast.showSuccess(
+            response['message'] ?? 'Password reset successfully');
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.offAllNamed(AppRoutes.LOGIN);
+        });
+      } else {
+        AppToast.showError(response['message'] ?? 'Failed to reset password');
+        return;
+      }
+    } catch (e) {
+      log("Reset Password error ${e.toString()}");
+    } finally {
+      isResetLoading.value = false;
     }
   }
 
   @override
   void onClose() {
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
     super.onClose();
   }
 }

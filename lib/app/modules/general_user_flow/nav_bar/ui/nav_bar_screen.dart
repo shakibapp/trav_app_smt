@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/home/ui/home_screen.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/profile/ui/profile_screen.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/trips/ui/trips_screen.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../alerts_screen/view/alerts_screen.dart';
 import '../controller/nav_bar_controller.dart';
-import 'tabs/nav_tabs.dart';
+
 import 'widgets/trav_bottom_nav_bar.dart';
 
 class NavBarScreen extends GetWidget<NavBarController> {
@@ -12,12 +16,12 @@ class NavBarScreen extends GetWidget<NavBarController> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = const <Widget>[
-      HomeTab(),
-      TripsTab(),
+    final pages = <Widget>[
+      HomeScreen(),
+      TripsScreen(),
       SizedBox.shrink(),
-      AlertsTab(),
-      ProfileTab(),
+      AlertsView(),
+      ProfileScreen(),
     ];
 
     return Scaffold(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/style/global_text_style.dart';
@@ -18,20 +19,9 @@ class PreferencesAboutYouScreen extends GetView<PreferencesController> {
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () => Get.back(),
-          child: Container(
-            margin: EdgeInsets.all(12.w),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.authFieldBorder, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              size: 18.sp,
-              color: AppColors.authOrange,
-            ),
-          ),
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: backButton(onTap: ()=>Get.back()),
         ),
       ),
       body: SafeArea(

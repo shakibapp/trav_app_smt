@@ -1,10 +1,18 @@
+import 'dart:convert';
+import 'dart:developer';
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_toast.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/auth/ui/6_verify_otp.dart';
 
-import '../../../../core/widgets/app_snackbar.dart';
-import '../../../../routes/app_routes.dart';
 
 class ForgotPasswordController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
+  
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
@@ -21,21 +29,40 @@ class ForgotPasswordController extends GetxController {
     return null;
   }
 
-  void onSendOtpPressed() {
-    if (formKey.currentState!.validate()) {
-      AppSnackBar.success('OTP sent to your email', title: 'Success');
-      Future.delayed(const Duration(seconds: 1), () {
-        Get.offNamed(
-          AppRoutes.VERIFICATION,
-          arguments: {'flow': 'forgot', 'email': emailController.text.trim()},
-        );
-      });
+final RxBool isForgotLoading = false.obs;
+  Future<void> onSendOtpPressed() async{
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    try {
+      isForgotLoading.value = true;
+      final Map<String, dynamic> jsonBody = {
+        "email": emailController.text.trim(),
+      };
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.POST,
+        Urls.forgotPassword,
+        jsonEncode(jsonBody),
+      );
+      if (response != null && response['success'] == true) {
+       AppToast.showSuccess(response['message'] ?? 'OTP sent successfully');
+       Get.to(()=>VerifyOtpScreen(email: emailController.text.trim(), isForPasswordReset: true));
+       log("Forgot Password Success: ${response.toString()}");
+      
+      } else {
+       AppToast.showError(response['message'] ?? 'Failed to send OTP');
+       log("Forgot Password Failed: ${response.toString()}");  
+      }
+    } catch (e) {
+     AppToast.showError('An error occurred. Please try again.');
+     log("Forgot Password Error: $e");
+    }finally{
+      isForgotLoading.value = false;
     }
   }
 
   @override
   void onClose() {
-    emailController.dispose();
     super.onClose();
   }
 }

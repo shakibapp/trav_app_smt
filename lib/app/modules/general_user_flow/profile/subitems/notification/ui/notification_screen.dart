@@ -41,14 +41,15 @@ class NotificationScreen extends GetWidget<NotificationController> {
           children: [
             _buildSectionHeader('ALERT PREFERENCES'),
             _buildSectionContainer([
-              _buildToggleRow('Flight Alerts', controller.flightAlerts),
+              _buildToggleRow('Flight Alerts', controller.flightAlert),
               _buildToggleRow(
                 'Check-in Reminders',
                 controller.checkInReminders,
               ),
-              _buildToggleRow('Parent Updates', controller.parentUpdates),
+              _buildToggleRow('Delay Updates', controller.delayUpdates),
+              _buildToggleRow('Arrive Alerts', controller.arriveAlerts),
               _buildToggleRow('Marketing Emails', controller.marketingEmails),
-              _buildToggleRow('Passport Alerts', controller.passportAlerts),
+              _buildToggleRow('Passport Alerts', controller.passportAlert),
             ]),
             SizedBox(height: 24.h),
             _buildSectionHeader('NOTIFICATION CHANNELS'),
@@ -80,9 +81,8 @@ class NotificationScreen extends GetWidget<NotificationController> {
               () => CustomButtonWidget.primary(
                 label: 'Save Changes',
                 loading: controller.isLoading.value,
-                onPressed: controller.isLoading.value
-                    ? null
-                    : controller.saveChanges,
+                onPressed:
+                    controller.isLoading.value ? null : controller.saveChanges,
               ),
             ),
             SizedBox(height: 24.h),
@@ -156,7 +156,8 @@ class NotificationScreen extends GetWidget<NotificationController> {
             Switch(
               value: value.value,
               onChanged: (v) => value.value = v,
-              activeColor: AppColors.primaryColor,
+              activeColor: AppColors.authOrange,
+              inactiveTrackColor: Color(0xffE5E5E5),
             ),
           ],
         ),

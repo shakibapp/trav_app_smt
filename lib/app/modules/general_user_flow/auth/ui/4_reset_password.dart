@@ -9,8 +9,10 @@ import '../../../../core/widgets/custom_button_widget.dart';
 import '../../../../core/widgets/custom_textfield_widget.dart';
 import '../controller/4_reset_password_controller.dart';
 
-class ResetPasswordScreen extends GetWidget<ResetPasswordController> {
-  const ResetPasswordScreen({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  final String email;
+   ResetPasswordScreen({super.key, required this.email});
+   final controller = Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +24,10 @@ class ResetPasswordScreen extends GetWidget<ResetPasswordController> {
         leading: GestureDetector(
           onTap: () => Get.back(),
           child: Container(
-            margin: EdgeInsets.all(12.w),
+            margin: EdgeInsets.all(6.w),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.authFieldBorder, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(100.r),
             ),
             child: Icon(
               Icons.arrow_back_ios_new,
@@ -124,19 +126,22 @@ class ResetPasswordScreen extends GetWidget<ResetPasswordController> {
             ),
           ),
           SizedBox(height: 28.h),
-          CustomButtonWidget(
-            label: 'Reset Password',
-            onPressed: controller.onResetPasswordPressed,
-            fullWidth: true,
-            height: 54.h,
-            radius: 30.r,
-            bgColor: AppColors.authOrange,
-            fgColor: AppColors.whiteColor,
-            textStyle: globaltextInterTight(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w700,
-              color: AppColors.whiteColor,
-              lineHeight: 1.1,
+          Obx(
+            () => CustomButtonWidget(
+              label: 'Reset Password',
+              onPressed: ()=>controller.onResetPassword(email),
+              loading: controller.isResetLoading.value,
+              fullWidth: true,
+              height: 54.h,
+              radius: 30.r,
+              bgColor: AppColors.authOrange,
+              fgColor: AppColors.whiteColor,
+              textStyle: globaltextInterTight(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.whiteColor,
+                lineHeight: 1.1,
+              ),
             ),
           ),
         ],

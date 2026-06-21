@@ -1,33 +1,41 @@
 name: hamishphipps
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ^3.10.7
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
+  cached_network_image: ^3.4.1
   carousel_slider: ^5.1.2
   file_picker: ^10.3.10
   flutter:
     sdk: flutter
-  flutter_screenutil: ^5.9.3
+  flutter_screenutil:
   flutter_svg: ^2.2.4
+  fluttertoast:
   get: ^4.7.3
   google_fonts: ^8.0.2
   image_picker: ^1.2.1
   internet_connection_checker: ^3.0.1
   intl: ^0.20.2
+  sqflite:
   logger: ^2.7.0
-  pinput: ^6.0.2
+  lottie: ^3.1.0
+  pinput:
   shared_preferences: ^2.5.4
-  shimmer: ^3.0.0
-  upgrader: ^12.5.0
+  shimmer:
+  upgrader: ^13.5.0
+  url_launcher:
+  gradient_borders: ^1.0.2
+  change_app_package_name: ^1.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
@@ -35,3 +43,11 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/jsons/
+    - assets/logo/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/logo/appLogo.png"

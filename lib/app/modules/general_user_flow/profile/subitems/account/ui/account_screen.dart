@@ -3,13 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/country_list.dart';
+import 'package:hamishphipps/app/core/constants/image_selete_option.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
 import 'package:hamishphipps/app/core/widgets/custom_button_widget.dart';
 import 'package:hamishphipps/app/core/widgets/custom_textfield_widget.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/profile/widget/account_shimmer.dart';
 
 import '../controller/account_controller.dart';
 
-class AccountScreen extends GetWidget<AccountController> {
+class AccountScreen extends GetView<AccountController> {
   AccountScreen({super.key});
 
   final formKey = GlobalKey<FormState>();
@@ -39,48 +41,63 @@ class AccountScreen extends GetWidget<AccountController> {
         padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
         child: Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildProfileImage(),
-              SizedBox(height: 24.h),
-              _buildEmailField(),
-              SizedBox(height: 16.h),
-              _buildLocationField(),
-              SizedBox(height: 16.h),
-              _buildFullNameField(),
-              SizedBox(height: 16.h),
-              _buildUserNameField(),
-              SizedBox(height: 32.h),
-              _buildSaveButton(),
-              SizedBox(height: 24.h),
-            ],
-          ),
+          child: Obx(() {
+            return controller.isUserProfileLoading.value
+                ? Center(child: AccountShimmer())
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildProfileImage(context),
+                      SizedBox(height: 24.h),
+                      _buildEmailField(),
+                      SizedBox(height: 16.h),
+                      _buildLocationField(),
+                      SizedBox(height: 16.h),
+                      _buildFullNameField(),
+                      SizedBox(height: 16.h),
+                      _buildUserNameField(),
+                      SizedBox(height: 32.h),
+                      _buildSaveButton(),
+                      SizedBox(height: 24.h),
+                    ],
+                  );
+          }),
         ),
       ),
     );
   }
 
-  Widget _buildProfileImage() {
+  Widget _buildProfileImage(BuildContext context) {
     return Center(
       child: Column(
         children: [
           Obx(() {
-            final hasImage = controller.imageFile.value != null;
+            final hasSelectedImage = controller.profileImage.value != null;
+            final hasProfileImageUrl =
+                controller.profileImageUrl.value.isNotEmpty;
             final container = Container(
               width: 100.w,
               height: 100.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0xFFE9E9EF),
-                image: hasImage
+                image: hasSelectedImage
                     ? DecorationImage(
-                        image: FileImage(controller.imageFile.value!),
+                        image: FileImage(controller.profileImage.value!),
                         fit: BoxFit.cover,
+                      )
+                    : hasProfileImageUrl
+                    ? DecorationImage(
+                        image: NetworkImage(controller.profileImageUrl.value),
+                        fit: BoxFit.cover,
+                        onError: (exception, stackTrace) {
+                          // Handle image loading error
+                          debugPrint('Image loading error: $exception');
+                        },
                       )
                     : null,
               ),
-              child: hasImage
+              child: (hasSelectedImage || hasProfileImageUrl)
                   ? null
                   : Icon(
                       Icons.person,
@@ -93,7 +110,23 @@ class AccountScreen extends GetWidget<AccountController> {
               children: [
                 container,
                 GestureDetector(
-                  onTap: controller.pickProfileImage,
+                  onTap: () => showImageOptions(
+                    context: context,
+                    onCamera: () {
+                      Get.back();
+                      controller.pickImage(
+                        target: controller.profileImage,
+                        fromCamera: true,
+                      );
+                    },
+                    onGallery: () {
+                      Get.back();
+                      controller.pickImage(
+                        target: controller.profileImage,
+                        fromCamera: false,
+                      );
+                    },
+                  ),
                   child: Container(
                     width: 36.w,
                     height: 36.w,
@@ -117,36 +150,6 @@ class AccountScreen extends GetWidget<AccountController> {
               ],
             );
           }),
-          // SizedBox(height: 12.h),
-          // Obx(
-          //   () => Row(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       GestureDetector(
-          //         onTap: controller.pickProfileImage,
-          //         child: Text(
-          //           'Upload',
-          //           style: globaltextInterTight(
-          //             fontSize: 13.sp,
-          //             fontWeight: FontWeight.w600,
-          //             color: AppColors.primaryColor,
-          //           ),
-          //         ),
-          //       ),
-          //       SizedBox(width: 16.w),
-          //       Text(
-          //         controller.imageFile.value != null
-          //             ? 'File selected'
-          //             : 'No file selected',
-          //         style: globaltextInterTight(
-          //           fontSize: 13.sp,
-          //           fontWeight: FontWeight.w500,
-          //           color: AppColors.secondaryColor,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );
@@ -165,33 +168,33 @@ class AccountScreen extends GetWidget<AccountController> {
           ),
         ),
         SizedBox(height: 8.h),
-        Obx(
-          () => Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F6F8),
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.email_outlined,
-                  size: 18.sp,
-                  color: AppColors.secondaryColor,
-                ),
-                SizedBox(width: 10.w),
-                Expanded(
-                  child: Text(
-                    controller.email.value,
-                    style: globaltextInterTight(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.blackColor,
-                    ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF5F6F8),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.email_outlined,
+                size: 18.sp,
+                color: AppColors.secondaryColor,
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: Text(
+                  controller.emailTEC.text.isEmpty
+                      ? 'Enter your email'
+                      : controller.emailTEC.text,
+                  style: globaltextInterTight(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.blackColor,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -298,14 +301,12 @@ class AccountScreen extends GetWidget<AccountController> {
     return Obx(
       () => CustomButtonWidget.primary(
         label: 'Save Changes',
-        loading: controller.isLoading.value,
-        onPressed: controller.isLoading.value
-            ? null
-            : () {
-                if (formKey.currentState!.validate()) {
-                  controller.saveChanges();
-                }
-              },
+        loading: controller.isUpdateLoading.value,
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            controller.updateProfile();
+          }
+        },
       ),
     );
   }

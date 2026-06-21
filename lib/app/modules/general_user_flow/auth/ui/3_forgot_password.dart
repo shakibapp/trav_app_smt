@@ -23,13 +23,15 @@ class ForgotPasswordScreen extends GetWidget<ForgotPasswordController> {
         leading: GestureDetector(
           onTap: () => Get.back(),
           child: Container(
-            margin: EdgeInsets.all(12.w),
+            alignment: Alignment.center,
+            margin: EdgeInsets.all(6.w),
+
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.authFieldBorder, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(100.r),
             ),
             child: Icon(
-              Icons.arrow_back_ios_new,
+              Icons.arrow_back_ios_new_outlined,
               size: 18.sp,
               color: AppColors.authOrange,
             ),
@@ -106,19 +108,22 @@ class ForgotPasswordScreen extends GetWidget<ForgotPasswordController> {
             validator: controller.validateEmail,
           ),
           SizedBox(height: 28.h),
-          CustomButtonWidget(
-            label: 'Send OTP',
-            onPressed: controller.onSendOtpPressed,
-            fullWidth: true,
-            height: 54.h,
-            radius: 30.r,
-            bgColor: AppColors.authOrange,
-            fgColor: AppColors.whiteColor,
-            textStyle: globaltextInterTight(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w700,
-              color: AppColors.whiteColor,
-              lineHeight: 1.1,
+          Obx(
+            () => CustomButtonWidget(
+              label: 'Send OTP',
+              onPressed: controller.onSendOtpPressed,
+              fullWidth: true,
+              loading: controller.isForgotLoading.value,
+              height: 54.h,
+              radius: 30.r,
+              bgColor: AppColors.authOrange,
+              fgColor: AppColors.whiteColor,
+              textStyle: globaltextInterTight(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.whiteColor,
+                lineHeight: 1.1,
+              ),
             ),
           ),
           SizedBox(height: 18.h),

@@ -1,0 +1,4555 @@
+[
+  {
+    "id": "region_europe",
+    "name": "Europe",
+    "type": "region"
+  },
+  {
+    "id": "region_southeast_asia",
+    "name": "South East Asia",
+    "type": "region"
+  },
+  {
+    "id": "region_south_america",
+    "name": "South America",
+    "type": "region"
+  },
+  {
+    "id": "region_north_america",
+    "name": "North America",
+    "type": "region"
+  },
+  {
+    "id": "region_australia",
+    "name": "Australia",
+    "type": "region"
+  },
+  {
+    "id": "region_africa",
+    "name": "Africa",
+    "type": "region"
+  },
+  {
+    "id": "region_middle_east",
+    "name": "Middle East",
+    "type": "region"
+  },
+  {
+    "id": "country_france",
+    "name": "France",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_italy",
+    "name": "Italy",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_spain",
+    "name": "Spain",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_germany",
+    "name": "Germany",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_uk_england",
+    "name": "England",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_uk_scotland",
+    "name": "Scotland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_uk_wales",
+    "name": "Wales",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_uk_nireland",
+    "name": "Northern Ireland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_netherlands",
+    "name": "Netherlands",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_portugal",
+    "name": "Portugal",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_greece",
+    "name": "Greece",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_switzerland",
+    "name": "Switzerland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_czechia",
+    "name": "Czech Republic",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_hungary",
+    "name": "Hungary",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_austria",
+    "name": "Austria",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_poland",
+    "name": "Poland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_belgium",
+    "name": "Belgium",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_denmark",
+    "name": "Denmark",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_sweden",
+    "name": "Sweden",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_norway",
+    "name": "Norway",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_finland",
+    "name": "Finland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_ireland",
+    "name": "Ireland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_croatia",
+    "name": "Croatia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_iceland",
+    "name": "Iceland",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_turkey",
+    "name": "Turkey",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_slovenia",
+    "name": "Slovenia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_slovakia",
+    "name": "Slovakia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_albania",
+    "name": "Albania",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_bosnia",
+    "name": "Bosnia & Herzegovina",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_montenegro",
+    "name": "Montenegro",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_romania",
+    "name": "Romania",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_bulgaria",
+    "name": "Bulgaria",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_serbia",
+    "name": "Serbia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_kosovo",
+    "name": "Kosovo",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_n_macedonia",
+    "name": "North Macedonia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_estonia",
+    "name": "Estonia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_latvia",
+    "name": "Latvia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_lithuania",
+    "name": "Lithuania",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_georgia",
+    "name": "Georgia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_armenia",
+    "name": "Armenia",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_ukraine",
+    "name": "Ukraine",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_cyprus",
+    "name": "Cyprus",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_malta",
+    "name": "Malta",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_luxembourg",
+    "name": "Luxembourg",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_andorra",
+    "name": "Andorra",
+    "type": "country",
+    "regionId": "region_europe"
+  },
+  {
+    "id": "country_thailand",
+    "name": "Thailand",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_vietnam",
+    "name": "Vietnam",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_indonesia",
+    "name": "Indonesia",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_philippines",
+    "name": "Philippines",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_cambodia",
+    "name": "Cambodia",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_laos",
+    "name": "Laos",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_malaysia",
+    "name": "Malaysia",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_singapore",
+    "name": "Singapore",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_myanmar",
+    "name": "Myanmar",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_brunei",
+    "name": "Brunei",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_east_timor",
+    "name": "East Timor",
+    "type": "country",
+    "regionId": "region_southeast_asia"
+  },
+  {
+    "id": "country_colombia",
+    "name": "Colombia",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_peru",
+    "name": "Peru",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_bolivia",
+    "name": "Bolivia",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_brazil",
+    "name": "Brazil",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_argentina",
+    "name": "Argentina",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_chile",
+    "name": "Chile",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_ecuador",
+    "name": "Ecuador",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_uruguay",
+    "name": "Uruguay",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_paraguay",
+    "name": "Paraguay",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_venezuela",
+    "name": "Venezuela",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_guyana",
+    "name": "Guyana",
+    "type": "country",
+    "regionId": "region_south_america"
+  },
+  {
+    "id": "country_usa",
+    "name": "United States",
+    "type": "country",
+    "regionId": "region_north_america"
+  },
+  {
+    "id": "country_canada",
+    "name": "Canada",
+    "type": "country",
+    "regionId": "region_north_america"
+  },
+  {
+    "id": "country_mexico",
+    "name": "Mexico",
+    "type": "country",
+    "regionId": "region_north_america"
+  },
+  {
+    "id": "country_australia",
+    "name": "Australia",
+    "type": "country",
+    "regionId": "region_australia"
+  },
+  {
+    "id": "country_egypt",
+    "name": "Egypt",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_morocco",
+    "name": "Morocco",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_south_africa",
+    "name": "South Africa",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_kenya",
+    "name": "Kenya",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_tanzania",
+    "name": "Tanzania",
+    "type": "country",
+    "regionId": "region_africa"
+  },
+  {
+    "id": "country_uae",
+    "name": "UAE",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_jordan",
+    "name": "Jordan",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_israel",
+    "name": "Israel",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_oman",
+    "name": "Oman",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "country_saudi",
+    "name": "Saudi Arabia",
+    "type": "country",
+    "regionId": "region_middle_east"
+  },
+  {
+    "id": "city_rome",
+    "name": "Rome",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_milan",
+    "name": "Milan",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_florence",
+    "name": "Florence",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_venice",
+    "name": "Venice",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_naples",
+    "name": "Naples",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_amalfi",
+    "name": "Amalfi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_positano",
+    "name": "Positano",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cinque_terre",
+    "name": "Cinque Terre",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1499678329028-101435549a4e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_siena",
+    "name": "Siena",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1599811566814-722cfa0256af?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_pisa",
+    "name": "Pisa",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541542684-ee7c7a96c20f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_turin",
+    "name": "Turin",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1595908129746-57bb1ca9274b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bologna",
+    "name": "Bologna",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1563810141258-00fc4884bc5c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_verona",
+    "name": "Verona",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1528150218153-6aed4c538a7c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_genoa",
+    "name": "Genoa",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1563290680-a68294da1bc8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bari",
+    "name": "Bari",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541362241300-3c22b1a37c02?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_palermo",
+    "name": "Palermo",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1601934661706-e78f9f090d8a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_pompeii",
+    "name": "Pompeii",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1569335468341-389d0b54f9a0?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sorrento",
+    "name": "Sorrento",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1598134443580-bdc7c6a96245?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_catania",
+    "name": "Catania",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1561571216-9b88b776263e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_taormina",
+    "name": "Taormina",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1620050868194-e840134f595b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lecce",
+    "name": "Lecce",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1587823521096-7a87178ee9ba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_matera",
+    "name": "Matera",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1552912441-d6028a2a8907?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lake_como",
+    "name": "Lake Como",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1545538132-7a92bab38c5b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lake_garda",
+    "name": "Lake Garda",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1568289569201-9ffdfcfbe8e7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_portofino",
+    "name": "Portofino",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sardinia",
+    "name": "Sardinia (Cagliari)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_perugia",
+    "name": "Perugia",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1616422328583-e18e69888915?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_orvieto",
+    "name": "Orvieto",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1597075095400-0e19cfb30f02?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_assisi",
+    "name": "Assisi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1563124803-f368d30e3954?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ravenna",
+    "name": "Ravenna",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_italy",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1596541604085-7832629bbf7a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_barcelona",
+    "name": "Barcelona",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_madrid",
+    "name": "Madrid",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_seville",
+    "name": "Seville",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_granada",
+    "name": "Granada",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1561021484-90227181016f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_valencia",
+    "name": "Valencia",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1558642084-fd074ec4bd9d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_malaga",
+    "name": "Malaga",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1579294800821-694d95e86143?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bilbao",
+    "name": "Bilbao",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541829070764-84a7d30dee3f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_san_sebastian",
+    "name": "San Sebastian",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1525230071276-4a87f42f469e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ibiza",
+    "name": "Ibiza",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1560170425-4c07da29b433?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tenerife",
+    "name": "Tenerife",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1589561454226-796a8aa89b05?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_palma",
+    "name": "Palma",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516496636080-1448e04237ad?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cordoba_es",
+    "name": "Cordoba",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1558231261-df73cf763870?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_toledo",
+    "name": "Toledo",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1536109968804-0359f4f46995?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_salamanca",
+    "name": "Salamanca",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_spain",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1612450531580-0a2da526154b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_paris",
+    "name": "Paris",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_nice",
+    "name": "Nice",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1491166617655-0723a0661b24?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lyon",
+    "name": "Lyon",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1569597867579-445d22114c6b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_marseille",
+    "name": "Marseille",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bordeaux",
+    "name": "Bordeaux",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549893072-4bc678117fba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_strasbourg",
+    "name": "Strasbourg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549646452-f472251a3db5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cannes",
+    "name": "Cannes",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_annecy",
+    "name": "Annecy",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1560170427-0c151121d556?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chamonix",
+    "name": "Chamonix",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1605538032432-a9f0c919a501?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mont_saint_michel",
+    "name": "Mont Saint-Michel",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1598516246877-2f7ba3043232?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_avignon",
+    "name": "Avignon",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1510524458316-d35fe6080ba3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_colmar",
+    "name": "Colmar",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_france",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549144511-f099e773c147?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_berlin",
+    "name": "Berlin",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_munich",
+    "name": "Munich",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1595867818082-083862f3d630?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hamburg",
+    "name": "Hamburg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cologne",
+    "name": "Cologne",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1490422119106-cf30f576e2c2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_frankfurt",
+    "name": "Frankfurt",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549490349-8643362247b5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dresden",
+    "name": "Dresden",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_heidelberg",
+    "name": "Heidelberg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559600122-ccbbf3e0a158?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_nuremberg",
+    "name": "Nuremberg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1599727443194-e3f4214f7765?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rothenburg",
+    "name": "Rothenburg ob der Tauber",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1581442111100-c97166a4bc27?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_fussen",
+    "name": "Fussen",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_germany",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_london",
+    "name": "London",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_manchester",
+    "name": "Manchester",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1573843221490-e483959950b7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_liverpool",
+    "name": "Liverpool",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1552353342-a393e8ca0f9b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bath",
+    "name": "Bath",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549822644-8395e81f185f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_oxford",
+    "name": "Oxford",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541014873321-df13b19b78a9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cambridge",
+    "name": "Cambridge",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1522115174737-2497162f69ec?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_york",
+    "name": "York",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1535914619736-2311f93f101a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cotswolds",
+    "name": "Cotswolds",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563721743048-cb58040b2efd?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cornwall",
+    "name": "Cornwall",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1505672678657-cc7037095e60?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_brighton",
+    "name": "Brighton",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1507608443039-bfde0855110f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lake_district",
+    "name": "Lake District (Windermere)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_england",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1508849789987-4e5333c12b78?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_edinburgh",
+    "name": "Edinburgh",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_scotland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1506377872008-6645d9d29ef7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_glasgow",
+    "name": "Glasgow",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_scotland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_isle_of_skye",
+    "name": "Isle of Skye",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_scotland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1526404423292-15db8c2334e5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_inverness",
+    "name": "Inverness",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_scotland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1560024220-4e5b7296ff91?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_st_andrews",
+    "name": "St Andrews",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_scotland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cardiff",
+    "name": "Cardiff",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_wales",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1573059224467-34748888e0eb?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_belfast",
+    "name": "Belfast",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_nireland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_giants_causeway",
+    "name": "Giant's Causeway",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_uk_nireland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528659556608-2508933b9c7b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_amsterdam",
+    "name": "Amsterdam",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rotterdam",
+    "name": "Rotterdam",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1544218563-3cb3d9515598?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_the_hague",
+    "name": "The Hague",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1582236173007-ccb86f4886f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_utrecht",
+    "name": "Utrecht",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_haarlem",
+    "name": "Haarlem",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1534954751410-67258380436d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_delft",
+    "name": "Delft",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_netherlands",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1563812832599-be0b3967d1fc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lisbon",
+    "name": "Lisbon",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1513735492246-483525079686?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_porto",
+    "name": "Porto",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sintra",
+    "name": "Sintra",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1503377212663-d1f214f77212?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_algarve_lagos",
+    "name": "Lagos",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563065011-37dc41c2106a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_faro",
+    "name": "Faro",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_braga",
+    "name": "Braga",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1562914107-160bfcd1947b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_coimbra",
+    "name": "Coimbra",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1557002665-c552e1832483?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_funchal",
+    "name": "Funchal (Madeira)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ponta_delgada",
+    "name": "Ponta Delgada (Azores)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_portugal",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549481358-132d7448cc4c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_athens",
+    "name": "Athens",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_santorini",
+    "name": "Santorini",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mykonos",
+    "name": "Mykonos",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_crete",
+    "name": "Crete (Heraklion)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rhodes",
+    "name": "Rhodes",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_corfu",
+    "name": "Corfu",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_meteora",
+    "name": "Meteora",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1501684992523-74da9636b04d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_thessaloniki",
+    "name": "Thessaloniki",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zakynthos",
+    "name": "Zakynthos",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1583344654032-a3d242f36d4f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chania",
+    "name": "Chania (Crete)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_naxos",
+    "name": "Naxos",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1586523912191-2ca34b9d36bb?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_paros",
+    "name": "Paros",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1598205244510-7469a9e3cb1b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_milos",
+    "name": "Milos",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kefalonia",
+    "name": "Kefalonia",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1558489580-faa74691fdc5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lefkada",
+    "name": "Lefkada",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_delphi",
+    "name": "Delphi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_greece",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1608958415210-9285747ba949?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zurich",
+    "name": "Zurich",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_geneva",
+    "name": "Geneva",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541746972996-4e0b0f43e01a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bern",
+    "name": "Bern",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lucerne",
+    "name": "Lucerne",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1588614470366-a3203f19a01c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_interlaken",
+    "name": "Interlaken",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zermatt",
+    "name": "Zermatt",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_basel",
+    "name": "Basel",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549646452-f472251a3db5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_grindelwald",
+    "name": "Grindelwald",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_switzerland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_prague",
+    "name": "Prague",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_czechia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541849546-216549ae216d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_brno",
+    "name": "Brno",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_czechia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cesky_krumlov",
+    "name": "Cesky Krumlov",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_czechia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1571210182410-b9dfae89b5dc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_karlovy_vary",
+    "name": "Karlovy Vary",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_czechia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1589632483569-8051756bc340?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_budapest",
+    "name": "Budapest",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_hungary",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549451371-64aa98a6f660?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_eger",
+    "name": "Eger",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_hungary",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1596436889106-be35e843f974?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vienna",
+    "name": "Vienna",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_salzburg",
+    "name": "Salzburg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1573555801434-25d7a7e1f9a3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_innsbruck",
+    "name": "Innsbruck",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hallstatt",
+    "name": "Hallstatt",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1520638029751-402747698240?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_graz",
+    "name": "Graz",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_austria",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1569429593410-b498b3fb3387?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_warsaw",
+    "name": "Warsaw",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1607427293702-036933bbf746?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_krakow",
+    "name": "Kraków",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1584611880564-a07162a4b5c4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_gdansk",
+    "name": "Gdansk",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1565011523534-747a8601f10a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_wroclaw",
+    "name": "Wroclaw",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zakopane",
+    "name": "Zakopane",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_poland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1542451313-a11b0eff3044?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_brussels",
+    "name": "Brussels",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_belgium",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559113513-d5b9de3b0bba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bruges",
+    "name": "Bruges",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_belgium",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ghent",
+    "name": "Ghent",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_belgium",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563721743048-cb58040b2efd?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_antwerp",
+    "name": "Antwerp",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_belgium",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1564314968303-86c5df2b9a4c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_copenhagen",
+    "name": "Copenhagen",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_denmark",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_aarhus",
+    "name": "Aarhus",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_denmark",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1555990793-da11153b2473?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_stockholm",
+    "name": "Stockholm",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_sweden",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_gothenburg",
+    "name": "Gothenburg",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_sweden",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_malmo",
+    "name": "Malmo",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_sweden",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1590059521360-1e5b88bd3722?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_visby",
+    "name": "Visby (Gotland)",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_sweden",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1616422328583-e18e69888915?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_oslo",
+    "name": "Oslo",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bergen",
+    "name": "Bergen",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1600811156044-b6c5c74e7b18?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tromso",
+    "name": "Tromso",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1579033393083-f542a6a9b43e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_flam",
+    "name": "Flam",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lofoten",
+    "name": "Lofoten Islands",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_norway",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1494548162494-384bba4ab999?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_helsinki",
+    "name": "Helsinki",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_finland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559060680-a4c7d13f4f52?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rovaniemi",
+    "name": "Rovaniemi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_finland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tampere",
+    "name": "Tampere",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_finland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dublin",
+    "name": "Dublin",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549918864-48ac978761a4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_galway",
+    "name": "Galway",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563806935-430c6a382e70?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cork",
+    "name": "Cork",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1588614470366-a3203f19a01c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_killarney",
+    "name": "Killarney",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dingle",
+    "name": "Dingle",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1505672678657-cc7037095e60?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kilkenny",
+    "name": "Kilkenny",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ireland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1528150218153-6aed4c538a7c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dubrovnik",
+    "name": "Dubrovnik",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1555990793-da11153b2473?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_split",
+    "name": "Split",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zagreb",
+    "name": "Zagreb",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rovinj",
+    "name": "Rovinj",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1548126032-079a0fb0099d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_plitvice",
+    "name": "Plitvice Lakes",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hvar",
+    "name": "Hvar",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zadar",
+    "name": "Zadar",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_croatia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1555992336-03a23c7b20eb?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_reykjavik",
+    "name": "Reykjavik",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_iceland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1529963183134-61a90db47eaf?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_akureyri",
+    "name": "Akureyri",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_iceland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vik",
+    "name": "Vik",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_iceland",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_husavik",
+    "name": "Husavik",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_iceland",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1504893524553-ac55fce698be?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_istanbul",
+    "name": "Istanbul",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cappadocia",
+    "name": "Cappadocia",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1570939274717-7eda259b3773?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_antalya",
+    "name": "Antalya",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1590736704728-f4730bb30770?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bodrum",
+    "name": "Bodrum",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_pamukkale",
+    "name": "Pamukkale",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_izmir",
+    "name": "Izmir",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1561542320-9a18cd340469?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_fethiye",
+    "name": "Fethiye",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_goreme",
+    "name": "Goreme",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_turkey",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507608443039-bfde0855110f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ljubljana",
+    "name": "Ljubljana",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_slovenia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1588614470366-a3203f19a01c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bled",
+    "name": "Bled",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_slovenia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_piran",
+    "name": "Piran",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_slovenia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549893072-4bc678117fba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bucharest",
+    "name": "Bucharest",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_romania",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cluj_napoca",
+    "name": "Cluj-Napoca",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_romania",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1569597867579-445d22114c6b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_brasov",
+    "name": "Brasov",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_romania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sibiu",
+    "name": "Sibiu",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_romania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1599811566814-722cfa0256af?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sighisoara",
+    "name": "Sighisoara",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_romania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541542684-ee7c7a96c20f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sofia",
+    "name": "Sofia",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_bulgaria",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1595908129746-57bb1ca9274b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_plovdiv",
+    "name": "Plovdiv",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_bulgaria",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563810141258-00fc4884bc5c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_varna",
+    "name": "Varna",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_bulgaria",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1528150218153-6aed4c538a7c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_belgrade",
+    "name": "Belgrade",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_serbia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563290680-a68294da1bc8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_novi_sad",
+    "name": "Novi Sad",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_serbia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541362241300-3c22b1a37c02?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sarajevo",
+    "name": "Sarajevo",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_bosnia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1601934661706-e78f9f090d8a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mostar",
+    "name": "Mostar",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_bosnia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1569335468341-389d0b54f9a0?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kotor",
+    "name": "Kotor",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_montenegro",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1598134443580-bdc7c6a96245?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_budva",
+    "name": "Budva",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_montenegro",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1561571216-9b88b776263e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tirana",
+    "name": "Tirana",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_albania",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1620050868194-e840134f595b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_berat",
+    "name": "Berat",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_albania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1587823521096-7a87178ee9ba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_saranda",
+    "name": "Saranda",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_albania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1552912441-d6028a2a8907?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_gjirokastra",
+    "name": "Gjirokastra",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_albania",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1545538132-7a92bab38c5b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tallinn",
+    "name": "Tallinn",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_estonia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1568289569201-9ffdfcfbe8e7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_riga",
+    "name": "Riga",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_latvia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vilnius",
+    "name": "Vilnius",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_lithuania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tbilisi",
+    "name": "Tbilisi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_georgia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_batumi",
+    "name": "Batumi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_georgia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1561021484-90227181016f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kazbegi",
+    "name": "Kazbegi",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_georgia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1558642084-fd074ec4bd9d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yerevan",
+    "name": "Yerevan",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_armenia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1579294800821-694d95e86143?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kyiv",
+    "name": "Kyiv",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ukraine",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541829070764-84a7d30dee3f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lviv",
+    "name": "Lviv",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_ukraine",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1560170425-4c07da29b433?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_paphos",
+    "name": "Paphos",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_cyprus",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1589561454226-796a8aa89b05?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_limassol",
+    "name": "Limassol",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_cyprus",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1516496636080-1448e04237ad?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_valletta",
+    "name": "Valletta",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_malta",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1558231261-df73cf763870?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mdina",
+    "name": "Mdina",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_malta",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1536109968804-0359f4f46995?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_st_julians",
+    "name": "St Julian's",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_malta",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1612450531580-0a2da526154b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_luxembourg_city",
+    "name": "Luxembourg City",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_luxembourg",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549144511-f099e773c147?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_andorra_la_vella",
+    "name": "Andorra la Vella",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_andorra",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_skopje",
+    "name": "Skopje",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_n_macedonia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1595867818082-083862f3d630?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ohrid",
+    "name": "Ohrid",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_n_macedonia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bratislava",
+    "name": "Bratislava",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_slovakia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1490422119106-cf30f576e2c2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_pristina",
+    "name": "Pristina",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_kosovo",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549490349-8643362247b5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_prizren",
+    "name": "Prizren",
+    "type": "city",
+    "regionId": "region_europe",
+    "countryId": "country_kosovo",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bangkok",
+    "name": "Bangkok",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chiangmai",
+    "name": "Chiang Mai",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_phuket",
+    "name": "Phuket",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_koh_samui",
+    "name": "Koh Samui",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_koh_phangan",
+    "name": "Koh Phangan",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_koh_tao",
+    "name": "Koh Tao",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_krabi",
+    "name": "Krabi",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chiang_rai",
+    "name": "Chiang Rai",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1596436889106-be35e843f974?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_pai",
+    "name": "Pai",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ayutthaya",
+    "name": "Ayutthaya",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_koh_lanta",
+    "name": "Koh Lanta",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_koh_phi_phi",
+    "name": "Koh Phi Phi",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hua_hin",
+    "name": "Hua Hin",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_thailand",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hanoi",
+    "name": "Hanoi",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hcmc",
+    "name": "Ho Chi Minh City",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hoi_an",
+    "name": "Hoi An",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ha_long_bay",
+    "name": "Ha Long Bay",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_da_nang",
+    "name": "Da Nang",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559592413-7ece359347d7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_nha_trang",
+    "name": "Nha Trang",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1543735385-122b4164d466?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_da_lat",
+    "name": "Da Lat",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hue",
+    "name": "Hue",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sapa",
+    "name": "Sapa",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_phu_quoc",
+    "name": "Phu Quoc",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ninh_binh",
+    "name": "Ninh Binh",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_phong_nha",
+    "name": "Phong Nha",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_vietnam",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bali_kuta",
+    "name": "Bali (Kuta/Seminyak)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bali_ubud",
+    "name": "Bali (Ubud)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bali_canggu",
+    "name": "Bali (Canggu)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bali_uluwatu",
+    "name": "Bali (Uluwatu)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lombok",
+    "name": "Lombok",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563810141258-00fc4884bc5c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_gili_islands",
+    "name": "Gili Islands",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yogyakarta",
+    "name": "Yogyakarta",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_jakarta",
+    "name": "Jakarta",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_komodo",
+    "name": "Komodo Island",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_raja_ampat",
+    "name": "Raja Ampat",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_labuan_bajo",
+    "name": "Labuan Bajo",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_nusa_penida",
+    "name": "Nusa Penida",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_indonesia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_manila",
+    "name": "Manila",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_el_nido",
+    "name": "El Nido",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_boracay",
+    "name": "Boracay",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_coron",
+    "name": "Coron",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cebu",
+    "name": "Cebu City",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bohol",
+    "name": "Bohol",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_siargao",
+    "name": "Siargao",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_palawan",
+    "name": "Palawan (Puerto Princesa)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_philippines",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_siem_reap",
+    "name": "Siem Reap",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_cambodia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_phnom_penh",
+    "name": "Phnom Penh",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_cambodia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sihanoukville",
+    "name": "Sihanoukville",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_cambodia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kampot",
+    "name": "Kampot",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_cambodia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_koh_rong",
+    "name": "Koh Rong",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_cambodia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_luang_prabang",
+    "name": "Luang Prabang",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_laos",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vientiane",
+    "name": "Vientiane",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_laos",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vang_vieng",
+    "name": "Vang Vieng",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_laos",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_4000_islands",
+    "name": "4000 Islands (Si Phan Don)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_laos",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kuala_lumpur",
+    "name": "Kuala Lumpur",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1596422846543-75c6fc18a523?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_penang",
+    "name": "Penang (Georgetown)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1604999333679-b86d54738315?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_langkawi",
+    "name": "Langkawi",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_melaka",
+    "name": "Melaka",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1596422846543-75c6fc18a52b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kota_kinabalu",
+    "name": "Kota Kinabalu (Sabah)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kuching",
+    "name": "Kuching (Sarawak)",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1571217691717-3bf791d3bc28?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ipoh",
+    "name": "Ipoh",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_malaysia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1628135824510-7b3bdf229d4c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_singapore",
+    "name": "Singapore City",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_singapore",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bagan",
+    "name": "Bagan",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_myanmar",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541417904950-b855846fe074?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yangon",
+    "name": "Yangon",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_myanmar",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mandalay",
+    "name": "Mandalay",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_myanmar",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_inle_lake",
+    "name": "Inle Lake",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_myanmar",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1524146128017-b9dd0bfd2778?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bandar_seri_begawan",
+    "name": "Bandar Seri Begawan",
+    "type": "city",
+    "regionId": "region_southeast_asia",
+    "countryId": "country_brunei",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bogota",
+    "name": "Bogotá",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1562183241-840b8af0721e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_medellin",
+    "name": "Medellin",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1571494541743-693ed3cb86ee?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cartagena",
+    "name": "Cartagena",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cali",
+    "name": "Cali",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1533038590840-1cde6e668a91?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_santa_marta",
+    "name": "Santa Marta",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_salento",
+    "name": "Salento",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_colombia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1582236319808-1f1981180fb8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_lima",
+    "name": "Lima",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1531968455001-5c5272a41129?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cusco",
+    "name": "Cusco",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_machu_picchu",
+    "name": "Machu Picchu",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1509216242873-7786f446f465?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_arequipa",
+    "name": "Arequipa",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1590054795393-d34315219d8f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_iquitos",
+    "name": "Iquitos",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_puno",
+    "name": "Puno",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_peru",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1583491417728-66236b2eb3df?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_la_paz",
+    "name": "La Paz",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_bolivia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1568994270415-b9fbe41865c1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_uyuni",
+    "name": "Uyuni (Salt Flats)",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_bolivia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sucre",
+    "name": "Sucre",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_bolivia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1619541525043-43a992648729?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_potosi",
+    "name": "Potosi",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_bolivia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1542640244-7e672d6cef21?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rio",
+    "name": "Rio de Janeiro",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sao_paulo",
+    "name": "São Paulo",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1578002769827-fa0d87b0ee07?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_salvador",
+    "name": "Salvador",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_florianopolis",
+    "name": "Florianopolis",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1554124673-dbf64b633008?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_manaus",
+    "name": "Manaus",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1580541631971-e40df0cde1a0?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_iguazu_br",
+    "name": "Foz do Iguaçu",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_brazil",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_buenos_aires",
+    "name": "Buenos Aires",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1589409202802-8f4aadce1849?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mendoza",
+    "name": "Mendoza",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1596560548464-f01068e62a17?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bariloche",
+    "name": "Bariloche",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1599818818451-b06cb87b1c1e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_salta",
+    "name": "Salta",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1627664819818-e147d6221422?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ushuaia",
+    "name": "Ushuaia",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_el_calafate",
+    "name": "El Calafate",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_argentina",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563811771146-577e3ca01217?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_santiago",
+    "name": "Santiago",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_chile",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1597349699654-35d23f77c21e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_valparaiso",
+    "name": "Valparaiso",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_chile",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1593134253032-4d4822203b29?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_san_pedro_atacama",
+    "name": "San Pedro de Atacama",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_chile",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_torres_del_paine",
+    "name": "Torres del Paine",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_chile",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_quito",
+    "name": "Quito",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_ecuador",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1588172901264-539665bc7c49?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_galapagos",
+    "name": "Galapagos Islands",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_ecuador",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cuenca_ec",
+    "name": "Cuenca",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_ecuador",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1512813583145-baaa340ef29f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_montevideo",
+    "name": "Montevideo",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_uruguay",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_punta_del_este",
+    "name": "Punta del Este",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_uruguay",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_asuncion",
+    "name": "Asuncion",
+    "type": "city",
+    "regionId": "region_south_america",
+    "countryId": "country_paraguay",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1568051243851-f9b136146e97?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_new_york",
+    "name": "New York City",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_los_angeles",
+    "name": "Los Angeles",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1534190760961-74e8c1c5c3da?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_san_francisco",
+    "name": "San Francisco",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_las_vegas",
+    "name": "Las Vegas",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_miami",
+    "name": "Miami",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chicago",
+    "name": "Chicago",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_honolulu",
+    "name": "Honolulu (Oahu)",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1542259005453-df954c422d57?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_maui",
+    "name": "Maui",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_new_orleans",
+    "name": "New Orleans",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_nashville",
+    "name": "Nashville",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_washington_dc",
+    "name": "Washington DC",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1557160854-e1e89fdd3286?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_boston",
+    "name": "Boston",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1506970845246-18f21d533b20?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_seattle",
+    "name": "Seattle",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1502175353174-a7a70e73b362?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_denver",
+    "name": "Denver",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_san_diego",
+    "name": "San Diego",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_grand_canyon",
+    "name": "Grand Canyon",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1615551043360-33de8b5f410c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yellowstone",
+    "name": "Yellowstone National Park",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1564314968303-86c5df2b9a4c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yosemite",
+    "name": "Yosemite National Park",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sedona",
+    "name": "Sedona",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zion",
+    "name": "Zion National Park",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1606859309981-270838d57ed8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bryce_canyon",
+    "name": "Bryce Canyon",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_orlando",
+    "name": "Orlando",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1597466765990-64ad1c35dafc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_austin",
+    "name": "Austin",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1531266752426-aad472b7bbf4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_philadelphia",
+    "name": "Philadelphia",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_portland_or",
+    "name": "Portland",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541414779316-956a5084c0d4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_napa_valley",
+    "name": "Napa Valley",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_aspen",
+    "name": "Aspen",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1611605698335-8b15d27e03f2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_jackson_hole",
+    "name": "Jackson Hole",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1530089255866-ab0e2b4be72a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_santa_fe",
+    "name": "Santa Fe",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1473163928189-364b2c4e1135?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_key_west",
+    "name": "Key West",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_anchorage",
+    "name": "Anchorage",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1482862549707-f63cb32c5fd9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_asheville",
+    "name": "Asheville",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1619546252870-fb682a85e8d1?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_charleston_sc",
+    "name": "Charleston",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1575303093127-16a15717ff47?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_savannah",
+    "name": "Savannah",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549474843-ea9af4d90f23?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_atlanta",
+    "name": "Atlanta",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1524168204150-c72bb4f5f129?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_minneapolis",
+    "name": "Minneapolis",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_usa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1534005952614-72215cc1263d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_toronto",
+    "name": "Toronto",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_vancouver",
+    "name": "Vancouver",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1559511260-66a654ae982a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_montreal",
+    "name": "Montreal",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1519178125433-2895f51083ef?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_banff",
+    "name": "Banff",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1483168527879-c66136b56105?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_quebec_city",
+    "name": "Quebec City",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1524022410005-349079a83a06?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_victoria_bc",
+    "name": "Victoria",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1561958867-e7c5a285d691?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_whistler",
+    "name": "Whistler",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_jasper",
+    "name": "Jasper",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_calgary",
+    "name": "Calgary",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1519112232436-9923c6192a53?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_ottawa",
+    "name": "Ottawa",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_niagara_falls",
+    "name": "Niagara Falls",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yellowknife",
+    "name": "Yellowknife",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_canada",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mexico_city",
+    "name": "Mexico City",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cancun",
+    "name": "Cancún",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tulum",
+    "name": "Tulum",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_playa_del_carmen",
+    "name": "Playa del Carmen",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_oaxaca",
+    "name": "Oaxaca City",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1465256410760-10485d5be681?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_san_miguel_allende",
+    "name": "San Miguel de Allende",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1595841696660-aa2722165f9a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_guadalajara",
+    "name": "Guadalajara",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1569949380643-6e7a6ecff340?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_puerto_vallarta",
+    "name": "Puerto Vallarta",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cabo_san_lucas",
+    "name": "Cabo San Lucas",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_merida_mx",
+    "name": "Merida",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1582236838334-1cfa97607797?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_guanajuato",
+    "name": "Guanajuato",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1591389703635-e15a07b842d7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chichen_itza",
+    "name": "Chichen Itza",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1518638150340-f706e86654de?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_bacalar",
+    "name": "Bacalar",
+    "type": "city",
+    "regionId": "region_north_america",
+    "countryId": "country_mexico",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563294329-87ff819c9b58?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sydney",
+    "name": "Sydney",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_melbourne",
+    "name": "Melbourne",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_brisbane",
+    "name": "Brisbane",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_gold_coast",
+    "name": "Gold Coast",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1572431447238-425af66a273b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cairns",
+    "name": "Cairns",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_perth",
+    "name": "Perth",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1574786438096-7d6861da69d6?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_adelaide",
+    "name": "Adelaide",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1548565431-4a87b89736e6?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hobart",
+    "name": "Hobart",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1569330107297-c7ba48b1bfb9?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_byron_bay",
+    "name": "Byron Bay",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_uluru",
+    "name": "Uluru (Ayers Rock)",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1529260830199-44580cf5160d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_great_ocean_road",
+    "name": "Great Ocean Road",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504681869397-879db299fb1d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_whitsundays",
+    "name": "Whitsundays",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_blue_mountains",
+    "name": "Blue Mountains",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_margaret_river",
+    "name": "Margaret River",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1563189333-3a7d23d24545?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_port_douglas",
+    "name": "Port Douglas",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_airlie_beach",
+    "name": "Airlie Beach",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1473116763269-25544724652c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_noosa",
+    "name": "Noosa",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_darwin",
+    "name": "Darwin",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kakadu",
+    "name": "Kakadu National Park",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1541414779316-956a5084c0d4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cradle_mountain",
+    "name": "Cradle Mountain",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_kangaroo_island",
+    "name": "Kangaroo Island",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_fremantle",
+    "name": "Fremantle",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_broome",
+    "name": "Broome",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_phillip_island",
+    "name": "Phillip Island",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1570114041132-7232230cf820?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_mornington",
+    "name": "Mornington Peninsula",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_hunter_valley",
+    "name": "Hunter Valley",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_barossa_valley",
+    "name": "Barossa Valley",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_canberra",
+    "name": "Canberra",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_alice_springs",
+    "name": "Alice Springs",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_yarra_valley",
+    "name": "Yarra Valley",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_grampians",
+    "name": "Grampians",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_fraser_island",
+    "name": "Fraser Island (K'gari)",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_rottnest_island",
+    "name": "Rottnest Island",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_sunshine_coast",
+    "name": "Sunshine Coast",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_launceston",
+    "name": "Launceston",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_freycinet",
+    "name": "Freycinet (Wineglass Bay)",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_port_arthur",
+    "name": "Port Arthur",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_exmouth",
+    "name": "Exmouth (Ningaloo)",
+    "type": "city",
+    "regionId": "region_australia",
+    "countryId": "country_australia",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cairo",
+    "name": "Cairo",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_egypt",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_luxor",
+    "name": "Luxor",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_egypt",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_marrakech",
+    "name": "Marrakech",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_fes",
+    "name": "Fes",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1565791380713-1756b9a05343?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_casablanca",
+    "name": "Casablanca",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_chefchaouen",
+    "name": "Chefchaouen",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_morocco",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1554101413-a4e9efcd05ea?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_cape_town",
+    "name": "Cape Town",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_south_africa",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_johannesburg",
+    "name": "Johannesburg",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_south_africa",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_nairobi",
+    "name": "Nairobi",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_kenya",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1614531341773-3bff8b7cb3fc?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_zanzibar",
+    "name": "Zanzibar",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_tanzania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1612699896716-6bfce39e0b03?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_serengeti",
+    "name": "Serengeti",
+    "type": "city",
+    "regionId": "region_africa",
+    "countryId": "country_tanzania",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_dubai",
+    "name": "Dubai",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_uae",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_abu_dhabi",
+    "name": "Abu Dhabi",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_uae",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_petra",
+    "name": "Petra",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_jordan",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1548786811-dd6e453ccca7?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_amman",
+    "name": "Amman",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_jordan",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1541414779316-956a5084c0d4?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_tel_aviv",
+    "name": "Tel Aviv",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_israel",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1544015759-237f4a4e1b3e?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_jerusalem",
+    "name": "Jerusalem",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_israel",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1562979314-bee7453e911c?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_muscat",
+    "name": "Muscat",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_oman",
+    "isPopular": true,
+    "image": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "city_riyadh",
+    "name": "Riyadh",
+    "type": "city",
+    "regionId": "region_middle_east",
+    "countryId": "country_saudi",
+    "isPopular": false,
+    "image": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=800&auto=format&fit=crop"
+  }
+]

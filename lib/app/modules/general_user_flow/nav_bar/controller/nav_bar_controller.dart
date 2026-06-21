@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../core/constants/app_colors.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/city/view/city_view.dart';
 import '../../../../core/constants/app_icons.dart';
-import '../ui/widgets/create_action_sheet.dart';
+
+
 
 class NavBarItemData {
   const NavBarItemData({
@@ -73,12 +73,12 @@ class NavBarController extends GetxController {
     NavBarCreateAction(
       icon: Icons.add_road_rounded,
       title: 'New Trip',
-      onTap: () {},
+      onTap: () => Get.to(() => CityViewScreen()),
     ),
     NavBarCreateAction(
       icon: Icons.event_available_rounded,
       title: 'New Booking',
-      onTap: () {},
+      onTap: () => Get.to(() => CityViewScreen()),
     ),
   ];
 
@@ -88,19 +88,19 @@ class NavBarController extends GetxController {
 
   void onNavTap(int index) {
     if (index == centerIndex) {
-      openCreateSheet();
+      Get.to(() => CityViewScreen());
       return;
     }
     setIndex(index);
   }
 
-  void openCreateSheet() {
-    Get.bottomSheet<void>(
-      CreateActionSheet(actions: createActions),
-      backgroundColor: AppColors.whiteColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-      ),
-    );
-  }
+  // void openCreateSheet() {
+  //   Get.bottomSheet<void>(
+  //     CreateActionSheet(actions: createActions),
+  //     backgroundColor: AppColors.whiteColor,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+  //     ),
+  //   );
+  // }
 }

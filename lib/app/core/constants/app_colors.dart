@@ -4,7 +4,7 @@ class AppColors {
   // Light Theme Colors
   static const Color primaryColor = Color(0xFFE8B298);
   static const Color secondaryColor = Color(0xFF999A9A);
-  static const Color bgColor = Color(0xFFF6F0E5);
+  static const Color bgColor = Color(0xFFFffffff);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
   static const Color greyColor = Color(0xFF616161);
@@ -23,5 +23,9 @@ class AppColors {
 
   static const Color authOrange = Color(0xFFFE751F);
   static const Color authOrangeDark = Color(0xFFD86B2F);
+  static const Color orangeLight = Color(0xFFf7ebe4);
   static const Color authFieldBorder = Color(0xFFD6E0F3);
+  static const Color authFieldFill = Color(0xFFF6F6F6);
+  static const Color borderColor = Color(0xFFC5D3E2);
+  
 }

@@ -1,17 +1,26 @@
+
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hamishphipps/app/core/constants/app_toast.dart';
+import 'package:hamishphipps/app/core/data/network/endpoints.dart';
+import 'package:hamishphipps/app/core/data/network/netconfig.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/auth/ui/6_verify_otp.dart';
 
-import '../../../../core/widgets/app_snackbar.dart';
-import '../../../../routes/app_routes.dart';
 
 class SignupController extends GetxController {
+  final networkConfig = NetworkConfigV1.instance;
   final fullNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final phoneController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   final isPasswordVisible = false.obs;
   final isTermsAgreed = false.obs;
+  final isSignupLoading = false.obs;
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
@@ -27,6 +36,10 @@ class SignupController extends GetxController {
     }
     if (value.length < 3) {
       return 'Full name must be at least 3 characters';
+    }
+    // Check if name contains only letters and spaces
+    if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+      return 'Full name can only contain letters and spaces';
     }
     return null;
   }
@@ -44,40 +57,82 @@ class SignupController extends GetxController {
     return null;
   }
 
-  String? validatePassword(String? value) {
+  String? validatePhoneNumber(String? value) {
+    // Phone number is optional, so empty is allowed
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return null;
     }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+    // If provided, validate format
+    if (value.length < 10) {
+      return 'Phone number must be at least 10 digits';
+    }
+    if (!RegExp(r'^[0-9+\-\s()]+$').hasMatch(value)) {
+      return 'Enter a valid phone number';
     }
     return null;
   }
 
-  void onSignupPressed() {
-    if (!isTermsAgreed.value) {
-      AppSnackBar.error(
-        'Please agree to Terms of Service and Privacy Policy',
-        title: 'Error',
-      );
-      return;
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
     }
-    if (formKey.currentState!.validate()) {
-      AppSnackBar.success('OTP sent to your email', title: 'Success');
-      Future.delayed(const Duration(seconds: 1), () {
-        Get.offNamed(
-          AppRoutes.VERIFICATION,
-          arguments: {'flow': 'signup', 'email': emailController.text.trim()},
-        );
-      });
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+
+    return null;
+  }
+
+
+  Future<void> onSignupPressed() async {
+    try {
+      isSignupLoading.value = true;
+
+      // Validate form
+      if (!formKey.currentState!.validate()) {
+        isSignupLoading.value = false;
+        return;
+      }
+
+      // Check terms agreement
+      if (!isTermsAgreed.value) {
+        AppToast.showError('You must agree to the terms and conditions');
+        isSignupLoading.value = false;
+        return;
+      }
+
+      // Build request body
+      final Map<String, dynamic> jsonBody = {
+        "fullName": fullNameController.text.trim(),
+        "email": emailController.text.trim(),
+        "password": passwordController.text.trim(),
+      };
+
+      
+
+      // Make API request
+      final response = await networkConfig.ApiRequestHandler(
+        RequestMethod.POST,
+        Urls.register,
+        jsonEncode(jsonBody),
+      );
+
+      if (response != null && response['success'] == true) {
+        AppToast.showSuccess(response['message'] ?? 'Signup successful');
+        // Navigate to OTP verification screen
+        Get.to(()=>VerifyOtpScreen(email: emailController.text.trim(),isForPasswordReset: false,));
+      } else {
+        AppToast.showError(response['message'] ?? 'Signup failed');
+      }
+    } catch (e) {
+      AppToast.showError('An error occurred. Please try again.');
+    } finally {
+      isSignupLoading.value = false;
     }
   }
 
   @override
   void onClose() {
-    fullNameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
     super.onClose();
   }
 }
