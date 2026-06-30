@@ -13,6 +13,12 @@ class StayController extends GetxController {
   int get totalDays =>
       locations.fold(0, (sum, item) => sum + item.stayDays.value);
 
+  bool get isReadyToProceed =>
+      locations.isNotEmpty &&
+      locations.every((loc) =>
+          loc.selectedAccommodation.value.isNotEmpty &&
+          loc.selectedTransport.value.isNotEmpty);
+
   void distributeDaysToCities(int totalDays) {
     if (locations.isEmpty) return;
     final daysPerCity = (totalDays / locations.length).floor();
@@ -70,10 +76,10 @@ class StayController extends GetxController {
           itineraryId: data['id']?.toString(),
           initialDays: (data['days'] is int ? data['days'] as int : 1),
           selectedAccommodation:
-              data['accommodation']?.toString() ?? 'Not Sure Yet',
+              data['accommodation']?.toString() ?? '',
           selectedTransport: data['transportation']?.toString() ??
               data['transport']?.toString() ??
-              'Not Sure Yet',
+              '',
         );
       }).toList());
     }
@@ -147,15 +153,15 @@ class StayLocation {
   // ✅ Loading & revert state
   var isUpdating = false.obs;
   var updatingField = ''.obs;
-  String previousAccommodation = 'Not Sure Yet';
-  String previousTransport = 'Not Sure Yet';
+  String previousAccommodation = '';
+  String previousTransport = '';
 
   StayLocation({
     required this.cityName,
     this.itineraryId,
     int initialDays = 1,
-    String selectedAccommodation = 'Not Sure Yet',
-    String selectedTransport = 'Not Sure Yet',
+    String selectedAccommodation = '',
+    String selectedTransport = '',
   }) {
     stayDays.value = initialDays;
     this.selectedAccommodation.value = selectedAccommodation;

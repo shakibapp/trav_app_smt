@@ -156,23 +156,12 @@ class HomeScreen extends GetWidget<HomeController> {
                                                     BorderRadius.circular(20.r),
                                                 child: trip.images != null &&
                                                         trip.images!.isNotEmpty
-                                                    ? PageView.builder(
-                                                        itemCount:
-                                                            trip.images!.length,
-                                                        itemBuilder:
-                                                            (_, imgIndex) {
-                                                          return AppNetworkImage(
-                                                            imageUrl: trip
-                                                                        .images![
-                                                                    imgIndex] ??
-                                                                "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            fit: BoxFit.cover,
-                                                          );
-                                                        },
+                                                    ? AppNetworkImage(
+                                                        imageUrl: trip.images!.first ??
+                                                            "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
                                                       )
                                                     : AppNetworkImage(
                                                         imageUrl:
@@ -377,9 +366,10 @@ class HomeScreen extends GetWidget<HomeController> {
                                     ));
                               },
                               child: Container(
+                                width: 150,
                                 alignment: Alignment.center,
                                 height: 180.h,
-                                margin: EdgeInsets.only(right: 5.h),
+                                margin: EdgeInsets.only(right: 12.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border.all(
@@ -390,10 +380,10 @@ class HomeScreen extends GetWidget<HomeController> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        width: 120,
+                                        width: 150,
                                         height: 100,
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -402,7 +392,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                         child: AppNetworkImage(
                                           fit: BoxFit.cover,
                                           height: 100,
-                                          width: 120,
+                                          width: 150,
                                           imageUrl:
                                               itinerary.image?.isNotEmpty ??
                                                       false
@@ -416,7 +406,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(left: 8.0),
+                                            const EdgeInsets.only(left: 8.0, top: 4.0, right: 4.0),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -424,7 +414,7 @@ class HomeScreen extends GetWidget<HomeController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "${itinerary.name}",
+                                              itinerary.name?.replaceAll('_', ' ') ?? "",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -434,7 +424,9 @@ class HomeScreen extends GetWidget<HomeController> {
                                               ),
                                             ),
                                             Text(
-                                              "${itinerary.days} Day, ${itinerary.transportation}",
+                                              "${itinerary.days} Day, ${itinerary.transportation?.replaceAll('_', ' ') ?? ''}",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize: 10.sp,
                                                 fontWeight: FontWeight.w400,
@@ -529,8 +521,9 @@ class HomeScreen extends GetWidget<HomeController> {
         reminder.passportExpiry!.year > 1900 &&
         !reminder.passportExpiry!.isBefore(DateTime.now());
 
-    final visaChecked =
-        reminder.isVisaConfirmed == true || reminder.noVisaRequired == true;
+    final visaChecked = reminder.isVisaConfirmed == true ||
+        reminder.noVisaRequired == true ||
+        reminder.needsAttention == true;
 
     final insuranceChecked = reminder.haveInsurance == true;
 
@@ -673,7 +666,7 @@ class HomeScreen extends GetWidget<HomeController> {
       scrollDirection: Axis.horizontal,
       itemCount: 3,
       padding: EdgeInsets.zero,
-      separatorBuilder: (_, index) => SizedBox(width: 10.w),
+      separatorBuilder: (_, index) => SizedBox(width: 16.w),
       itemBuilder: (_, index) => Shimmer.fromColors(
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
@@ -681,15 +674,15 @@ class HomeScreen extends GetWidget<HomeController> {
           width: 220,
           margin: EdgeInsets.only(right: 5.h),
           decoration: BoxDecoration(
-            color: Colors.white,
+            border: Border.all(color: Colors.grey.shade300, width: 2),
             borderRadius: BorderRadius.circular(20.r),
           ),
           padding: EdgeInsets.all(16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(height: 18.h, width: 100.w, color: Colors.white),
-              SizedBox(height: 12.h),
+              Container(height: 18.h, width: 120.w, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.r))),
+              SizedBox(height: 16.h),
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -708,38 +701,43 @@ class HomeScreen extends GetWidget<HomeController> {
 
   Widget _buildDestinationsLoadingShimmer() {
     return SizedBox(
-      height: 150.h,
+      height: 180.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: 4,
         padding: EdgeInsets.zero,
-        separatorBuilder: (_, index) => SizedBox(width: 10.w),
+        separatorBuilder: (_, index) => SizedBox(width: 16.w),
         itemBuilder: (_, index) => Shimmer.fromColors(
           baseColor: Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
           child: Container(
-            height: 120.h,
-            width: 100.w,
+            width: 150,
             margin: EdgeInsets.only(right: 5.h),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20.r),
+              border: Border.all(color: Colors.grey.shade300, width: 2),
+              borderRadius: BorderRadius.circular(15.r),
             ),
-            padding: EdgeInsets.all(10.w),
+            padding: EdgeInsets.all(12.w),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: 72.h,
+                  height: 90.h,
                   width: double.infinity,
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.r),
+                  ),
                 ),
+                SizedBox(height: 12.h),
                 Container(
-                  height: 12.h,
+                  height: 14.h,
                   width: double.infinity,
-                  color: Colors.white,
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.r)),
                 ),
-                Container(height: 12.h, width: 50.w, color: Colors.white),
+                SizedBox(height: 8.h),
+                Container(height: 12.h, width: 80.w, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.r))),
               ],
             ),
           ),
@@ -764,16 +762,22 @@ class HomeScreen extends GetWidget<HomeController> {
             ),
           ),
         ),
-        SizedBox(height: 10.h),
-        Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Container(
-            height: 90.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20.r),
+        SizedBox(height: 16.h),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          separatorBuilder: (_, __) => SizedBox(height: 16.h),
+          itemBuilder: (_, __) => Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Container(
+              height: 100.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.r),
+              ),
             ),
           ),
         ),
