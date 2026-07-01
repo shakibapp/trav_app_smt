@@ -45,12 +45,27 @@ class TripsScreen extends GetView<TripsController> {
                 }
                 final trips = controller.currentTrips;
                 if (trips.isEmpty) {
-                  return Center(
-                    child: Lottie.asset(
-                      AppAnimations.emptyTrips,
-                      width: 250.w,
-                      height: 250.h,
-                      fit: BoxFit.contain,
+                  return Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.card_travel_rounded,
+                            size: 80.sp,
+                            color: AppColors.secondaryColor.withOpacity(0.3),
+                          ),
+                          SizedBox(height: 16.h),
+                          Text(
+                            "No trips found",
+                            style: globaltextInterTight(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.secondaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }

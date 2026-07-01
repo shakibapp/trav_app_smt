@@ -266,6 +266,11 @@ class AlertController extends GetxController {
           alerts.addAll(fetched);
         }
 
+        alerts.sort((a, b) {
+          if (a.read == b.read) return 0;
+          return a.read == true ? 1 : -1;
+        });
+
         totalAlerts.value = data['total'] ?? alerts.length;
         final responsePage = data['page'] ?? page;
         final responseLimit = data['limit'] ?? limit.value;

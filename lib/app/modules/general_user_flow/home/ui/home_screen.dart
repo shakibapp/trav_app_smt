@@ -596,7 +596,53 @@ class HomeScreen extends GetWidget<HomeController> {
       padding: EdgeInsets.only(top: 16.h, bottom: 14.h),
       child: Obx(() {
         if (controller.isUserProfileLoading.value) {
-          return CircularProgressIndicator();
+          return Row(
+            children: [
+              Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: 44.w,
+                  height: 44.w,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(width: 6.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      width: 100.w,
+                      height: 12.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 6.h),
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      width: 140.w,
+                      height: 16.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
         } else {
           final user = controller.userProfile.value;
           return Column(
@@ -619,6 +665,11 @@ class HomeScreen extends GetWidget<HomeController> {
                           width: 40,
                           borderRadius: BorderRadius.circular(100),
                           imageUrl: user!.profileImage ?? "",
+                          errorWidget: const Icon(
+                            Icons.person,
+                            color: Colors.grey,
+                            size: 24,
+                          ),
                         ),
                       ),
                     ),
@@ -1013,7 +1064,7 @@ class HomeScreen extends GetWidget<HomeController> {
           ),
           SizedBox(height: 20.h),
           InkWell(
-            onTap: () => Get.to(CityViewScreen()),
+            onTap: () => Get.to(() => CityViewScreen()),
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
               decoration: BoxDecoration(
