@@ -3,12 +3,14 @@ import 'package:upgrader/upgrader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'app/core/services/local_data.dart';
+import 'app/core/services/network_manager.dart';
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalService.init();
+  Get.put(NetworkManager(), permanent: true);
   runApp(const MainApp());
 }
 
@@ -28,6 +30,10 @@ class MainApp extends StatelessWidget {
           getPages: AppPages.pages,
           builder: (context, widget) {
             return UpgradeAlert(
+              upgrader: Upgrader(
+                debugLogging: true,
+                durationUntilAlertAgain: const Duration(hours: 1),
+              ),
               navigatorKey: Get.key,
               child: widget ?? const SizedBox(),
             );
