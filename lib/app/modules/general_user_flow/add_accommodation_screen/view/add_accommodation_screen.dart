@@ -145,7 +145,7 @@ class AddAccommodationView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'ACCOMMODATION TYPE',
+          'ACCOMMODATION TYPE *',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
@@ -188,6 +188,20 @@ class AddAccommodationView extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        Obx(
+          () => controller.hasTypeError.value
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 12.0),
+                  child: Text(
+                    'Please select an accommodation type',
+                    style: TextStyle(
+                      color: Colors.red[700],
+                      fontSize: 12,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );

@@ -35,6 +35,7 @@ class AccommodationController extends GetxController {
   final selectedPaymentStatus = Rxn<String>();
   final numberOfGuests = RxInt(0);
   final isFormValid = false.obs;
+  final hasTypeError = false.obs; // ✅ Track type validation error
 
   // Form Key
   late GlobalKey<FormState> formKey;
@@ -79,17 +80,22 @@ class AccommodationController extends GetxController {
 
   // Validate all fields
   bool validateForm() {
-    if (formKey.currentState!.validate()) {
-      isFormValid.value = true;
-      return true;
+    bool isValid = formKey.currentState!.validate();
+    if (selectedAccommodationType.value == null) {
+      hasTypeError.value = true;
+      isValid = false;
+    } else {
+      hasTypeError.value = false;
     }
-    isFormValid.value = false;
-    return false;
+    
+    isFormValid.value = isValid;
+    return isValid;
   }
 
   // Accommodation Type Selection
   void selectAccommodationType(String type) {
     selectedAccommodationType.value = type;
+    hasTypeError.value = false; // ✅ Clear error on select
     update();
   }
 
@@ -151,7 +157,7 @@ class AccommodationController extends GetxController {
   // Validate accommodation name
   String? validateAccommodationName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Accommodation name is required';
+      return 'Please enter an accommodation name';
     }
     if (value.length < 2) {
       return 'Name must be at least 2 characters';
@@ -162,7 +168,7 @@ class AccommodationController extends GetxController {
   // Validate check-in date
   String? validateCheckInDate(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Check-in date is required';
+      return 'Please select a check-in date';
     }
     return null;
   }
@@ -170,7 +176,7 @@ class AccommodationController extends GetxController {
   // Validate check-out date
   String? validateCheckOutDate(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Check-out date is required';
+      return 'Please select a check-out date';
     }
     return null;
   }
@@ -178,10 +184,10 @@ class AccommodationController extends GetxController {
   // Validate total cost
   String? validateTotalCost(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Total cost is required';
+      return 'Please enter the total cost';
     }
     if (double.tryParse(value) == null) {
-      return 'Please enter a valid number';
+      return 'Please enter a valid amount';
     }
     if (double.parse(value) < 0) {
       return 'Cost cannot be negative';
@@ -195,10 +201,10 @@ class AccommodationController extends GetxController {
     if (selectedPaymentStatus.value == 'Paid') return null;
 
     if (value == null || value.isEmpty) {
-      return 'Amount is required';
+      return 'Please enter the amount owing';
     }
     if (double.tryParse(value) == null) {
-      return 'Please enter a valid number';
+      return 'Please enter a valid amount';
     }
     if (double.parse(value) < 0) {
       return 'Amount cannot be negative';
@@ -218,6 +224,7 @@ class AccommodationController extends GetxController {
   // create new accommodations
   final RxBool isAddAccommodationLoading = false.obs;
   Future<void> createNewAccommodation(String id) async {
+    if (!validateForm()) return;
     try {
       isAddAccommodationLoading.value = true;
       final Map<String, dynamic> data = {
@@ -383,6 +390,7 @@ Future<void> updateAccommodation(String accommodationId, String itineraryId) asy
     numberOfGuests.value = 0;
     numberOfGuestsController.text = '1';
     isFormValid.value = false;
+    hasTypeError.value = false;
     formKey.currentState?.reset();
     update();
   }

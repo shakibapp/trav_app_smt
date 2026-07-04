@@ -44,6 +44,7 @@ class TransportationController extends GetxController {
   final selectedBookingPlatform = Rxn<String>();
   final selectedCurrency = Rxn<String>();
   final isFormValid = false.obs;
+  final hasTypeError = false.obs; // ✅ Track type validation error
 
   // Form Key
   late GlobalKey<FormState> formKey;
@@ -58,21 +59,22 @@ class TransportationController extends GetxController {
 
   // Validate all fields
   bool validateForm() {
-    if (formKey.currentState!.validate()) {
-      if (selectedTransportationType.value == null) {
-        AppSnackbar.failed("Please select a transportation type");
-        return false;
-      }
-      isFormValid.value = true;
-      return true;
+    bool isValid = formKey.currentState!.validate();
+    if (selectedTransportationType.value == null) {
+      hasTypeError.value = true;
+      isValid = false;
+    } else {
+      hasTypeError.value = false;
     }
-    isFormValid.value = false;
-    return false;
+    
+    isFormValid.value = isValid;
+    return isValid;
   }
 
   // Transportation Type Selection
   void selectTransportationType(String type) {
     selectedTransportationType.value = type;
+    hasTypeError.value = false; // ✅ Clear error on select
     update();
   }
 
@@ -356,6 +358,7 @@ Future<void> updateTransportation(String transportationId) async {
     selectedBookingPlatform.value = 'Skyscanner';
     selectedCurrency.value = 'EUR';
     isFormValid.value = false;
+    hasTypeError.value = false;
     formKey.currentState?.reset();
   }
 

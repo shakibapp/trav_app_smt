@@ -7,15 +7,20 @@ import 'app/core/services/network_manager.dart';
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalService.init();
   Get.put(NetworkManager(), permanent: true);
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+
+  final Upgrader _upgrader = Upgrader(
+    debugLogging: true,
+    durationUntilAlertAgain: const Duration(hours: 1),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +35,7 @@ class MainApp extends StatelessWidget {
           getPages: AppPages.pages,
           builder: (context, widget) {
             return UpgradeAlert(
-              upgrader: Upgrader(
-                debugLogging: true,
-                durationUntilAlertAgain: const Duration(hours: 1),
-              ),
+              upgrader: _upgrader,
               navigatorKey: Get.key,
               child: widget ?? const SizedBox(),
             );

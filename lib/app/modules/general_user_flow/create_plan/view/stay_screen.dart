@@ -356,9 +356,10 @@ class StayView extends StatelessWidget {
     bool isAccommodation,
   ) {
     final location = controller.locations[index];
+    final backendValue = label.replaceAll(' ', '_');
 
     return Obx(() {
-      final isSelected = selectedValue.value == label;
+      final isSelected = selectedValue.value == backendValue;
       // ✅ Show spinner only on the chip being updated
       final isThisLoading = location.isUpdating.value &&
           ((isAccommodation &&
@@ -394,8 +395,8 @@ class StayView extends StatelessWidget {
         onSelected: isDisabled
             ? null // ✅ Disable tap while loading
             : (v) => isAccommodation
-                ? controller.selectAccommodation(index, label)
-                : controller.selectTransport(index, label),
+                ? controller.selectAccommodation(index, backendValue)
+                : controller.selectTransport(index, backendValue),
         backgroundColor: Colors.white,
         selectedColor: Colors.orange.withOpacity(0.1),
         disabledColor: Colors.grey.shade100,
