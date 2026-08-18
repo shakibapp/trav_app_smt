@@ -14,15 +14,6 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
-import java.util.Properties
-import java.io.FileInputStream
-
-val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-}
-
 android {
     namespace = "com.trav.app"
     compileSdk = flutter.compileSdkVersion
@@ -49,19 +40,13 @@ android {
     }
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"]?.toString()
-            keyPassword = keystoreProperties["keyPassword"]?.toString()
-            storePassword = keystoreProperties["storePassword"]?.toString()
-            storeFile = file(keystoreProperties["storeFile"]?.toString() ?: "upload-keystore.jks")
-        }
-    }
-
-    signingConfigs {
-        create("release") {
             keyAlias = keystoreProperties.getProperty("keyAlias")
             keyPassword = keystoreProperties.getProperty("keyPassword")
-            storeFile = keystoreProperties.getProperty("storeFile")?.let { file(it) }
             storePassword = keystoreProperties.getProperty("storePassword")
+            val storeFilePath = keystoreProperties.getProperty("storeFile")
+            if (storeFilePath != null) {
+                storeFile = file(storeFilePath)
+            }
         }
     }
 

@@ -8,10 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"/>
 
-    <!-- Android 13+ Media Permissions -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+    <!-- Media Permissions Removed for Google Play Policy Compliance -->
     <application
         android:label="Trav"
         android:name="${applicationName}"
