@@ -257,6 +257,7 @@ class AddActivityController extends GetxController {
 
   // Submit form
   Future<void> createActivity(String id) async {
+    if (!validateAllFields()) return;
     try {
       isLoading.value = true;
 
@@ -325,6 +326,7 @@ class AddActivityController extends GetxController {
   //update activity --
   final RxBool isUpdateActivivtyLoading = false.obs;
   Future<void> updateActivity(String id) async {
+    if (!validateAllFields()) return;
     try {
       isUpdateActivivtyLoading.value = true;
 

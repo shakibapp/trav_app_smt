@@ -7,17 +7,18 @@ import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/ba
 
 class AddTransportationView extends StatelessWidget {
   final String id;
-  final DateTime tripStartDate; 
+  final DateTime tripStartDate;
   final DateTime tripEndDate;
-  final bool isEdit;                       
-  final String? transportationId; 
-  AddTransportationView(
-      {super.key,
-      required this.id,
-      required this.tripStartDate,
-      required this.tripEndDate,
-       this.isEdit = false,                   
-    this.transportationId,});
+  final bool isEdit;
+  final String? transportationId;
+  AddTransportationView({
+    super.key,
+    required this.id,
+    required this.tripStartDate,
+    required this.tripEndDate,
+    this.isEdit = false,
+    this.transportationId,
+  });
 
   final TransportationController controller = Get.put(
     TransportationController(),
@@ -25,7 +26,7 @@ class AddTransportationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       if (isEdit && transportationId != null) {
+    if (isEdit && transportationId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await controller.getSingleTransportation(transportationId!);
         controller.prefillForm();
@@ -41,7 +42,7 @@ class AddTransportationView extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: backButton(onTap: () => Get.back()),
         ),
-        title:  Text(
+        title: Text(
           isEdit ? 'Edit Transportation' : 'Add Transportation',
           style: TextStyle(
             fontSize: 22,
@@ -401,7 +402,7 @@ class AddTransportationView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Transportation Type',
+          'TRANSPORTATION TYPE *',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -458,6 +459,20 @@ class AddTransportationView extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        Obx(
+          () => controller.hasTypeError.value
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 12.0),
+                  child: Text(
+                    'Please select a transportation type',
+                    style: TextStyle(
+                      color: Colors.red[700],
+                      fontSize: 12,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );
@@ -649,7 +664,7 @@ class AddTransportationView extends StatelessWidget {
               const SizedBox(height: 8),
               AppInputTextField(
                 controller: controller.airlineController,
-                hintText: 'e.g. Qatar Airways',
+                hintText: 'e.g.Airways',
               ),
             ],
           ),
@@ -777,7 +792,8 @@ class AddTransportationView extends StatelessWidget {
                     value: controller.selectedCurrency.value,
                     isExpanded: true,
                     underline: const SizedBox(),
-                    items:  ['AUD', 'USD', 'EUR', 'GBP', 'INR', 'BDT'].map((currency) {
+                    items: ['AUD', 'USD', 'EUR', 'GBP', 'INR', 'BDT']
+                        .map((currency) {
                       return DropdownMenuItem(
                         value: currency,
                         child: Text(currency),
@@ -889,59 +905,68 @@ class AddTransportationView extends StatelessWidget {
     );
   }
 
-void _selectDate(BuildContext context, TextEditingController ctrl) {
-  final now = DateTime.now();
-  final initial = now.isAfter(tripStartDate) && now.isBefore(tripEndDate)
-      ? now
-      : tripStartDate;
-
-  // ✅ Arrival date হলে departure date-এর আগে select করা যাবে না
-  DateTime firstAllowed = tripStartDate;
-  if (ctrl == controller.arrivalDateController &&
-      controller.departureDateController.text.isNotEmpty) {
-    try {
-      final parts = controller.departureDateController.text.split('/');
-      final departureDate = DateTime(
-        int.parse(parts[2]),
-        int.parse(parts[1]),
-        int.parse(parts[0]),
-      );
-      firstAllowed = departureDate; // ✅ departure date থেকে শুরু
-    } catch (_) {}
-  }
-
-  final safeInitial = initial.isBefore(firstAllowed) ? firstAllowed : initial;
-
-  showDatePicker(
-    context: context,
-    initialDate: safeInitial,
-    firstDate: firstAllowed,  // ✅ dynamic first date
-    lastDate: tripEndDate,
-  ).then((selectedDate) {
-    if (selectedDate != null) {
-      ctrl.text =
-          '${selectedDate.day.toString().padLeft(2, '0')}/'
-          '${selectedDate.month.toString().padLeft(2, '0')}/'
-          '${selectedDate.year}';
-
-      // ✅ Departure date change হলে arrival date clear করো যদি আগের date হয়
-      if (ctrl == controller.departureDateController &&
-          controller.arrivalDateController.text.isNotEmpty) {
-        try {
-          final parts = controller.arrivalDateController.text.split('/');
-          final arrivalDate = DateTime(
-            int.parse(parts[2]),
-            int.parse(parts[1]),
-            int.parse(parts[0]),
-          );
-          if (selectedDate.isAfter(arrivalDate)) {
-            controller.arrivalDateController.clear();
-          }
-        } catch (_) {}
-      }
+  void _selectDate(BuildContext context, TextEditingController ctrl) {
+    DateTime toLocalDay(DateTime d) {
+      final local = d.toLocal();
+      return DateTime(local.year, local.month, local.day);
     }
-  });
-}
+
+    final now = toLocalDay(DateTime.now());
+    final localTripStart = toLocalDay(tripStartDate);
+    final localTripEnd = toLocalDay(tripEndDate);
+
+    final initial = now.isAfter(localTripStart) && now.isBefore(localTripEnd)
+        ? now
+        : localTripStart;
+
+    // ✅ Arrival date হলে departure date-এর আগে select করা যাবে না
+    DateTime firstAllowed = localTripStart;
+    if (ctrl == controller.arrivalDateController &&
+        controller.departureDateController.text.isNotEmpty) {
+      try {
+        final parts = controller.departureDateController.text.split('/');
+        final departureDate = DateTime(
+          int.parse(parts[2]),
+          int.parse(parts[1]),
+          int.parse(parts[0]),
+        );
+        firstAllowed = departureDate; // ✅ departure date থেকে শুরু
+      } catch (_) {}
+    }
+
+    final safeInitial = initial.isBefore(firstAllowed) ? firstAllowed : initial;
+    final safeLastDate =
+        localTripEnd.isBefore(firstAllowed) ? firstAllowed : localTripEnd;
+
+    showDatePicker(
+      context: context,
+      initialDate: safeInitial,
+      firstDate: firstAllowed,
+      lastDate: safeLastDate,
+    ).then((selectedDate) {
+      if (selectedDate != null) {
+        ctrl.text = '${selectedDate.day.toString().padLeft(2, '0')}/'
+            '${selectedDate.month.toString().padLeft(2, '0')}/'
+            '${selectedDate.year}';
+
+        // ✅ Departure date change হলে arrival date clear করো যদি আগের date হয়
+        if (ctrl == controller.departureDateController &&
+            controller.arrivalDateController.text.isNotEmpty) {
+          try {
+            final parts = controller.arrivalDateController.text.split('/');
+            final arrivalDate = DateTime(
+              int.parse(parts[2]),
+              int.parse(parts[1]),
+              int.parse(parts[0]),
+            );
+            if (selectedDate.isAfter(arrivalDate)) {
+              controller.arrivalDateController.clear();
+            }
+          } catch (_) {}
+        }
+      }
+    });
+  }
 
   void _selectTime(BuildContext context, TextEditingController controller) {
     showTimePicker(context: context, initialTime: TimeOfDay.now()).then((

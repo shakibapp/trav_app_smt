@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,8 +49,11 @@ class ProfileController extends GetxController {
     Get.toNamed(AppRoutes.PROFILE_PARENTS);
   }
 
-  void onPrivacyTap() {
-    AppToast.showSuccess("Upcoming...");
+  Future<void> onPrivacyTap() async {
+    final Uri url = Uri.parse('https://checkintrav.com/privacy-policy');
+    if (!await launchUrl(url)) {
+      AppToast.showError("Could not launch privacy policy");
+    }
   }
 
   void onTermsOfUseTap() {

@@ -32,10 +32,10 @@ class CityViewScreen extends StatelessWidget {
                 children: [
                   backButton(onTap: () => Get.back()),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 14),
 
                   _buildHelpCard(),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 14),
 
                   const Text(
                     'Where to next?',
@@ -77,14 +77,14 @@ class CityViewScreen extends StatelessWidget {
                   // const SizedBox(height: 16),
                   // _selectedRegions(),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 14),
 
                   // ---------------- POPULAR CITIES ----------------
                   _sectionTitle("Popular Cities"),
                   const SizedBox(height: 12),
                   _citySection(controller.popularCities),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 14),
 
                   // ---------------- SEARCH RESULTS ----------------
 

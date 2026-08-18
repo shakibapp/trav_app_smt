@@ -411,8 +411,9 @@ class TripDetailsScreen extends StatelessWidget {
         reminder.passportExpiry!.year > 1900 &&
         !reminder.passportExpiry!.isBefore(DateTime.now());
 
-    final visaChecked =
-        reminder.isVisaConfirmed == true || reminder.noVisaRequired == true;
+    final visaChecked = reminder.isVisaConfirmed == true ||
+        reminder.noVisaRequired == true ||
+        reminder.needsAttention == true;
 
     final insuranceChecked = reminder.haveInsurance == true;
 
@@ -487,7 +488,6 @@ class TripDetailsScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey[200]!, width: 1),
           ),
-          // ✅ প্রতিটা section আলাদা Obx — নিজের Rx field change হলেই শুধু সেটা rebuild হবে
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

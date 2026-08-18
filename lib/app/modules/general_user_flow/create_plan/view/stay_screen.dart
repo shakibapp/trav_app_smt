@@ -62,10 +62,8 @@ class StayView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Back Button
-              backButton(onTap: (){
-                
-                  Get.back();
-                
+              backButton(onTap: () {
+                Get.back();
               }),
               SizedBox(height: 10),
 
@@ -77,9 +75,8 @@ class StayView extends StatelessWidget {
                 "We'll include this in your itinerary",
                 style: TextStyle(color: Colors.grey),
               ),
-             
 
-              SizedBox(height: 20),
+              SizedBox(height: 14),
 
               // Summary Card (6 Days)
               Obx(
@@ -121,7 +118,7 @@ class StayView extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 14),
 
               // List of Stay Cards
               Obx(
@@ -134,40 +131,45 @@ class StayView extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 30),
+              SizedBox(height: 14),
 
-              // Next Button
-              Obx(
-                () => SizedBox(
-                  width: double.infinity,
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: createPlanController.isSubmitting.value ||
-                            createPlanController.isManualSubmitting.value
-                        ? null
-                        : controller.goTripDetails,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.authOrange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: createPlanController.isSubmitting.value ||
-                            createPlanController.isManualSubmitting.value
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text(
-                            "Next",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Obx(() {
+        if (!controller.isReadyToProceed) {
+          return const SizedBox.shrink();
+        }
+        return Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40, top: 10),
+          child: SizedBox(
+            width: double.infinity,
+            height: 55,
+            child: ElevatedButton(
+              onPressed: createPlanController.isSubmitting.value ||
+                      createPlanController.isManualSubmitting.value
+                  ? null
+                  : controller.goTripDetails,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.authOrange,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: createPlanController.isSubmitting.value ||
+                      createPlanController.isManualSubmitting.value
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                  : const Text(
+                      "Next",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+            ),
+          ),
+        );
+      }),
     );
   }
 
@@ -348,64 +350,67 @@ class StayView extends StatelessWidget {
   //   });
   // }
   Widget _choiceChip(
-  String label,
-  RxString selectedValue,
-  int index,
-  bool isAccommodation,
-) {
-  final location = controller.locations[index];
+    String label,
+    RxString selectedValue,
+    int index,
+    bool isAccommodation,
+  ) {
+    final location = controller.locations[index];
+    final backendValue = label.replaceAll(' ', '_');
 
-  return Obx(() {
-    final isSelected = selectedValue.value == label;
-    // ✅ Show spinner only on the chip being updated
-    final isThisLoading = location.isUpdating.value &&
-        ((isAccommodation && location.updatingField.value == 'accommodation') ||
-            (!isAccommodation && location.updatingField.value == 'transport')) &&
-        isSelected;
-    // ✅ Disable all chips in this group while updating
-    final isDisabled = location.isUpdating.value;
+    return Obx(() {
+      final isSelected = selectedValue.value == backendValue;
+      // ✅ Show spinner only on the chip being updated
+      final isThisLoading = location.isUpdating.value &&
+          ((isAccommodation &&
+                  location.updatingField.value == 'accommodation') ||
+              (!isAccommodation &&
+                  location.updatingField.value == 'transport')) &&
+          isSelected;
+      // ✅ Disable all chips in this group while updating
+      final isDisabled = location.isUpdating.value;
 
-    return FilterChip(
-      label: isThisLoading
-          ? SizedBox(
-              width: 12,
-              height: 12,
-              child: CircularProgressIndicator(
-                strokeWidth: 1.5,
-                color: Colors.orange,
+      return FilterChip(
+        label: isThisLoading
+            ? SizedBox(
+                width: 12,
+                height: 12,
+                child: CircularProgressIndicator(
+                  strokeWidth: 1.5,
+                  color: Colors.orange,
+                ),
+              )
+            : Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDisabled
+                      ? Colors.grey.shade400
+                      : isSelected
+                          ? Colors.orange
+                          : Colors.black,
+                ),
               ),
-            )
-          : Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                color: isDisabled
-                    ? Colors.grey.shade400
-                    : isSelected
-                        ? Colors.orange
-                        : Colors.black,
-              ),
-            ),
-      selected: isSelected,
-      onSelected: isDisabled
-          ? null // ✅ Disable tap while loading
-          : (v) => isAccommodation
-              ? controller.selectAccommodation(index, label)
-              : controller.selectTransport(index, label),
-      backgroundColor: Colors.white,
-      selectedColor: Colors.orange.withOpacity(0.1),
-      disabledColor: Colors.grey.shade100,
-      shape: StadiumBorder(
-        side: BorderSide(
-          color: isDisabled
-              ? Colors.grey.shade200
-              : isSelected
-                  ? Colors.orange
-                  : Colors.grey.shade200,
+        selected: isSelected,
+        onSelected: isDisabled
+            ? null // ✅ Disable tap while loading
+            : (v) => isAccommodation
+                ? controller.selectAccommodation(index, backendValue)
+                : controller.selectTransport(index, backendValue),
+        backgroundColor: Colors.white,
+        selectedColor: Colors.orange.withOpacity(0.1),
+        disabledColor: Colors.grey.shade100,
+        shape: StadiumBorder(
+          side: BorderSide(
+            color: isDisabled
+                ? Colors.grey.shade200
+                : isSelected
+                    ? Colors.orange
+                    : Colors.grey.shade200,
+          ),
         ),
-      ),
-      showCheckmark: false,
-    );
-  });
-}
+        showCheckmark: false,
+      );
+    });
+  }
 }

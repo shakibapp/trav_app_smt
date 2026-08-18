@@ -93,7 +93,7 @@ class TripItineraryView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 60),
+                          const SizedBox(height: 120),
                           // Destination info
                           Text(
                             itinerary.name ?? "Untitled Trip",

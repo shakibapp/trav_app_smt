@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:get/get.dart';
+import 'package:hamishphipps/app/routes/app_routes.dart';
 import 'package:hamishphipps/app/core/constants/app_snackbar.dart';
 import 'package:hamishphipps/app/core/services/logger.dart';
 import 'package:http/http.dart' as http;
@@ -250,6 +252,22 @@ class NetworkConfigV1 {
 
   dynamic _handleJsonResponse(http.Response resp) {
     final code = resp.statusCode;
+    
+    // Handle Token Expiration or Unauthorized globally
+    if (code == 401) {
+      try {
+        final data = json.decode(resp.body);
+        final msg = data['message'] ?? 'Session expired, please login again.';
+        ShowError(msg);
+      } catch (_) {
+        ShowError('Session expired, please login again.');
+      }
+      
+      LocalService.localService.clearUserData();
+      Get.offAllNamed(AppRoutes.LOGIN);
+      return null;
+    }
+
     if (code >= 200 && code < 300) {
       try {
         return json.decode(resp.body);

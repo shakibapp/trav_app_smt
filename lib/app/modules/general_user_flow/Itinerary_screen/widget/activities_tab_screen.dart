@@ -153,9 +153,8 @@ class ActivitiesTabScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                     width: double.infinity,
-                    alignment: Alignment.bottomLeft,
                     height: 45,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -164,10 +163,40 @@ class ActivitiesTabScreen extends StatelessWidget {
                       ),
                       color: Colors.grey.shade300,
                     ),
-                    child: Text(
-                      "Day ${activity.dayNumber}",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Day ${activity.dayNumber}",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: activity.status == "Completed"
+                                ? Colors.green.shade100
+                                : activity.status == "Missed"
+                                    ? Colors.red.shade100
+                                    : Colors.orange.shade100,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            activity.status ?? "Pending",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: activity.status == "Completed"
+                                  ? Colors.green.shade700
+                                  : activity.status == "Missed"
+                                      ? Colors.red.shade700
+                                      : Colors.orange.shade700,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 12),
@@ -318,12 +347,12 @@ class ActivitiesTabScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16),
-                        Obx(() => activity.status == "Completed"
+                        (activity.status == "Completed" || activity.status == "Missed")
                             ? SizedBox()
                             : Row(
                                 children: [
                                   Expanded(
-                                    child: appButton(
+                                    child: Obx(() => appButton(
                                       height: 45,
                                       loading: activityController
                                           .isMissedLoading
@@ -333,11 +362,11 @@ class ActivitiesTabScreen extends StatelessWidget {
                                               activity.id.toString(), "Missed"),
                                       name: "Missed",
                                       bgColor: Colors.transparent,
-                                    ),
+                                    )),
                                   ),
                                   SizedBox(width: 12),
                                   Expanded(
-                                    child: appButton(
+                                    child: Obx(() => appButton(
                                       height: 45,
                                       loading: activityController
                                           .isCompletedLoading
@@ -350,10 +379,10 @@ class ActivitiesTabScreen extends StatelessWidget {
                                           ? "Mark as Complete"
                                           : "Complete",
                                       textColor: Colors.white,
-                                    ),
+                                    )),
                                   ),
                                 ],
-                              )),
+                              ),
                       ],
                     ),
                   ),

@@ -2,11 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppSnackbar {
+  static String? _lastMessage;
+  static DateTime? _lastTime;
+
   static void show({
     required String title,
     required String message,
     required bool isSuccess,
   }) {
+    final now = DateTime.now();
+    if (_lastMessage == message && _lastTime != null) {
+      if (now.difference(_lastTime!) < const Duration(seconds: 3)) {
+        return;
+      }
+    }
+    _lastMessage = message;
+    _lastTime = now;
+
     Get.snackbar(
       title,
       message,

@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/routes/app_routes.dart';
@@ -149,22 +151,21 @@ class SignupScreen extends GetWidget<SignupController> {
                             lineHeight: 1.4,
                           ),
                         ),
-                        WidgetSpan(
-                          child: GestureDetector(
-                            onTap: () {
-                              // Navigate to Terms of Service
-                               //Get.toNamed(AppRoutes.TERMS_OF_SERVICE);
-                            },
-                            child: Text(
-                              'Terms of Service',
-                              style: globaltextInterTight(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.authOrange,
-                                lineHeight: 1.4,
-                              ),
-                            ),
+                        TextSpan(
+                          text: 'Terms of Service',
+                          style: globaltextInterTight(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.authOrange,
+                            lineHeight: 1.4,
                           ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              final url = Uri.parse('https://checkintrav.com/privacy-policy');
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              }
+                            },
                         ),
                         TextSpan(
                           text: ' and ',
@@ -175,22 +176,21 @@ class SignupScreen extends GetWidget<SignupController> {
                             lineHeight: 1.4,
                           ),
                         ),
-                        WidgetSpan(
-                          child: GestureDetector(
-                            onTap: () {
-                              // Navigate to Privacy Policy
-                              // Get.toNamed(AppRoutes.PRIVACY_POLICY);
-                            },
-                            child: Text(
-                              'Privacy Policy',
-                              style: globaltextInterTight(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.authOrange,
-                                lineHeight: 1.4,
-                              ),
-                            ),
+                        TextSpan(
+                          text: 'Privacy Policy',
+                          style: globaltextInterTight(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.authOrange,
+                            lineHeight: 1.4,
                           ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              final url = Uri.parse('https://checkintrav.com/privacy-policy');
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              }
+                            },
                         ),
                       ],
                     ),
