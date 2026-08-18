@@ -606,6 +606,7 @@ class HomeScreen extends GetWidget<HomeController> {
           return CircularProgressIndicator();
         } else {
           final user = controller.userProfile.value;
+          if (user == null) return const SizedBox.shrink();
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

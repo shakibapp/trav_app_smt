@@ -139,13 +139,9 @@ class CreatePlanController extends GetxController {
   // PAYLOAD BUILDER
   // =========================
   Map<String, dynamic> _buildPayload({required bool isAiMode}) {
-    final cityList = cityController.selectedCities.map((city) {
-      return {"name": city.name, "image": city.image ?? ""};
-    }).toList();
-
     final base = {
       "region": selectedRegions,
-      "city": cityList,
+      "city": selectedCities,
       "startDate": _formatDate(startDate),
       "endDate": _formatDate(endDate),
       "totalDays": totalDays,

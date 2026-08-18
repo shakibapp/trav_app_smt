@@ -10,6 +10,8 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mime/mime.dart'; // added
 import 'package:path/path.dart' as p;
 
+import 'package:get/get.dart';
+import 'package:hamishphipps/app/routes/app_routes.dart';
 import '../../services/local_data.dart';
 import '../../widgets/app_snackbar.dart';
 
@@ -26,6 +28,7 @@ enum RequestMethod {
 
 class NetworkConfigV1 {
   final localService = LocalService.localService;
+  bool _isLoggingOut = false;
 
   NetworkConfigV1._privateConstructor();
 
@@ -257,6 +260,20 @@ class NetworkConfigV1 {
 
     try {
       final data = json.decode(resp.body);
+      
+      if (data['errorCode'] == 'USER_NOT_FOUND') {
+        if (!_isLoggingOut) {
+          _isLoggingOut = true;
+          localService.clearUserData().then((_) {
+            Get.offAllNamed(AppRoutes.LOGIN)?.whenComplete(() {
+              _isLoggingOut = false;
+            });
+          });
+          ShowError('User not found. Please log in again.');
+        }
+        return data; 
+      }
+
       final msg =
           data['message'] ??
           (code >= 500 ? 'Server Error' : 'Try again after some time');
