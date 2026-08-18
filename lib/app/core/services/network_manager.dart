@@ -43,53 +43,53 @@ class NetworkManager extends GetxController {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(24.w),
+                  padding: EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     color: AppColors.authOrange.withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     Icons.wifi_off_rounded,
-                    size: 80.sp,
+                    size: 80,
                     color: AppColors.authOrange,
                   ),
                 ),
-                SizedBox(height: 32.h),
+                SizedBox(height: 32),
                 Text(
                   "No Internet Connection",
                   style: globaltextInterTight(
-                    fontSize: 24.sp,
+                    fontSize: 24,
                     fontWeight: FontWeight.w800,
                     color: AppColors.blackColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 16),
                 Text(
                   "Please check your network settings. We're waiting for the connection to come back...",
                   style: globaltextInterTight(
-                    fontSize: 15.sp,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500,
                     color: AppColors.secondaryColor,
                     lineHeight: 1.5,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 48.h),
+                SizedBox(height: 48),
                 CircularProgressIndicator(
                   color: AppColors.authOrange,
                   strokeWidth: 3,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 16),
                 Text(
                   "Waiting to reconnect...",
                   style: globaltextInterTight(
-                    fontSize: 12.sp,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: AppColors.greyColor,
                   ),
