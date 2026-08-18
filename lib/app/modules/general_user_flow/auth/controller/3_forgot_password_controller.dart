@@ -50,7 +50,11 @@ final RxBool isForgotLoading = false.obs;
        log("Forgot Password Success: ${response.toString()}");
       
       } else {
-       AppToast.showError(response['message'] ?? 'Failed to send OTP');
+       // response null হতে পারে (504 বা network error এর কারণে)
+       final msg = response != null
+           ? (response['message'] ?? 'Failed to send OTP')
+           : 'Server error. Please try again later.';
+       AppToast.showError(msg);
        log("Forgot Password Failed: ${response.toString()}");  
       }
     } catch (e) {

@@ -64,7 +64,7 @@ class CreatePlanController extends GetxController {
         is_auth: true,
       );
 
-      if (response != null || response['success'] == true) {
+      if (response != null && response['success'] == true) {
         tripResponse(response['data']);
         log("${response}");
         Get.snackbar(
@@ -138,14 +138,9 @@ class CreatePlanController extends GetxController {
   // =========================
   // PAYLOAD BUILDER
   // =========================
-  Map<String, dynamic> _buildPayload({
-    required bool isAiMode,
-  }) {
+  Map<String, dynamic> _buildPayload({required bool isAiMode}) {
     final cityList = cityController.selectedCities.map((city) {
-      return {
-        "name": city.name,
-        "image": city.image ?? "",
-      };
+      return {"name": city.name, "image": city.image ?? ""};
     }).toList();
 
     final base = {
@@ -239,13 +234,14 @@ class CreatePlanController extends GetxController {
     final theme = normalized.contains('Culture')
         ? 'cultural'
         : normalized.contains('Food')
-            ? 'food-focused'
-            : normalized.contains('Adventure')
-                ? 'adventurous'
-                : 'relaxed';
+        ? 'food-focused'
+        : normalized.contains('Adventure')
+        ? 'adventurous'
+        : 'relaxed';
 
-    final regionText =
-        regions.isNotEmpty ? regions.join(', ') : 'selected destinations';
+    final regionText = regions.isNotEmpty
+        ? regions.join(', ')
+        : 'selected destinations';
 
     return "I want a $theme trip through $regionText";
   }

@@ -1,5 +1,6 @@
 class Urls {
-  static const String baseUrl = 'https://hamishhipps.vercel.app/api/v1';
+  // static const String baseUrl = 'https://hamishhipps.vercel.app/api/v1';
+  static const String baseUrl = 'https://api.209.38.85.90.nip.io/api/v1';
 
   //----------------------------Auth Endpoints------------------//
   static const String login = '$baseUrl/auth/login'; //POST
@@ -23,10 +24,14 @@ class Urls {
   static const String tripDetail = '$baseUrl/trips'; //GET
   static const String getItineraryDetails = '$baseUrl/trips/itinerary/'; //PUT
 
-  static const String createAccommondation = "$baseUrl/accommodations"; //POST With ID
-  static const String createTransportation = "$baseUrl/transportations"; //POST With ID
-  static const String activityCreate = "$baseUrl/activities"; 
-  static const String singleActivityById ="$baseUrl/activities/single"; //get 
-  static const String aiCreateActivityById ="$baseUrl/ai/generate-activities"; //get 
-  static const String priorityStatusChange ="$baseUrl/trips/priority-remainder"; //get
+  static const String createAccommondation =
+      "$baseUrl/accommodations"; //POST With ID
+  static const String createTransportation =
+      "$baseUrl/transportations"; //POST With ID
+  static const String activityCreate = "$baseUrl/activities";
+  static const String singleActivityById = "$baseUrl/activities/single"; //get
+  static const String aiCreateActivityById =
+      "$baseUrl/ai/generate-activities"; //get
+  static const String priorityStatusChange =
+      "$baseUrl/trips/priority-remainder"; //get
 }
