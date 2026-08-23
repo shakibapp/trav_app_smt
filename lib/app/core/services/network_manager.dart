@@ -11,6 +11,7 @@ class NetworkManager extends GetxController {
   
   late StreamSubscription<InternetConnectionStatus> _subscription;
   bool isDialogOpen = false;
+  Timer? _debounceTimer;
 
   @override
   void onInit() {
@@ -20,11 +21,18 @@ class NetworkManager extends GetxController {
 
   void _updateConnectionStatus(InternetConnectionStatus status) {
     if (status == InternetConnectionStatus.disconnected) {
-      if (!isDialogOpen) {
-        isDialogOpen = true;
-        _showNoInternetDialog();
-      }
+      // Add a small delay (debounce) before showing the dialog.
+      // This prevents the dialog from flashing during app startup or momentary network drops.
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(const Duration(seconds: 2), () {
+        if (!isDialogOpen) {
+          isDialogOpen = true;
+          _showNoInternetDialog();
+        }
+      });
     } else {
+      // If internet comes back, cancel the timer and close the dialog if it's open
+      _debounceTimer?.cancel();
       if (isDialogOpen) {
         isDialogOpen = false;
         if (Get.isDialogOpen ?? false) {
@@ -34,7 +42,12 @@ class NetworkManager extends GetxController {
     }
   }
 
-  void _showNoInternetDialog() {
+  void _showNoInternetDialog() async {
+    while (Get.overlayContext == null) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+    if (!isDialogOpen) return;
+
     Get.dialog(
       PopScope(
         canPop: false,

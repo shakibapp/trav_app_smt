@@ -2,13 +2,19 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hamishphipps/app/core/constants/app_button.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_icons.dart';
+import 'package:hamishphipps/app/core/constants/app_images.dart';
+import 'package:hamishphipps/app/core/style/global_text_style.dart';
+import 'package:hamishphipps/app/core/widgets/custom_button_widget.dart';
 import 'package:hamishphipps/app/core/widgets/network_image.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/Itinerary_screen/view/tripItinerary_overview_screen.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/create_plan/city/view/city_view.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/create_plan/widget/back_button_widget.dart';
+import 'package:hamishphipps/app/modules/general_user_flow/home/controller/home_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/nav_bar/controller/nav_bar_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/controller/trip_details_controller.dart';
 import 'package:hamishphipps/app/modules/general_user_flow/trip_details_screen/model/trip_details_model.dart';
@@ -50,6 +56,11 @@ class TripDetailsScreen extends StatelessWidget {
                       ? _buildOptimizeRouteSection(controller)
                       : const SizedBox()),
                   _buildItinerarySection(controller),
+                  const SizedBox(height: 20),
+                  if (controller.singleTripData.value.status?.toLowerCase() != 'completed')
+                    _shareTripWithParents(
+                      onTap: () => _showShareTripConfirmDialog(HomeController(), tripId),
+                    ),
                   const SizedBox(height: 30),
                 ],
               );
@@ -946,4 +957,172 @@ class TripDetailsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _shareTripWithParents({required VoidCallback onTap}) {
+  return Material(
+    color: Colors.transparent,
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16.r),
+      child: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          color: AppColors.authOrange.withValues(alpha: 0.08),
+          border: Border.all(color: AppColors.authOrange, width: 1),
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40.w,
+              height: 40.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.authOrange.withValues(alpha: 0.1),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  AppImages.share,
+                  width: 20.w,
+                  height: 20.w,
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.authOrange,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Want to share trip with your parents?',
+                    style: globaltextInterTight(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.blackColor,
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    'Your parents will get notified and informed about you.',
+                    style: globaltextInterTight(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.blackColor.withAlpha(150),
+                      lineHeight: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 8.w),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 18.sp,
+              color: AppColors.blackColor.withAlpha(150),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Future<void> _showShareTripConfirmDialog(HomeController controller, String tripId) async {
+  await Get.dialog(
+    Dialog(
+      backgroundColor: Colors.white,
+      insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18.r),
+      ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(18.w, 10.h, 18.w, 18.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                const Spacer(),
+                IconButton(
+                  onPressed: Get.back,
+                  icon: const Icon(Icons.close),
+                  splashRadius: 18.r,
+                ),
+              ],
+            ),
+            SizedBox(height: 6.h),
+            Text(
+              'Want to share trip with your parents?',
+              textAlign: TextAlign.center,
+              style: globaltextInterTight(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w800,
+                color: AppColors.blackColor,
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              'Your parents will get notified and informed about you.',
+              textAlign: TextAlign.center,
+              style: globaltextInterTight(
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w400,
+                color: AppColors.blackColor.withAlpha(150),
+                lineHeight: 1.3,
+              ),
+            ),
+            SizedBox(height: 22.h),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButtonWidget.outline(
+                    label: 'Not Now',
+                    onPressed: Get.back,
+                    color: AppColors.authOrange,
+                    fullWidth: true,
+                    height: 48.h,
+                  ),
+                ),
+                SizedBox(width: 14.w),
+                Expanded(
+                  child: Obx(() {
+                    return CustomButtonWidget(
+                      loading: controller.isInvitingParent.value,
+                      label: 'Yes, interested.',
+                      onPressed: () async {
+                        if (tripId.isNotEmpty) {
+                          await controller.inviteParentByEmail(tripId);
+                        } else {
+                          Get.snackbar("Failed", "No trip selected to share",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white);
+                        }
+                      },
+                      bgColor: AppColors.authOrange,
+                      fgColor: AppColors.whiteColor,
+                      fullWidth: true,
+                      height: 48.h,
+                      radius: 999.r,
+                      elevation: 3,
+                      textStyle: globaltextInterTight(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.whiteColor,
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+    barrierDismissible: false,
+  );
 }

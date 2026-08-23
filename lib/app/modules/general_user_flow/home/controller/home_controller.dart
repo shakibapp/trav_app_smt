@@ -1014,6 +1014,7 @@ final hasFetchedSummary = (visaAiSummerData.value.destinations?.isNotEmpty == tr
         );
         parentEmailController.clear();
       } else {
+        Get.back();
         Get.snackbar(
           'Share Trip',
           response?['message'] ?? 'Unknown error occurred',
