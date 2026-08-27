@@ -132,33 +132,31 @@ class StayView extends StatelessWidget {
               ),
 
               SizedBox(height: 14),
-
             ],
           ),
         ),
       ),
       bottomNavigationBar: Obx(() {
-        if (!controller.isReadyToProceed) {
-          return const SizedBox.shrink();
-        }
+        final bool isReady = controller.isReadyToProceed;
+        final bool isSubmitting = createPlanController.isSubmitting.value ||
+            createPlanController.isManualSubmitting.value;
+
         return Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40, top: 10),
           child: SizedBox(
             width: double.infinity,
             height: 55,
             child: ElevatedButton(
-              onPressed: createPlanController.isSubmitting.value ||
-                      createPlanController.isManualSubmitting.value
+              onPressed: (!isReady || isSubmitting)
                   ? null
                   : controller.goTripDetails,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.authOrange,
+                backgroundColor: isReady ? AppColors.authOrange : Colors.grey.shade400,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: createPlanController.isSubmitting.value ||
-                      createPlanController.isManualSubmitting.value
+              child: isSubmitting
                   ? const CircularProgressIndicator(
                       color: Colors.white,
                     )

@@ -34,6 +34,8 @@ class HomeController extends GetxController implements PriorityReminderHandler {
 
   final RxList<AllTripDataModel> upcomingTripsFromApi =
       <AllTripDataModel>[].obs;
+  final RxList<AllTripDataModel> ongoingTripsFromApi =
+      <AllTripDataModel>[].obs;
   final RxBool isLoadingTrips = false.obs;
   Future<void> fetchUpcomingTrips() async {
     try {
@@ -45,14 +47,22 @@ class HomeController extends GetxController implements PriorityReminderHandler {
         is_auth: true,
       );
       if (response != null && response['success'] == true) {
-        upcomingTripsFromApi.value = List<AllTripDataModel>.from(
-            response["data"]["data"]
-                .map((e) => AllTripDataModel.fromJson(e))
-                .where((trip) => trip.status?.toLowerCase() == 'upcoming'));
+        final allTrips = List<AllTripDataModel>.from(
+            response["data"]["data"].map((e) => AllTripDataModel.fromJson(e)));
 
-        final firstTripId = upcomingTripsFromApi.isNotEmpty
-            ? upcomingTripsFromApi.first.id?.toString() ?? ''
-            : '';
+        upcomingTripsFromApi.value = allTrips
+            .where((trip) => trip.status?.toLowerCase() == 'upcoming')
+            .toList();
+
+        ongoingTripsFromApi.value = allTrips
+            .where((trip) => trip.status?.toLowerCase() == 'ongoing')
+            .toList();
+
+        final firstTripId = ongoingTripsFromApi.isNotEmpty
+            ? ongoingTripsFromApi.first.id?.toString() ?? ''
+            : upcomingTripsFromApi.isNotEmpty
+                ? upcomingTripsFromApi.first.id?.toString() ?? ''
+                : '';
         if (firstTripId.isNotEmpty && selectedTripId.value.isEmpty) {
           await getTripDetailById(firstTripId);
         }

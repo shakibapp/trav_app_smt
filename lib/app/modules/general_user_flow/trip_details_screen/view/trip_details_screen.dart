@@ -438,44 +438,107 @@ class TripDetailsScreen extends StatelessWidget {
       return 'Add';
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        priorityRemindersStatusBanner(completed: allChecked),
-        const SizedBox(height: 15),
-        tripPriority(
-          name: 'Passport',
-          image: AppIcons.passport,
-          onTap: () => controller.showPriorityReminderBottomSheet(
-            reminder,
-            'Passport',
+    int uncompletedCount = 0;
+    if (!passportChecked) uncompletedCount++;
+    if (!visaChecked) uncompletedCount++;
+    if (!insuranceChecked) uncompletedCount++;
+
+    return Theme(
+      data: Theme.of(Get.context!).copyWith(dividerColor: Colors.transparent),
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: uncompletedCount > 0 ? AppColors.authOrange.withValues(alpha: 0.3) : Colors.grey.shade200,
+            width: uncompletedCount > 0 ? 1.5 : 1,
           ),
-          buttonName: buttonLabel('Passport'),
-          isChecked: passportChecked,
+          boxShadow: [
+            BoxShadow(
+              color: uncompletedCount > 0 
+                  ? AppColors.authOrange.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            )
+          ],
         ),
-        const SizedBox(height: 6),
-        tripPriority(
-          name: 'Visa',
-          image: AppIcons.visa,
-          onTap: () => controller.showPriorityReminderBottomSheet(
-            reminder,
-            'Visa',
+        child: ExpansionTile(
+          initiallyExpanded: uncompletedCount > 0, // Expand if action needed
+          tilePadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+          iconColor: AppColors.authOrange,
+          collapsedIconColor: Colors.grey.shade600,
+          title: Row(
+            children: [
+              Text(
+                "Priority Reminders",
+                style: globaltextInterTight(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              if (uncompletedCount > 0) ...[
+                SizedBox(width: 8.w),
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    uncompletedCount.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
-          buttonName: buttonLabel('Visa'),
-          isChecked: visaChecked,
+          childrenPadding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+          children: [
+            priorityRemindersStatusBanner(completed: allChecked),
+            const SizedBox(height: 15),
+            tripPriority(
+              name: 'Passport',
+              image: AppIcons.passport,
+              onTap: () => controller.showPriorityReminderBottomSheet(
+                reminder,
+                'Passport',
+              ),
+              buttonName: buttonLabel('Passport'),
+              isChecked: passportChecked,
+            ),
+            const SizedBox(height: 6),
+            tripPriority(
+              name: 'Visa',
+              image: AppIcons.visa,
+              onTap: () => controller.showPriorityReminderBottomSheet(
+                reminder,
+                'Visa',
+              ),
+              buttonName: buttonLabel('Visa'),
+              isChecked: visaChecked,
+            ),
+            const SizedBox(height: 6),
+            tripPriority(
+              name: 'Travel Insurance',
+              image: AppIcons.agreement,
+              onTap: () => controller.showPriorityReminderBottomSheet(
+                reminder,
+                'Travel Insurance',
+              ),
+              buttonName: buttonLabel('Travel Insurance'),
+              isChecked: insuranceChecked,
+            ),
+          ],
         ),
-        const SizedBox(height: 6),
-        tripPriority(
-          name: 'Travel Insurance',
-          image: AppIcons.agreement,
-          onTap: () => controller.showPriorityReminderBottomSheet(
-            reminder,
-            'Travel Insurance',
-          ),
-          buttonName: buttonLabel('Travel Insurance'),
-          isChecked: insuranceChecked,
-        ),
-      ],
+      ),
     );
   }
 

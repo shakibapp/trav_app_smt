@@ -51,6 +51,7 @@ class HomeScreen extends GetWidget<HomeController> {
               children: [
                 SizedBox(height: 50.h),
                 _buildGreetingSection(userController),
+                _buildOngoingTripsSection(),
                 Obx(() {
                   if (controller.upcomingTripsFromApi.isEmpty ||
                       controller.isLoadingTrips.value) {
@@ -538,56 +539,107 @@ class HomeScreen extends GetWidget<HomeController> {
       return 'Add';
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Priority Reminders",
-          style: globaltextInterTight(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w800,
-            color: AppColors.blackColor,
-          ),
-        ),
-        SizedBox(height: 10.h),
+    int uncompletedCount = 0;
+    if (!passportChecked) uncompletedCount++;
+    if (!visaChecked) uncompletedCount++;
+    if (!insuranceChecked) uncompletedCount++;
 
-        // ✅ এইটাই নতুন — trip details screen এর মতো same banner
-        priorityRemindersStatusBanner(completed: allChecked),
-        const SizedBox(height: 15),
-
-        tripPriority(
-          name: 'Passport',
-          image: AppIcons.passport,
-          onTap: () => controller.showPriorityReminderBottomSheet(
-            reminder,
-            'Passport',
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: uncompletedCount > 0 ? AppColors.authOrange.withValues(alpha: 0.3) : Colors.grey.shade200,
+            width: uncompletedCount > 0 ? 1.5 : 1,
           ),
-          buttonName: buttonLabel('Passport'),
-          isChecked: passportChecked,
+          boxShadow: [
+            BoxShadow(
+              color: uncompletedCount > 0 
+                  ? AppColors.authOrange.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            )
+          ],
         ),
-        const SizedBox(height: 6),
-        tripPriority(
-          name: 'Visa',
-          image: AppIcons.visa,
-          onTap: () => controller.showPriorityReminderBottomSheet(
-            reminder,
-            'Visa',
+        child: ExpansionTile(
+          initiallyExpanded: uncompletedCount > 0, // Expand if action needed
+          tilePadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+          iconColor: AppColors.authOrange,
+          collapsedIconColor: Colors.grey.shade600,
+          title: Row(
+            children: [
+              Text(
+                "Priority Reminders",
+                style: globaltextInterTight(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              if (uncompletedCount > 0) ...[
+                SizedBox(width: 8.w),
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    uncompletedCount.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
-          buttonName: buttonLabel('Visa'),
-          isChecked: visaChecked,
+          childrenPadding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+          children: [
+            priorityRemindersStatusBanner(completed: allChecked),
+            const SizedBox(height: 15),
+            tripPriority(
+              name: 'Passport',
+              image: AppIcons.passport,
+              onTap: () => controller.showPriorityReminderBottomSheet(
+                reminder,
+                'Passport',
+              ),
+              buttonName: buttonLabel('Passport'),
+              isChecked: passportChecked,
+            ),
+            const SizedBox(height: 6),
+            tripPriority(
+              name: 'Visa',
+              image: AppIcons.visa,
+              onTap: () => controller.showPriorityReminderBottomSheet(
+                reminder,
+                'Visa',
+              ),
+              buttonName: buttonLabel('Visa'),
+              isChecked: visaChecked,
+            ),
+            const SizedBox(height: 6),
+            tripPriority(
+              name: 'Travel Insurance',
+              image: AppIcons.agreement,
+              onTap: () => controller.showPriorityReminderBottomSheet(
+                reminder,
+                'Travel Insurance',
+              ),
+              buttonName: buttonLabel('Travel Insurance'),
+              isChecked: insuranceChecked,
+            ),
+          ],
         ),
-        const SizedBox(height: 6),
-        tripPriority(
-          name: 'Travel Insurance',
-          image: AppIcons.agreement,
-          onTap: () => controller.showPriorityReminderBottomSheet(
-            reminder,
-            'Travel Insurance',
-          ),
-          buttonName: buttonLabel('Travel Insurance'),
-          isChecked: insuranceChecked,
-        ),
-      ],
+      ),
     );
   }
 
@@ -749,6 +801,210 @@ class HomeScreen extends GetWidget<HomeController> {
         ),
       ),
     );
+  }
+
+  Widget _buildOngoingTripsSection() {
+    return Obx(() {
+      if (controller.isLoadingTrips.value) {
+        return const SizedBox.shrink();
+      }
+      final ongoingTrips = controller.ongoingTripsFromApi;
+      if (ongoingTrips.isEmpty) return const SizedBox.shrink();
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                "Ongoing Trip",
+                style: globaltextInterTight(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.blackColor,
+                ),
+              ),
+              SizedBox(width: 8.w),
+              // Live Badge
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(color: Colors.red.shade200),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 8.w,
+                      height: 8.w,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    Text(
+                      'Live',
+                      style: globaltextInterTight(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 12.h),
+          SizedBox(
+            height: 200.h,
+            width: double.infinity,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: ongoingTrips.length,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) {
+                final trip = ongoingTrips[index];
+
+                String dateInfo = '';
+                if (trip.startDate != null && trip.endDate != null) {
+                  try {
+                    final startStr = DateFormat('MMM d').format(trip.startDate!);
+                    final endStr = DateFormat('MMM d').format(trip.endDate!);
+                    final days = trip.endDate!.difference(trip.startDate!).inDays;
+                    dateInfo = '$startStr – $endStr · $days days';
+                  } catch (e) {
+                    dateInfo = 'Dates unknown';
+                  }
+                } else {
+                  dateInfo = 'Dates unknown';
+                }
+
+                final String tripCity =
+                    (trip.city != null && trip.city!.isNotEmpty)
+                        ? trip.city!.join(', ')
+                        : 'Unknown Destination';
+
+                // Make the card slightly smaller than screen width so the next one is visible
+                final cardWidth = ongoingTrips.length > 1
+                    ? MediaQuery.of(context).size.width * 0.85
+                    : MediaQuery.of(context).size.width - 30; // 30 for padding
+
+                return Padding(
+                  padding: EdgeInsets.only(right: 12.w),
+                  child: InkWell(
+                    onTap: () => controller.getTripDetailById(trip.id.toString()),
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Container(
+                      width: cardWidth,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        border: Border.all(
+                          color: controller.selectedTripId.value == trip.id
+                              ? AppColors.authOrange
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.r),
+                            child: trip.images != null && trip.images!.isNotEmpty
+                                ? AppNetworkImage(
+                                    imageUrl: trip.images!.first ??
+                                        "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : AppNetworkImage(
+                                    imageUrl:
+                                        "https://media.cntraveller.com/photos/66dab99cca79963e5f03ff9d/16:9/w_2560%2Cc_limit/GettyImages-1588291549.jpg",
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                          // Gradient overlay for better text readability
+                          Positioned.fill(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.r),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black.withValues(alpha: 0.6),
+                                    Colors.transparent,
+                                    Colors.black.withValues(alpha: 0.6),
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Info panel
+                          Positioned(
+                            left: 16.w,
+                            right: 16.w,
+                            bottom: 16.h,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  tripCity,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: globaltextInterTight(
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.whiteColor,
+                                    lineHeight: 1.1,
+                                  ),
+                                ),
+                                SizedBox(height: 6.h),
+                                Row(
+                                  children: [
+                                    Icon(Icons.calendar_today,
+                                        color: Colors.white70, size: 14.sp),
+                                    SizedBox(width: 6.w),
+                                    Text(
+                                      dateInfo,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: globaltextInterTight(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 24.h),
+        ],
+      );
+    });
   }
 
   Widget _buildDestinationsLoadingShimmer() {

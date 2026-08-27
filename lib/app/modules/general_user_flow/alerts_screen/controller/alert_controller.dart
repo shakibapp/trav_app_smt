@@ -256,7 +256,7 @@ class AlertController extends GetxController {
         final data = response['data'];
         final fetched = List<NotificationModel>.from(
           (data['data'] as List<dynamic>).map(
-                (x) => NotificationModel.fromJson(x as Map<String, dynamic>),
+            (x) => NotificationModel.fromJson(x as Map<String, dynamic>),
           ),
         );
 
@@ -331,12 +331,47 @@ class AlertController extends GetxController {
     }
   }
 
+  Future<void> readSingleNotification(String id, int index) async {
+    if (_isClosed) return;
+
+    try {
+      final response = await _networkConfig.ApiRequestHandler(
+        RequestMethod.PATCH,
+        Urls.readNotification,
+        jsonEncode({'read': true}),
+        is_auth: true,
+      );
+
+      if (_isClosed) return;
+
+      if (response != null && response['success'] == true) {
+        log('read single notification response: ${response['message']}');
+      } else {
+        log(
+          'read single notification failed: ${response?['message'] ?? 'no response'}',
+        );
+        // Revert local state if API fails
+        if (index >= 0 && index < alerts.length) {
+          alerts[index] = alerts[index].copyWith(read: false);
+        }
+      }
+    } catch (e) {
+      log('Error occurred while marking single notification read: $e');
+      if (index >= 0 && index < alerts.length) {
+        alerts[index] = alerts[index].copyWith(read: false);
+      }
+    }
+  }
+
   void markNotificationAsRead(int index) {
     if (_isClosed) return;
     if (index < 0 || index >= alerts.length) return;
     final notification = alerts[index];
     if (notification.read == true) return;
     alerts[index] = notification.copyWith(read: true);
-    readNotification();
+
+    if (notification.id != null) {
+      readSingleNotification(notification.id!, index);
+    }
   }
 }

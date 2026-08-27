@@ -44,14 +44,13 @@ class BudgetController extends GetxController {
 
   void selectBudget(int index) {
     if (selectedIndex.value == index) {
+      // Deselect: clear everything
       selectedIndex.value = -1;
       amountController.clear();
       customAmount.value = "";
     } else {
+      // Select tier: only highlight — do NOT pre-fill the amount
       selectedIndex.value = index;
-      final selectedOption = options[index];
-      amountController.text = selectedOption.fillAmount;
-      customAmount.value = selectedOption.fillAmount;
     }
   }
 
