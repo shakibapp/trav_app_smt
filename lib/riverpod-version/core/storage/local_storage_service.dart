@@ -78,4 +78,3 @@ final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
   return LocalStorageServiceImpl(prefs);
 });
-

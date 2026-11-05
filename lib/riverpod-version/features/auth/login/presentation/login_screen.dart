@@ -12,7 +12,7 @@ import 'provider/login_notifier.dart';
 // [LoginScreen] - RIVERPOD CONSUMER STATEFUL WIDGET
 // ============================================================================
 // কেন ConsumerStatefulWidget?
-// 
+//
 // ১. TextEditingController এবং FormState dispose করার জন্য StatefulWidget দরকার।
 // ২. Riverpod এর `ref` অবজেক্ট ক্লাসের সর্বত্র সরাসরি ব্যবহার করা যায়
 //    (যেমন: build মেথডে `ref.watch`, ইভেন্টে `ref.read`, এবং লিসেনারে `ref.listen`)।
@@ -88,7 +88,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // এটি বিল্ড সাইকেলের অংশ নয়, স্টেট বদলালেই কেবল ফায়ার হয়।
     ref.listen<LoginState>(loginNotifierProvider, (previous, next) {
       // এরর মেসেজ দেখালে
-      if (next.errorMessage != null && next.errorMessage != previous?.errorMessage) {
+      if (next.errorMessage != null &&
+          next.errorMessage != previous?.errorMessage) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.errorMessage!),
@@ -181,11 +182,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     fillColor: AppColors.authFieldFill,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
-                      borderSide: const BorderSide(color: AppColors.authFieldBorder),
+                      borderSide:
+                          const BorderSide(color: AppColors.authFieldBorder),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
-                      borderSide: const BorderSide(color: AppColors.authFieldBorder),
+                      borderSide:
+                          const BorderSide(color: AppColors.authFieldBorder),
                     ),
                   ),
                 ),
@@ -206,11 +209,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     fillColor: AppColors.authFieldFill,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
-                      borderSide: const BorderSide(color: AppColors.authFieldBorder),
+                      borderSide:
+                          const BorderSide(color: AppColors.authFieldBorder),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
-                      borderSide: const BorderSide(color: AppColors.authFieldBorder),
+                      borderSide:
+                          const BorderSide(color: AppColors.authFieldBorder),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(

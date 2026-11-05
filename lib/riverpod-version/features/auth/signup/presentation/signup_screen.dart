@@ -92,7 +92,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
     // সাইড ইফেক্ট লিসেনার (SnackBar এবং স্ক্রিন নেভিগেশন)
     ref.listen<SignupState>(signupNotifierProvider, (previous, next) {
-      if (next.errorMessage != null && next.errorMessage != previous?.errorMessage) {
+      if (next.errorMessage != null &&
+          next.errorMessage != previous?.errorMessage) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.errorMessage!),
@@ -105,7 +106,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       if (next.isSuccess && !(previous?.isSuccess ?? false)) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(next.successData?.message ?? 'Account created successfully!'),
+            content: Text(
+                next.successData?.message ?? 'Account created successfully!'),
             backgroundColor: AppColors.successColor,
             behavior: SnackBarBehavior.floating,
           ),
@@ -191,7 +193,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   validator: _validateEmail,
-                  decoration: _buildInputDecoration(hint: 'hello@traveller.com'),
+                  decoration:
+                      _buildInputDecoration(hint: 'hello@traveller.com'),
                 ),
                 SizedBox(height: 16.h),
 

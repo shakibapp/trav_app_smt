@@ -6,7 +6,7 @@ import '../errors/failures.dart';
 /// সিনিয়র ডেভেলপাররা প্রেজেন্টেশন এবং ডোমেইনে try-catch এর বদলে Result/Either
 /// প্যাটার্ন ফলো করেন। এর মাধ্যমে একটি ফাংশন নিশ্চিতভাবে হয় Success ডাটা দিবে,
 /// অথবা Failure দিবে। কোনো আনহ্যান্ডেলড এক্সেপশন অ্যাপ ক্র্যাশ করবে না।
-/// 
+///
 /// ব্যবহার:
 /// ```dart
 /// final result = await loginUseCase(params);
@@ -62,4 +62,3 @@ class Error<T> extends Result<T> {
   final Failure failure;
   const Error(this.failure);
 }
-

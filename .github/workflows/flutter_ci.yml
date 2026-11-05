@@ -1,0 +1,70 @@
+name: Flutter CI Pipeline (No Deployment)
+
+# ==============================================================================
+# এই CI (Continuous Integration) পাইপলাইনটি GitHub এ কোড পুশ বা Pull Request
+# তৈরি হলেই স্বয়ংক্রিয়ভাবে রান হবে।
+# এটি কোনো অ্যাপ ডেপ্লয় বা প্লে স্টোরে আপলোড করবে না।
+# 
+# এর কাজ:
+# ১. কোডের ফরম্যাটিং চেক করা (Code Formatting)
+# ২. কোডের কোয়ালিটি এবং এরর অ্যানালাইজ করা (Flutter Analyze)
+# ৩. অটোমেটিক টেস্ট রান করা (Flutter Test)
+# ৪. অ্যাপের সিনট্যাক্স ও কম্পাইলেশন ঠিক আছে কিনা তা নিশ্চিত করা
+# ==============================================================================
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+# কনকারেন্সি: একই ব্রাঞ্চে পরপর পুশ দিলে আগের চলমান পাইপলাইন ক্যানসেল করে নতুনটি রান করবে (টাইম ও রিসোর্স সাশ্রয়ী)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint_and_test:
+    name: Lint, Analyze & Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ১. রিপোজিটরি থেকে কোড ডাউনলোড করা
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # ২. জাভা এনভায়রনমেন্ট সেটআপ (Java 17)
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # ৩. ফ্লাটার SDK সেটআপ এবং ডিপেনডেন্সি ক্যাশিং
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
+
+      # ৪. প্যাকেজ ডিপেনডেন্সি ইনস্টল করা
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # ৫. কোড ফরম্যাটিং চেক করা (Clean Architecture ফোল্ডার)
+      - name: Check Code Formatting
+        run: dart format --output=none --set-exit-if-changed lib/riverpod-version
+
+      # ৬. স্ট্যাটিক অ্যানালাইসিস (কোনো এরর বা কোড কোয়ালিটি সমস্যা আছে কি না)
+      - name: Analyze Riverpod Clean Architecture Code
+        run: flutter analyze lib/riverpod-version
+
+      # ৭. অটোমেটিক ইউনিট টেস্ট চালানো
+      - name: Run Unit Tests
+        run: flutter test
+
+      # ৮. (ঐচ্ছিক) কোড কম্পাইল চেক - এটি কোনো ডেপ্লয় করবে না, শুধু চেক করবে অ্যাপে কোনো সিনট্যাক্স এরর আছে কি না
+      # - name: Verify Android Build (Dry-run without deploy)
+      #   run: flutter build apk --debug --no-pub

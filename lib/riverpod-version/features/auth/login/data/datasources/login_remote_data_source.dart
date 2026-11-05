@@ -37,7 +37,8 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
     );
 
     if (response == null || response is! Map<String, dynamic>) {
-      throw const ServerException(message: 'Invalid response received from server.');
+      throw const ServerException(
+          message: 'Invalid response received from server.');
     }
 
     return LoginModel.fromJson(response, fallbackEmail: email);

@@ -10,7 +10,7 @@ import '../errors/exceptions.dart';
 /// ============================================================================
 /// এই ক্লাসটি সেন্ট্রালাইজড ভাবে সব ধরনের নেটওয়ার্ক কল (GET, POST, PUT, DELETE)
 /// এক্সিকিউট করে।
-/// 
+///
 /// কেন এই প্যাটার্ন সিনিয়র লেভেলের?
 /// ১. প্রতিটি ফিচারে গিয়ে http.post(...) লেখার কোনো প্রয়োজন নেই।
 /// ২. সব রিকোয়েস্টের হেডার, টাইমআউট এবং JSON এনকোডিং এক জায়গা থেকে কন্ট্রোল হয়।
@@ -20,8 +20,10 @@ import '../errors/exceptions.dart';
 
 abstract class ApiClient {
   Future<dynamic> get(String url, {Map<String, String>? headers});
-  Future<dynamic> post(String url, {Map<String, dynamic>? body, Map<String, String>? headers});
-  Future<dynamic> put(String url, {Map<String, dynamic>? body, Map<String, String>? headers});
+  Future<dynamic> post(String url,
+      {Map<String, dynamic>? body, Map<String, String>? headers});
+  Future<dynamic> put(String url,
+      {Map<String, dynamic>? body, Map<String, String>? headers});
   Future<dynamic> delete(String url, {Map<String, String>? headers});
 }
 
@@ -49,7 +51,8 @@ class ApiClientImpl implements ApiClient {
     } on SocketException {
       throw const NetworkException();
     } on TimeoutException {
-      throw const ServerException(message: 'Request timed out. Please try again.');
+      throw const ServerException(
+          message: 'Request timed out. Please try again.');
     }
   }
 
@@ -71,7 +74,8 @@ class ApiClientImpl implements ApiClient {
     } on SocketException {
       throw const NetworkException();
     } on TimeoutException {
-      throw const ServerException(message: 'Request timed out. Please try again.');
+      throw const ServerException(
+          message: 'Request timed out. Please try again.');
     }
   }
 
@@ -93,7 +97,8 @@ class ApiClientImpl implements ApiClient {
     } on SocketException {
       throw const NetworkException();
     } on TimeoutException {
-      throw const ServerException(message: 'Request timed out. Please try again.');
+      throw const ServerException(
+          message: 'Request timed out. Please try again.');
     }
   }
 
@@ -107,7 +112,8 @@ class ApiClientImpl implements ApiClient {
     } on SocketException {
       throw const NetworkException();
     } on TimeoutException {
-      throw const ServerException(message: 'Request timed out. Please try again.');
+      throw const ServerException(
+          message: 'Request timed out. Please try again.');
     }
   }
 
@@ -121,7 +127,8 @@ class ApiClientImpl implements ApiClient {
     }
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      if (jsonResponse is Map<String, dynamic> && jsonResponse['success'] == false) {
+      if (jsonResponse is Map<String, dynamic> &&
+          jsonResponse['success'] == false) {
         throw ServerException(
           message: jsonResponse['message'] ?? 'Action failed',
           statusCode: response.statusCode,
@@ -135,7 +142,8 @@ class ApiClientImpl implements ApiClient {
       throw AuthException(message: message);
     } else {
       final message = jsonResponse is Map<String, dynamic>
-          ? (jsonResponse['message'] ?? 'Server error occurred (${response.statusCode})')
+          ? (jsonResponse['message'] ??
+              'Server error occurred (${response.statusCode})')
           : 'Server error occurred (${response.statusCode})';
       throw ServerException(
         message: message,
@@ -149,4 +157,3 @@ class ApiClientImpl implements ApiClient {
 final apiClientProvider = Provider<ApiClient>((ref) {
   return ApiClientImpl();
 });
-

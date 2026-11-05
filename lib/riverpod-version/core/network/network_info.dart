@@ -6,7 +6,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 /// ============================================================================
 /// Dependency Inversion Principle (DIP):
 /// সরাসরি InternetConnectionChecker এর উপর নির্ভর না করে আমরা একটি অ্যাবস্ট্রাক্ট
-/// ইন্টারফেস তৈরি করেছি। 
+/// ইন্টারফেস তৈরি করেছি।
 /// সুবিধা: টেস্টিং এর সময় সহজেই মক (Mock) করা যায়।
 /// ============================================================================
 
@@ -27,4 +27,3 @@ class NetworkInfoImpl implements NetworkInfo {
 final networkInfoProvider = Provider<NetworkInfo>((ref) {
   return NetworkInfoImpl(InternetConnectionChecker.createInstance());
 });
-

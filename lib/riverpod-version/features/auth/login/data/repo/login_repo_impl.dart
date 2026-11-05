@@ -11,8 +11,8 @@ import '../datasources/login_remote_data_source.dart';
 // [LoginRepoImpl] - DATA REPOSITORY IMPLEMENTATION
 // ============================================================================
 // কেন Repository Implementation Data Layer এ থাকে?
-// 
-// ১. Domain Layer এ থাকে শুধুমাত্র [LoginRepo] ইন্টারফেস (চুক্তি)। 
+//
+// ১. Domain Layer এ থাকে শুধুমাত্র [LoginRepo] ইন্টারফেস (চুক্তি)।
 //    আর Data Layer সেই ইন্টারফেসটিকে বাস্তবে রূপ দেয়।
 // ২. এটি RemoteDataSource, LocalDataSource এবং NetworkInfo এর মধ্যে সমন্বয় করে।
 // ৩. সবচেয়ে গুরুত্বপূর্ণ কাজ: এটি কোনো Exception কে Domain বা UI পর্যন্ত যেতে দেয় না।
@@ -77,7 +77,8 @@ class LoginRepoImpl implements LoginRepo {
     required String email,
   }) async {
     try {
-      await localDataSource.saveAuthData(token: token, role: role, email: email);
+      await localDataSource.saveAuthData(
+          token: token, role: role, email: email);
       return const Result.success(null);
     } on CacheException catch (e) {
       return Result.failure(CacheFailure(e.message));

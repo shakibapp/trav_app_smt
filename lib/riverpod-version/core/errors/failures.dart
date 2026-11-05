@@ -3,7 +3,7 @@
 // ============================================================================
 // Clean Architecture এর নিয়ম অনুযায়ী, UI এবং Domain কখনো Exception দিয়ে ক্র্যাশ
 // হওয়া উচিত না। Repository সব Exception হ্যান্ডেল করে এই Failure ক্লাসে ম্যাপ করে।
-// 
+//
 // সুবিধা:
 // ১. UI খুব সহজে failure.message দিয়ে ইউজার ফ্রেন্ডলি মেসেজ দেখাতে পারে।
 // ২. টাইপ অনুযায়ী আলাদা এরর হ্যান্ডলিং (যেমন: NetworkFailure হলে অফলাইন ডায়ালগ)।
@@ -25,7 +25,8 @@ class ServerFailure extends Failure {
 
 /// ইন্টারনেট কানেকশন না থাকলে
 class NetworkFailure extends Failure {
-  const NetworkFailure([super.message = 'Please check your internet connection.']);
+  const NetworkFailure(
+      [super.message = 'Please check your internet connection.']);
 }
 
 /// ভুল পাসওয়ার্ড বা ক্রেডেনশিয়াল দিলে
@@ -45,5 +46,6 @@ class ValidationFailure extends Failure {
 
 /// অপ্রত্যাশিত কোনো সমস্যা হলে
 class UnknownFailure extends Failure {
-  const UnknownFailure([super.message = 'An unexpected error occurred. Please try again.']);
+  const UnknownFailure(
+      [super.message = 'An unexpected error occurred. Please try again.']);
 }

@@ -19,31 +19,24 @@ class SignupModel extends SignupEntity {
   });
 
   /// Factory constructor to parse API response JSON
-  factory SignupModel.fromJson(Map<String, dynamic> json, {String? fallbackEmail, String? fallbackName}) {
-    final data = json.containsKey('data') && json['data'] is Map<String, dynamic>
-        ? json['data'] as Map<String, dynamic>
-        : json;
+  factory SignupModel.fromJson(Map<String, dynamic> json,
+      {String? fallbackEmail, String? fallbackName}) {
+    final data =
+        json.containsKey('data') && json['data'] is Map<String, dynamic>
+            ? json['data'] as Map<String, dynamic>
+            : json;
 
-    final resolvedEmail = (data['email'] ??
-            data['userEmail'] ??
-            fallbackEmail ??
-            '')
-        .toString();
+    final resolvedEmail =
+        (data['email'] ?? data['userEmail'] ?? fallbackEmail ?? '').toString();
 
-    final resolvedName = (data['fullName'] ??
-            data['name'] ??
-            fallbackName ??
-            '')
-        .toString();
+    final resolvedName =
+        (data['fullName'] ?? data['name'] ?? fallbackName ?? '').toString();
 
-    final resolvedId = (data['id'] ??
-            data['_id'] ??
-            data['userId'])
-        ?.toString();
+    final resolvedId =
+        (data['id'] ?? data['_id'] ?? data['userId'])?.toString();
 
-    final emailVerified = data['emailVerified'] ??
-        data['isEmailVerified'] ??
-        false;
+    final emailVerified =
+        data['emailVerified'] ?? data['isEmailVerified'] ?? false;
 
     final serverMessage = json['message']?.toString();
 

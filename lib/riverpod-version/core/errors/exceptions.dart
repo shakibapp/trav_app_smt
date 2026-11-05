@@ -2,8 +2,8 @@
 // [Exceptions] - DATA LAYER
 // ============================================================================
 // Clean Architecture এ Data Layer (Remote API বা Local DB) থেকে কোনো এরর ঘটলে
-// এই কাস্টম Exception গুলো throw করা হয়। 
-// এগুলো সরাসরি UI তে যায় না, Repository Implementation এগুলোকে ক্যাচ করে 
+// এই কাস্টম Exception গুলো throw করা হয়।
+// এগুলো সরাসরি UI তে যায় না, Repository Implementation এগুলোকে ক্যাচ করে
 // সংশ্লিষ্ট [Failure] অবজেক্টে কনভার্ট করে।
 // ============================================================================
 
@@ -18,7 +18,8 @@ class ServerException implements Exception {
   });
 
   @override
-  String toString() => 'ServerException(statusCode: $statusCode, message: $message)';
+  String toString() =>
+      'ServerException(statusCode: $statusCode, message: $message)';
 }
 
 /// ইন্টারনেট কানেকশন না থাকলে এই এক্সেপশন থ্রো হয়
@@ -35,7 +36,8 @@ class NetworkException implements Exception {
 class AuthException implements Exception {
   final String message;
 
-  const AuthException({this.message = 'Authentication failed. Please login again.'});
+  const AuthException(
+      {this.message = 'Authentication failed. Please login again.'});
 
   @override
   String toString() => 'AuthException(message: $message)';
