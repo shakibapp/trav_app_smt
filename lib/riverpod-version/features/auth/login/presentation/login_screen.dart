@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hamishphipps/app/core/constants/app_colors.dart';
 import 'package:hamishphipps/app/core/constants/app_images.dart';
 import 'package:hamishphipps/app/core/style/global_text_style.dart';
+import 'package:hamishphipps/riverpod-version/features/auth/signup/presentation/signup_screen.dart';
 import 'provider/login_notifier.dart';
 
 // ============================================================================
@@ -259,6 +260,39 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ),
                   ),
+                ),
+                SizedBox(height: 24.h),
+
+                // অ্যাকাউন্ট নেই? সাইনআপ করুন
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account? ",
+                      style: globaltextInterTight(
+                        fontSize: 13.sp,
+                        color: AppColors.secondaryColor,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const SignupScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: globaltextInterTight(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 24.h),
               ],
